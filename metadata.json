@@ -1,0 +1,6 @@
+{
+  "name": "Rotaract Club of Gandaki University",
+  "description": "Official organizational website for Rotaract Club of Gandaki University, RID 3292 Zone XVI, sponsored by Rotaract Club of Lekhnath.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

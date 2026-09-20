@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <!-- Text Paths for Arched Text -->
+    <path id="top-arc" d="M 65,250 A 185,185 0 0,1 435,250" fill="none" />
+    <path id="bottom-arc" d="M 435,250 A 185,185 0 0,1 65,250" fill="none" />
+    
+    <!-- Rotary Inner Text Paths -->
+    <path id="rotary-arc" d="M 125,250 A 125,125 0 0,1 375,250" fill="none" />
+    <path id="intl-arc" d="M 375,250 A 125,125 0 0,1 125,250" fill="none" />
+
+    <style>
+      .cranberry-fill { fill: #D91B5C; }
+      .cranberry-stroke { stroke: #D91B5C; }
+      .white-fill { fill: #FFFFFF; }
+      .outer-text {
+        font-family: 'Arial Black', Impact, sans-serif;
+        font-size: 27px;
+        font-weight: 900;
+        letter-spacing: 5px;
+        fill: #D91B5C;
+        stroke: #FFFFFF;
+        stroke-width: 1px;
+      }
+      .inner-banner-text {
+        font-family: 'Arial Black', Impact, sans-serif;
+        font-size: 26px;
+        font-weight: 900;
+        letter-spacing: 6px;
+        fill: #D91B5C;
+      }
+    </style>
+  </defs>
+
+  <!-- Background circle white base -->
+  <circle cx="250" cy="250" r="240" fill="#FFFFFF" />
+
+  <!-- Laurel Wreaths on Left and Right -->
+  <g class="cranberry-fill">
+    <!-- Left Laurel Wreath Leaves -->
+    <path d="M 85,180 C 70,200 65,230 70,260 C 62,250 58,230 65,210 Z" />
+    <path d="M 75,210 C 60,230 55,260 62,290 C 53,275 52,250 62,230 Z" />
+    <path d="M 72,250 C 62,275 62,305 75,330 C 65,310 63,285 70,265 Z" />
+    <path d="M 82,150 C 72,170 70,195 80,215 C 72,200 72,180 80,165 Z" />
+    <path d="M 100,125 C 88,145 88,170 100,190 C 90,175 90,155 98,140 Z" />
+
+    <!-- Right Laurel Wreath Leaves -->
+    <path d="M 415,180 C 430,200 435,230 430,260 C 438,250 442,230 435,210 Z" />
+    <path d="M 425,210 C 440,230 445,260 438,290 C 447,275 448,250 438,230 Z" />
+    <path d="M 428,250 C 438,275 438,305 425,330 C 435,310 437,285 430,265 Z" />
+    <path d="M 418,150 C 428,170 430,195 420,215 C 428,200 428,180 420,165 Z" />
+    <path d="M 400,125 C 412,145 412,170 400,190 C 410,175 410,155 402,140 Z" />
+  </g>
+
+  <!-- Arched Outer Text: ROTARACT CLUB OF -->
+  <text class="outer-text">
+    <textPath href="#top-arc" startOffset="50%" text-anchor="middle">
+      ROTARACT CLUB OF
+    </textPath>
+  </text>
+
+  <!-- Arched Outer Text: GANDAKI UNIVERSITY -->
+  <text class="outer-text">
+    <textPath href="#bottom-arc" startOffset="50%" text-anchor="middle">
+      GANDAKI UNIVERSITY
+    </textPath>
+  </text>
+
+  <!-- Central 24-Cogs Rotaract Gear Wheel in Cranberry -->
+  <g id="gear-wheel">
+    <!-- Outer Rim Ring -->
+    <circle cx="250" cy="250" r="142" fill="#D91B5C" />
+    
+    <!-- 24 Cogs -->
+    <g class="cranberry-fill">
+      <!-- Cogs placed mathematically at 15 deg intervals -->
+      <path d="M 241,94 L 259,94 L 256,112 L 244,112 Z" />
+      <path d="M 241,94 L 259,94 L 256,112 L 244,112 Z" transform="rotate(15 250 250)" />
+      <path d="M 241,94 L 259,94 L 256,112 L 244,112 Z" transform="rotate(30 250 250)" />
+      <path d="M 241,94 L 259,94 L 256,112 L 244,112 Z" transform="rotate(45 250 250)" />
+      <path d="M 241,94 L 259,94 L 256,112 L 244,112 Z" transform="rotate(60 250 250)" />
+      <path d="M 241,94 L 259,94 L 256,112 L 244,112 Z" transform="rotate(75 250 250)" />
+      <path d="M 241,94 L 259,94 L 256,112 L 244,112 Z" transform="rotate(90 250 250)" />
+      <path d="M 241,94 L 259,94 L 256,112 L 244,112 Z" transform="rotate(105 250 250)" />
+      <path d="M 241,94 L 259,94 L 256,112 L 244,112 Z" transform="rotate(120 250 250)" />
+      <path d="M 241,94 L 259,94 L 256,112 L 244,112 Z" transform="rotate(135 250 250)" />
+      <path d="M 241,94 L 259,94 L 256,112 L 244,112 Z" transform="rotate(150 250 250)" />
+      <path d="M 241,94 L 259,94 L 256,112 L 244,112 Z" transform="rotate(165 250 250)" />
+      <path d="M 241,94 L 259,94 L 256,112 L 244,112 Z" transform="rotate(180 250 250)" />
+      <path d="M 241,94 L 259,94 L 256,112 L 244,112 Z" transform="rotate(195 250 250)" />
+      <path d="M 241,94 L 259,94 L 256,112 L 244,112 Z" transform="rotate(210 250 250)" />
+      <path d="M 241,94 L 259,94 L 256,112 L 244,112 Z" transform="rotate(225 250 250)" />
+      <path d="M 241,94 L 259,94 L 256,112 L 244,112 Z" transform="rotate(240 250 250)" />
+      <path d="M 241,94 L 259,94 L 256,112 L 244,112 Z" transform="rotate(255 250 250)" />
+      <path d="M 241,94 L 259,94 L 256,112 L 244,112 Z" transform="rotate(270 250 250)" />
+      <path d="M 241,94 L 259,94 L 256,112 L 244,112 Z" transform="rotate(285 250 250)" />
+      <path d="M 241,94 L 259,94 L 256,112 L 244,112 Z" transform="rotate(300 250 250)" />
+      <path d="M 241,94 L 259,94 L 256,112 L 244,112 Z" transform="rotate(315 250 250)" />
+      <path d="M 241,94 L 259,94 L 256,112 L 244,112 Z" transform="rotate(330 250 250)" />
+      <path d="M 241,94 L 259,94 L 256,112 L 244,112 Z" transform="rotate(345 250 250)" />
+    </g>
+
+    <!-- White Circular Ring Track for Text -->
+    <circle cx="250" cy="250" r="124" fill="#FFFFFF" stroke="#D91B5C" stroke-width="5" />
+
+    <!-- Inner Gear Hub -->
+    <circle cx="250" cy="250" r="92" fill="#D91B5C" />
+
+    <!-- ROTARY on top arc -->
+    <text class="inner-banner-text">
+      <textPath href="#rotary-arc" startOffset="50%" text-anchor="middle">
+        ROTARY
+      </textPath>
+    </text>
+
+    <!-- INTERNATIONAL on bottom arc -->
+    <text class="inner-banner-text" font-size="20px" letter-spacing="4px">
+      <textPath href="#intl-arc" startOffset="50%" text-anchor="middle">
+        INTERNATIONAL
+      </textPath>
+    </text>
+
+    <!-- Spokes (6 cutaways) -->
+    <!-- Center Gandaki University Shield / Mountain & Book Crest -->
+    <circle cx="250" cy="250" r="88" fill="#D91B5C" />
+    <circle cx="250" cy="250" r="85" fill="#FFFFFF" />
+
+    <!-- Mountain Crest (Machapuchare / Annapurna) inside -->
+    <g transform="translate(160, 160) scale(1.8)">
+      <!-- Mountain base silhouette in cranberry -->
+      <polygon points="10,65 35,22 52,42 68,26 90,65" fill="#D91B5C" />
+      <!-- Snow cap white highlights -->
+      <polygon points="35,22 41,31 34,35 29,30" fill="#FFFFFF" />
+      <polygon points="68,26 73,34 66,37 63,31" fill="#FFFFFF" />
+      <polygon points="52,42 56,48 48,51" fill="#FFFFFF" />
+
+      <!-- Open Book at bottom -->
+      <path d="M 18,67 C 32,60 46,60 50,68 C 54,60 68,60 82,67 L 82,73 C 68,66 54,66 50,74 C 46,66 32,66 18,73 Z" fill="#D91B5C" stroke="#FFFFFF" stroke-width="1.5" />
+      
+      <!-- Central Torch Flame -->
+      <path d="M 50,48 C 47,54 45,58 50,63 C 55,58 53,54 50,48 Z" fill="#FFFFFF" />
+      <circle cx="50" cy="46" r="2" fill="#D91B5C" />
+    </g>
+  </g>
+</svg>
