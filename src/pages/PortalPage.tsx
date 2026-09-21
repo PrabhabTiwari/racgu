@@ -8,6 +8,7 @@ import {
   UserProfile, 
   EventCategory 
 } from '../types';
+import { clubApi } from '../services/api';
 
 interface PortalPageProps {
   currentUser: UserProfile;
@@ -91,6 +92,7 @@ export const PortalPage: React.FC<PortalPageProps> = ({
 
   // Photo form state
   const [showPhotoForm, setShowPhotoForm] = useState(false);
+  const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [photoFormData, setPhotoFormData] = useState<Partial<GalleryPhoto>>({
     title: '',
     eventTitle: '',
@@ -235,9 +237,19 @@ Gandaki University Campus, Pokhara-32, Kaski, Nepal
 
   const handleSavePhoto = async (e: React.FormEvent) => {
     e.preventDefault();
-    await onAddPhoto(photoFormData);
-    flashMessage(`Photo "${photoFormData.title}" added to the gallery.`);
-    setShowPhotoForm(false);
+    if (!isPst || !photoFile) {
+      flashMessage(!isPst ? 'Only PST officers can upload photographs.' : 'Select a photo first.');
+      return;
+    }
+    try {
+      const imageUrl = await clubApi.uploadGalleryFile(photoFile);
+      await onAddPhoto({ ...photoFormData, imageUrl });
+      flashMessage(`Photo "${photoFormData.title}" added to the gallery.`);
+      setPhotoFile(null);
+      setShowPhotoForm(false);
+    } catch (error) {
+      flashMessage(error instanceof Error ? error.message : 'Photo upload failed.');
+    }
   };
 
   return (
@@ -1065,15 +1077,17 @@ Gandaki University Campus, Pokhara-32, Kaski, Nepal
               </p>
             </div>
 
-            <button
-              onClick={() => setShowPhotoForm(!showPhotoForm)}
-              className="px-4 py-2 bg-[#D91B5C] hover:bg-[#BE123C] text-white rounded-lg text-xs font-bold transition-colors shrink-0"
-            >
-              {showPhotoForm ? 'Close Form' : '+ Add Photo'}
-            </button>
+            {isPst && (
+              <button
+                onClick={() => setShowPhotoForm(!showPhotoForm)}
+                className="px-4 py-2 bg-[#D91B5C] hover:bg-[#BE123C] text-white rounded-lg text-xs font-bold transition-colors shrink-0"
+              >
+                {showPhotoForm ? 'Close Form' : 'Upload Photo'}
+              </button>
+            )}
           </div>
 
-          {showPhotoForm && (
+          {isPst && showPhotoForm && (
             <form onSubmit={handleSavePhoto} className="bg-slate-50 rounded-2xl border border-pink-200 p-6 space-y-4">
               <h3 className="text-sm font-bold text-slate-900">
                 Add Photo to Club Gallery
@@ -1105,15 +1119,15 @@ Gandaki University Campus, Pokhara-32, Kaski, Nepal
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">Image URL</label>
+                <label className="block text-xs font-bold text-slate-700 mb-1">Photo file *</label>
                 <input
-                  type="url"
+                  type="file"
                   required
-                  value={photoFormData.imageUrl}
-                  onChange={(e) => setPhotoFormData({ ...photoFormData, imageUrl: e.target.value })}
-                  placeholder="https://images.unsplash.com/..."
+                  accept="image/jpeg,image/png,image/webp"
+                  onChange={(e) => setPhotoFile(e.target.files?.[0] || null)}
                   className="w-full px-3 py-2 text-xs border border-slate-300 rounded bg-white text-slate-800"
                 />
+                <p className="mt-1 text-[11px] text-slate-500">JPG, PNG or WebP, maximum 5 MB.</p>
               </div>
 
               <div>
