@@ -82,6 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'joinedDate' => '2026-01-22',
                 'bio' => '',
                 'badge' => $title,
+                'mustChangePassword' => true,
             ];
             $hash = password_hash($temporaryPassword, PASSWORD_DEFAULT);
             $payload = json_encode($profile, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
