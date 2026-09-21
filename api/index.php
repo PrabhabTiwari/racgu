@@ -58,6 +58,13 @@ $uri = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
 $apiPos = strpos($uri, '/api');
 $path = $apiPos === false ? '/' : substr($uri, $apiPos + 4);
 $path = '/' . trim($path, '/');
+// Support explicit front-controller URLs on WAMP installations where
+// Apache mod_rewrite or AllowOverride is not enabled.
+if ($path === '/index.php') {
+    $path = '/';
+} elseif (str_starts_with($path, '/index.php/')) {
+    $path = substr($path, strlen('/index.php'));
+}
 
 try {
     if ($path === '/health' && $method === 'GET') reply(200, ['success' => true, 'data' => ['database' => 'connected']]);
