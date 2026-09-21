@@ -386,9 +386,33 @@ export const clubApi = {
       const res = await fetch('/api/index.php/members');
       if (res.ok) {
         const json = await res.json();
-        if (json.success && Array.isArray(json.data) && json.data.length > 0) {
-          setLocal(STORAGE_KEYS.MEMBERS, json.data);
-          return json.data;
+        if (json.success && Array.isArray(json.data)) {
+          // The users table stores portal accounts, not the authoritative public
+          // roster. Merge matching accounts into the verified roster so a small
+          // number of login accounts cannot replace the full club directory.
+          const accounts = json.data as UserProfile[];
+          const normalize = (value?: string) => (value || '').trim().toLowerCase();
+          const roster = INITIAL_MEMBERS.map(member => {
+            const account = accounts.find(candidate =>
+              normalize(candidate.email) === normalize(member.email) ||
+              normalize(candidate.name) === normalize(member.name)
+            );
+
+            if (!account) return member;
+
+            return {
+              ...member,
+              ...account,
+              // Official media and public role information remain controlled by
+              // the verified roster while the database supplies the login ID.
+              avatar: member.avatar,
+              role: member.role,
+              roleTitle: member.roleTitle,
+              badge: member.badge
+            };
+          });
+          setLocal(STORAGE_KEYS.MEMBERS, roster);
+          return roster;
         }
       }
     } catch {}
