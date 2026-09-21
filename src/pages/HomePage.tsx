@@ -192,6 +192,36 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
       </section>
 
+      {/* --- OFFICIAL LOGO REVEAL --- */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-950 shadow-sm">
+          <div className="grid grid-cols-1 lg:grid-cols-12 items-center">
+            <div className="lg:col-span-8 bg-black">
+              <video
+                className="block w-full aspect-video object-cover"
+                src="/assets/official/racgu-logo-reveal.mp4"
+                poster="/assets/official/racgu-letterhead.webp"
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                aria-label="Official Rotaract Club of Gandaki University logo reveal"
+              >
+                Your browser does not support the official club logo reveal video.
+              </video>
+            </div>
+            <div className="lg:col-span-4 p-6 sm:p-8 text-left">
+              <p className="text-xs font-bold uppercase tracking-wider text-pink-400">Official Club Identity</p>
+              <h2 className="mt-2 text-2xl font-bold text-white">Insight to Impact</h2>
+              <p className="mt-3 text-sm leading-relaxed text-slate-300">
+                The official visual identity of the Rotaract Club of Gandaki University for Rotaract Year 2026-27.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* --- STATS COUNTER --- */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -237,7 +267,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               <div className="pt-6">
                 <div className="flex items-center gap-3">
                   <img
-                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800"
+                    src="/members/prabhab.webp"
                     alt="President Rtr. Prabhab Tiwari"
                     className="w-14 h-14 rounded-xl object-cover border border-pink-400"
                   />
@@ -263,7 +293,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               </p>
               <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
                 Our theme <strong>"Insight to Impact"</strong> challenges our collegiate membership to translate the 
-                technological, medical, and entrepreneurial expertise gained inside Gandaki University lecture halls into 
+                technological and academic expertise gained inside Gandaki University lecture halls into
                 concrete solutions for our community in Pokhara, Lekhnath, and beyond.
               </p>
               <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-between border-t border-slate-100 gap-2">

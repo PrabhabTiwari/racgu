@@ -397,8 +397,11 @@ export const clubApi = {
               normalize(candidate.email) === normalize(member.email) ||
               normalize(candidate.name) === normalize(member.name)
             );
+            const officialFaculty = member.role === 'advisor'
+              ? member.faculty
+              : 'Bachelor of Information Technology (BIT)';
 
-            if (!account) return member;
+            if (!account) return { ...member, faculty: officialFaculty };
 
             return {
               ...member,
@@ -408,7 +411,8 @@ export const clubApi = {
               avatar: member.avatar,
               role: member.role,
               roleTitle: member.roleTitle,
-              badge: member.badge
+              badge: member.badge,
+              faculty: officialFaculty
             };
           });
           setLocal(STORAGE_KEYS.MEMBERS, roster);
