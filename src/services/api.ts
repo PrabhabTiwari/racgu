@@ -185,22 +185,11 @@ export const clubApi = {
           return json.data;
         }
       }
-    } catch {}
-
-    // Fallback sync
-    const events = getLocal<ClubEvent[]>(STORAGE_KEYS.EVENTS, INITIAL_EVENTS);
-    const ev = events.find(e => e.id === eventId);
-    if (ev) {
-      reg.eventTitle = ev.title;
-      reg.eventDate = ev.date;
-      if (!ev.registeredMembers.includes(member.id)) {
-        ev.registeredMembers.push(member.id);
-        setLocal(STORAGE_KEYS.EVENTS, events);
-      }
+      const json = await res.json().catch(() => null);
+      throw new Error(json?.error || 'Registration could not be saved. Please try again.');
+    } catch (error) {
+      throw error instanceof Error ? error : new Error('Registration could not be saved.');
     }
-    const allRegs = getLocal<MemberRegistration[]>(STORAGE_KEYS.REGISTRATIONS, INITIAL_REGISTRATIONS);
-    setLocal(STORAGE_KEYS.REGISTRATIONS, [reg, ...allRegs]);
-    return reg;
   },
 
   // --- DOCUMENTS ---
@@ -369,6 +358,17 @@ export const clubApi = {
     const updated = [newPhoto, ...current];
     setLocal(STORAGE_KEYS.GALLERY, updated);
     return newPhoto;
+  },
+
+  async uploadGalleryFile(file: File): Promise<string> {
+    const formData = new FormData();
+    formData.append('photo', file);
+    const res = await fetch('/api/index.php/gallery/upload', {
+      method: 'POST', credentials: 'same-origin', body: formData
+    });
+    const json = await res.json();
+    if (!res.ok || !json.success || !json.data?.url) throw new Error(json.error || 'Photo upload failed');
+    return json.data.url;
   },
 
   async deletePhoto(id: string): Promise<boolean> {
