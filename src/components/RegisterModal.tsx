@@ -24,10 +24,12 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
   const [notes, setNotes] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setErrorMessage('');
 
     try {
       await onConfirmRegistration(event.id, {
@@ -42,7 +44,8 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
         setIsSuccess(false);
         onClose();
       }, 1800);
-    } catch {
+    } catch (error) {
+      setErrorMessage(error instanceof Error ? error.message : 'Registration failed. Please try again.');
       setIsSubmitting(false);
     }
   };
@@ -89,6 +92,11 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
+              {errorMessage && (
+                <div className="p-3 rounded-lg border border-rose-200 bg-rose-50 text-xs font-semibold text-rose-700">
+                  {errorMessage}
+                </div>
+              )}
               <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-600 space-y-1">
                 <p><strong>Venue:</strong> {event.location}</p>
                 <p><strong>Avenue:</strong> {event.category} • <strong>Chair:</strong> {event.chairperson}</p>
