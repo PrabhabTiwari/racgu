@@ -249,63 +249,47 @@ export const HomePage: React.FC<HomePageProps> = ({
 
       {/* --- PRESIDENT'S MESSAGE --- */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs">
+        <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
           <div className="grid grid-cols-1 lg:grid-cols-12">
-            <div className="lg:col-span-4 bg-[#0A1931] p-6 sm:p-8 text-white flex flex-col justify-between">
-              <div>
-                <span className="text-xs font-bold text-pink-400 uppercase tracking-wider block mb-2">
-                  Leadership Address
-                </span>
-                <h3 className="text-xl font-bold">
-                  Charter President's Message
-                </h3>
-                <p className="text-xs text-slate-300 mt-1">
-                  Rotaract Year 2026-27
-                </p>
-              </div>
-
-              <div className="pt-6">
-                <div className="flex items-center gap-3">
-                  <img
-                    src="/members/prabhab.webp"
-                    alt="President Rtr. Prabhab Tiwari"
-                    className="w-14 h-14 rounded-xl object-cover border border-pink-400"
-                  />
-                  <div>
-                    <h4 className="text-sm font-bold text-white">Rtr. Prabhab Tiwari</h4>
-                    <p className="text-xs text-pink-300">Charter President (RY 2026-27)</p>
-                    <p className="text-[11px] text-slate-400">Rotaract Club of Gandaki University</p>
-                  </div>
-                </div>
+            <div className="lg:col-span-4 relative min-h-[520px] bg-[#0A1931] overflow-hidden">
+              <img
+                src="/members/prabhab.webp"
+                alt="Rtr. Prabhab Tiwari, Charter President"
+                className="absolute inset-0 w-full h-full object-cover object-top"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#07152d] via-[#07152d]/20 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8 text-white text-left">
+                <p className="text-xs font-bold text-pink-300 uppercase tracking-wider">Charter President</p>
+                <h3 className="mt-1 text-2xl font-bold">Rtr. Prabhab Tiwari</h3>
+                <p className="mt-1 text-xs text-slate-200">Rotaract Year 2026-27</p>
               </div>
             </div>
 
-            <div className="lg:col-span-8 p-6 sm:p-8 space-y-4 text-left">
+            <div className="lg:col-span-8 p-6 sm:p-10 text-left">
               <span className="text-xs font-bold text-[#D91B5C] uppercase tracking-wider block">
-                Greetings from Pokhara, Nepal
+                Message from the Charter President
               </span>
-              <h4 className="text-lg font-bold text-slate-900">
-                "Insight to Impact: Bridging Academic Excellence with Civic Transformation"
+              <h4 className="mt-2 text-xl sm:text-2xl font-bold text-slate-900">
+                Building a Foundation for Service, Leadership and Lasting Impact
               </h4>
-              <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
-                As Charter President of the Rotaract Club of Gandaki University, chartered on 22nd January 2026, 
-                it gives me immense honor to welcome fellow Rotarians, Rotaractors, faculty mentors, and student leaders.
-              </p>
-              <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
-                Our theme <strong>"Insight to Impact"</strong> challenges our collegiate membership to translate the 
-                technological and academic expertise gained inside Gandaki University lecture halls into
-                concrete solutions for our community in Pokhara, Lekhnath, and beyond.
-              </p>
-              <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-between border-t border-slate-100 gap-2">
-                <span className="text-xs font-semibold text-slate-600">
-                  Sponsored with pride by Rotaract Club of Lekhnath
-                </span>
-                <button
-                  onClick={() => setActiveTab('about')}
-                  className="text-xs font-bold text-[#D91B5C] hover:underline"
-                >
-                  Read Club History &rarr;
-                </button>
+              <div className="mt-5 space-y-4 text-sm text-slate-700 leading-7">
+                <p>It is both an honor and a privilege to serve as the Charter President of the Rotaract Club of Gandaki University. The establishment of our club marks the beginning of a new journey—one built on service, leadership, fellowship, and a shared commitment to creating meaningful change.</p>
+                <p>As a university-based Rotaract Club, we believe that young people have the potential not only to imagine a better future but also to actively build it. Our club provides a platform where students can develop leadership skills, exchange ideas, serve communities, build lasting friendships, and transform their knowledge into meaningful action.</p>
+                <p>Our charter theme, <strong className="text-[#D91B5C]">“Insight to Impact,”</strong> reflects the spirit of our journey. Insight begins with understanding the challenges around us, while impact is created when that understanding is transformed into purposeful action. Through every project, meeting, collaboration, and service initiative, we aim to turn ideas into outcomes that positively influence both our university and the wider community.</p>
+                <p>Being a charter club also brings a special responsibility. We are not simply leading a club for one Rotaract year; we are building the foundation upon which future generations of Rotaractors at Gandaki University will stand. Our priority is therefore to create a strong, inclusive, disciplined, and sustainable institution where every member is encouraged to participate, lead, learn, and grow.</p>
+                <p>I am deeply grateful to Gandaki University for its support, to our sponsoring club, the Rotaract Club of Lekhnath, for its guidance and encouragement, and to Rotaract District 3292, our mentors, faculty members, well-wishers, and every charter member who believed in this vision from the beginning.</p>
+                <p>To every member of the Rotaract Club of Gandaki University, I encourage you to consider this club not merely as an organization you belong to, but as a platform where you can discover your abilities, take responsibility, serve others, and leave behind a meaningful legacy.</p>
+                <p>As we move forward, may we continue to learn together, lead with integrity, serve with compassion, and transform our insights into lasting impact.</p>
+              </div>
+              <div className="mt-6 pt-5 border-t border-slate-200">
+                <img
+                  src="/assets/official/president-signature.png"
+                  alt="Signature of Rtr. Prabhab Tiwari"
+                  className="h-14 sm:h-16 w-auto object-contain object-left"
+                />
+                <p className="mt-2 text-sm font-bold text-slate-900">Rtr. Prabhab Tiwari</p>
+                <p className="text-xs text-slate-600">Charter President, Rotaract Club of Gandaki University</p>
+                <p className="mt-1 text-xs font-semibold text-[#D91B5C]">Charter Theme: “Insight to Impact”</p>
               </div>
             </div>
           </div>
