@@ -38,6 +38,12 @@ function require_manager(): void {
     }
 }
 
+function require_pst(): void {
+    if (($_SESSION['user']['role'] ?? null) !== 'pst') {
+        reply(403, ['success' => false, 'error' => 'Only PST officers can perform this action.']);
+    }
+}
+
 $configFile = __DIR__ . '/config.php';
 if (!is_file($configFile)) reply(503, ['success' => false, 'error' => 'Copy api/config.example.php to api/config.php and enter the MySQL settings.']);
 $config = require $configFile;
@@ -128,16 +134,54 @@ try {
             'memberName' => $name, 'memberEmail' => $email, 'memberPhone' => $phone,
             'registeredAt' => date(DATE_ATOM), 'status' => 'confirmed', 'notes' => $body['notes'] ?? 'Registered online'
         ];
-        $stmt = $pdo->prepare('INSERT INTO registrations (id, event_id, payload) VALUES (?, ?, ?)');
-        try { $stmt->execute([$id, $m[1], json_encode($registration)]); }
-        catch (PDOException $e) { reply(409, ['success' => false, 'error' => 'This email is already registered for the event.']); }
+        try {
+            $pdo->beginTransaction();
+            $stmt = $pdo->prepare('INSERT INTO registrations (id, event_id, payload) VALUES (?, ?, ?)');
+            $stmt->execute([$id, $m[1], json_encode($registration)]);
+            $memberId = (string)$registration['memberId'];
+            $registered = $eventData['registeredMembers'] ?? [];
+            if (!in_array($memberId, $registered, true)) $registered[] = $memberId;
+            $eventData['registeredMembers'] = array_values($registered);
+            $stmt = $pdo->prepare('UPDATE content_items SET payload = ? WHERE type = "events" AND item_id = ?');
+            $stmt->execute([json_encode($eventData), $m[1]]);
+            $pdo->commit();
+        } catch (PDOException $e) {
+            if ($pdo->inTransaction()) $pdo->rollBack();
+            if ((string)$e->getCode() === '23000') reply(409, ['success' => false, 'error' => 'This email is already registered for the event.']);
+            throw $e;
+        }
         reply(201, ['success' => true, 'data' => $registration]);
     }
 
     if ($path === '/registrations' && $method === 'GET') {
-        require_manager();
+        $sessionUser = $_SESSION['user'] ?? null;
+        if (!$sessionUser) reply(401, ['success' => false, 'error' => 'Member login required.']);
         $rows = $pdo->query('SELECT payload FROM registrations ORDER BY created_at DESC')->fetchAll();
-        reply(200, ['success' => true, 'data' => array_map(fn($r) => json_decode($r['payload'], true), $rows)]);
+        $registrations = array_map(fn($r) => json_decode($r['payload'], true), $rows);
+        if (!in_array($sessionUser['role'] ?? '', ['pst', 'bod'], true)) {
+            $userId = (string)($sessionUser['id'] ?? '');
+            $userEmail = strtolower((string)($sessionUser['email'] ?? ''));
+            $registrations = array_values(array_filter($registrations, static fn($r) =>
+                (string)($r['memberId'] ?? '') === $userId || strtolower((string)($r['memberEmail'] ?? '')) === $userEmail
+            ));
+        }
+        reply(200, ['success' => true, 'data' => $registrations]);
+    }
+
+    if ($path === '/gallery/upload' && $method === 'POST') {
+        require_pst();
+        if (!isset($_FILES['photo']) || !is_uploaded_file($_FILES['photo']['tmp_name'])) reply(422, ['success' => false, 'error' => 'Select a photo to upload.']);
+        $file = $_FILES['photo'];
+        if (($file['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK) reply(422, ['success' => false, 'error' => 'The photo upload failed.']);
+        if (($file['size'] ?? 0) > 5 * 1024 * 1024) reply(413, ['success' => false, 'error' => 'The photo must be 5 MB or smaller.']);
+        $mime = (new finfo(FILEINFO_MIME_TYPE))->file($file['tmp_name']);
+        $extensions = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/webp' => 'webp'];
+        if (!isset($extensions[$mime])) reply(422, ['success' => false, 'error' => 'Only JPG, PNG and WebP photos are allowed.']);
+        $uploadDir = dirname(__DIR__) . '/uploads/gallery';
+        if (!is_dir($uploadDir) && !mkdir($uploadDir, 0755, true) && !is_dir($uploadDir)) reply(500, ['success' => false, 'error' => 'Could not create the gallery upload directory.']);
+        $filename = date('Ymd-His') . '-' . bin2hex(random_bytes(6)) . '.' . $extensions[$mime];
+        if (!move_uploaded_file($file['tmp_name'], $uploadDir . '/' . $filename)) reply(500, ['success' => false, 'error' => 'Could not save the uploaded photo.']);
+        reply(201, ['success' => true, 'data' => ['url' => '/uploads/gallery/' . $filename]]);
     }
 
     if (preg_match('#^/(events|documents|notices|gallery)(?:/([^/]+))?$#', $path, $m)) {
@@ -148,7 +192,8 @@ try {
             $stmt->execute([$type]);
             reply(200, ['success' => true, 'data' => array_map(fn($r) => json_decode($r['payload'], true), $stmt->fetchAll())]);
         }
-        require_manager();
+        if ($type === 'gallery') require_pst();
+        else require_manager();
         if ($method === 'POST' && !$id) {
             $body = clean(input());
             $prefix = ['events'=>'ev', 'documents'=>'doc', 'notices'=>'not', 'gallery'=>'gal'][$type];
