@@ -202,7 +202,7 @@ export const HomePage: React.FC<HomePageProps> = ({
           </div>
 
           <div className="bg-white p-5 rounded-xl border border-slate-200 text-center space-y-1">
-            <p className="text-2xl sm:text-3xl font-black text-[#D91B5C]">12</p>
+            <p className="text-2xl sm:text-3xl font-black text-[#D91B5C]">13</p>
             <p className="text-xs font-bold text-slate-500 uppercase tracking-wide">Board Directors (BOD)</p>
           </div>
 
