@@ -17,7 +17,7 @@ export const ContactPage: React.FC = () => {
     setError('');
     setIsSending(true);
     try {
-      const response = await fetch('/api/contact', {
+      const response = await fetch('/api/index.php/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
