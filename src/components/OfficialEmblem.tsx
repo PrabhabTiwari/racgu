@@ -15,7 +15,7 @@ export const OfficialClubLogo: React.FC<{
 }) => (
   <div className={`inline-flex items-center gap-3 ${className}`}>
     <img 
-      src="/assets/racgu-official-logo.svg" 
+      src="/assets/official/racgu-official-logo.webp"
       alt="Rotaract Club of Gandaki University"
       style={size ? { width: size, height: size } : undefined}
       className="shrink-0 object-contain max-h-full"
@@ -55,7 +55,7 @@ export const PresidentialThemeLogo: React.FC<{
   return (
     <div className={`inline-flex items-center ${className}`}>
       <img 
-        src="/assets/insight-to-impact.svg" 
+        src="/assets/official/insight-to-impact.webp"
         alt="Insight to Impact - Presidential Theme RY 2026-27"
         className={`${heights[size]} w-auto object-contain`}
       />

@@ -43,12 +43,12 @@ export const Footer: React.FC<FooterProps> = ({ setActiveTab }) => {
           <div className="space-y-3">
             <div className="flex items-center gap-3">
               <img 
-                src="/assets/racgu-official-logo.svg" 
+                src="/assets/official/racgu-official-logo.webp"
                 alt="Rotaract Club of Gandaki University" 
                 className="h-10 w-auto object-contain"
               />
               <img 
-                src="/assets/insight-to-impact.svg" 
+                src="/assets/official/insight-to-impact.webp"
                 alt="Insight to Impact Theme" 
                 className="h-8 w-auto object-contain"
               />

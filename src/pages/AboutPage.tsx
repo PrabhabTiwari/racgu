@@ -7,7 +7,7 @@ export const AboutPage: React.FC = () => {
       <div className="bg-[#0A1931] text-white rounded-2xl p-6 sm:p-10 border border-slate-800 space-y-4">
         <div className="flex items-center gap-3">
           <img 
-            src="/assets/racgu-official-logo.svg" 
+            src="/assets/official/racgu-official-logo.webp"
             alt="Club Logo" 
             className="w-16 h-16 object-contain"
           />
@@ -55,16 +55,14 @@ export const AboutPage: React.FC = () => {
 
         <div className="space-y-4 text-slate-700 text-xs sm:text-sm leading-relaxed">
           <p>
-            The <strong>Rotaract Club of Gandaki University (RACGU)</strong> was established to instill the core rotary values 
-            of fellowship, ethical leadership, and high civic responsibility among students of Gandaki University, Pokhara. 
-            Sponsored by the <strong>Rotaract Club of Lekhnath</strong> and mentored by the <strong>Rotary Club of Lekhnath</strong>, 
-            the club was officially granted its Charter by Rotary International on <strong>22nd January 2026</strong>.
+            The <strong>Rotaract Club of Gandaki University (RCGU)</strong> is a university-based, non-profit,
+            non-political and non-sectarian service and leadership organization at Gandaki University, Pokhara.
+            Sponsored by the <strong>Rotaract Club of Lekhnath</strong>, it was chartered on <strong>22 January 2026</strong>.
           </p>
           <p>
-            Operating from the Gandaki University campus in Pokhara-32, the club unites collegiate scholars across 
-            Artificial Intelligence & Data Science, Business Administration, Pharmacy, and Sports Management. 
-            Members channel their academic research into active volunteer service, health screening camps, environmental 
-            conservation around Begnas and Rupa lakes, and community development across Gandaki Province.
+            The club provides students with a structured platform for leadership development, professional growth,
+            fellowship and community service. Guided by Service Above Self, members work together to address
+            community needs and convert knowledge and ideas into sustainable impact.
           </p>
         </div>
       </div>
@@ -77,8 +75,8 @@ export const AboutPage: React.FC = () => {
           </span>
           <h3 className="text-lg font-bold text-slate-900">Our Vision</h3>
           <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
-            To establish Rotaract Club of Gandaki University as a benchmark youth institution in Nepal, 
-            cultivating principled leaders and empowering students to translate knowledge into sustainable community transformation.
+            To build a resilient and sustainable Rotaract Club of Gandaki University through strategic recruitment,
+            meaningful engagement, leadership development and impactful community service.
           </p>
         </div>
 
@@ -88,8 +86,8 @@ export const AboutPage: React.FC = () => {
           </span>
           <h3 className="text-lg font-bold text-slate-900">Our Mission</h3>
           <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
-            To engage university youth through hands-on service initiatives, professional development seminars, 
-            and ethical fellowship, maintaining steadfast alignment with Rotary International's Four-Way Test.
+            To engage and develop university students as ethical and responsible leaders through community service,
+            professional growth, fellowship, innovation and collaboration while upholding Rotary and Rotaract values.
           </p>
         </div>
       </div>
@@ -107,7 +105,7 @@ export const AboutPage: React.FC = () => {
           </div>
           <div className="h-10">
             <img 
-              src="/assets/insight-to-impact.svg" 
+              src="/assets/official/insight-to-impact.webp"
               alt="Insight to Impact" 
               className="h-10 w-auto object-contain"
             />

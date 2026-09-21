@@ -67,7 +67,7 @@ export const Header: React.FC<HeaderProps> = ({
             </span>
             <div className="h-6 flex items-center bg-white/10 px-2 py-0.5 rounded border border-white/10">
               <img 
-                src="/assets/insight-to-impact.svg" 
+                src="/assets/official/insight-to-impact.webp"
                 alt="Insight to Impact" 
                 className="h-4 w-auto object-contain"
               />
@@ -87,7 +87,7 @@ export const Header: React.FC<HeaderProps> = ({
             id="navbar-brand-link"
           >
             <img 
-              src="/assets/racgu-official-logo.svg" 
+              src="/assets/official/racgu-official-logo.webp"
               alt="Rotaract Club of Gandaki University Logo" 
               className="w-14 h-14 object-contain shrink-0"
             />

@@ -77,9 +77,8 @@ export const HomePage: React.FC<HomePageProps> = ({
 
               {/* Description */}
               <p className="text-slate-700 text-sm sm:text-base leading-relaxed max-w-2xl">
-                Welcome to the official digital portal of Gandaki University's premier collegiate Rotaract club. 
-                Rooted in fellowship, ethical leadership, and academic dedication, we turn student innovation and 
-                community passion into measurable societal impact.
+                A university-based community of young leaders committed to transforming knowledge, ideas and
+                compassion into meaningful action through leadership, fellowship and community service.
               </p>
 
               {/* Action Buttons */}
@@ -140,7 +139,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 {/* Official Logos Side-by-Side */}
                 <div className="flex flex-col items-center justify-center gap-4 py-2">
                   <img 
-                    src="/assets/racgu-official-logo.svg" 
+                    src="/assets/official/racgu-official-logo.webp"
                     alt="Rotaract Club of Gandaki University Logo" 
                     className="w-28 h-28 object-contain"
                   />
@@ -150,7 +149,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                       Official Presidential Theme RY 2026-27
                     </span>
                     <img 
-                      src="/assets/insight-to-impact.svg" 
+                      src="/assets/official/insight-to-impact.webp"
                       alt="Insight to Impact Presidential Theme Logo" 
                       className="h-14 w-auto object-contain max-w-full"
                     />

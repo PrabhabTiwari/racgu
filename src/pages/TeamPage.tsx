@@ -73,7 +73,7 @@ export const TeamPage: React.FC<TeamPageProps> = ({ members }) => {
           <div className="space-y-3 max-w-2xl">
             <div className="inline-flex items-center gap-2 bg-white/10 px-3 py-1 rounded-md border border-white/10">
               <img 
-                src="/assets/insight-to-impact.svg" 
+                src="/assets/official/insight-to-impact.webp"
                 alt="Presidential Theme" 
                 className="h-5 w-auto object-contain"
               />
@@ -101,8 +101,8 @@ export const TeamPage: React.FC<TeamPageProps> = ({ members }) => {
               <span className="text-[11px] text-slate-300">Executive PST</span>
             </div>
             <div className="bg-white/10 rounded-xl p-3 text-center border border-white/10">
-              <span className="text-xl font-bold text-blue-300 block">{bodMembers.length}</span>
-              <span className="text-[11px] text-slate-300">Board Directors</span>
+              <span className="text-xl font-bold text-blue-300 block">{pstMembers.length + bodMembers.length + advisorMembers.filter(m => m.roleTitle === 'Faculty Advisor').length}</span>
+              <span className="text-[11px] text-slate-300">Board & Faculty Advisor</span>
             </div>
             <div className="bg-white/10 rounded-xl p-3 text-center border border-white/10">
               <span className="text-xl font-bold text-emerald-300 block">{generalMembers.length}</span>
