@@ -229,10 +229,6 @@ export function App() {
               onDeleteNotice={handleDeleteNotice}
               onAddPhoto={handleAddPhoto}
               onDeletePhoto={handleDeletePhoto}
-              onSwitchUser={(user) => {
-                setCurrentUser(user);
-                clubApi.setCurrentUser(user);
-              }}
               setActiveTab={setActiveTab}
             />
           ) : (
