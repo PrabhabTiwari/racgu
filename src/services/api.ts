@@ -36,7 +36,7 @@ function setLocal<T>(key: string, value: T): void {
 
 export const clubApi = {
   async login(email: string, password: string): Promise<UserProfile> {
-    const res = await fetch('/api/auth/login', {
+    const res = await fetch('/api/index.php/auth/login', {
       method: 'POST',
       credentials: 'same-origin',
       headers: { 'Content-Type': 'application/json' },
@@ -51,7 +51,7 @@ export const clubApi = {
   // --- EVENTS ---
   async getEvents(): Promise<ClubEvent[]> {
     try {
-      const res = await fetch('/api/events');
+      const res = await fetch('/api/index.php/events');
       if (res.ok) {
         const json = await res.json();
         if (json.success && Array.isArray(json.data)) {
@@ -84,7 +84,7 @@ export const clubApi = {
     };
 
     try {
-      const res = await fetch('/api/events', {
+      const res = await fetch('/api/index.php/events', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newEvent)
@@ -109,7 +109,7 @@ export const clubApi = {
 
   async updateEvent(id: string, updates: Partial<ClubEvent>): Promise<ClubEvent | null> {
     try {
-      const res = await fetch(`/api/events/${id}`, {
+      const res = await fetch(`/api/index.php/events/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updates)
@@ -140,7 +140,7 @@ export const clubApi = {
 
   async deleteEvent(id: string): Promise<boolean> {
     try {
-      await fetch(`/api/events/${id}`, { method: 'DELETE' });
+      await fetch(`/api/index.php/events/${id}`, { method: 'DELETE' });
     } catch {}
 
     const current = getLocal<ClubEvent[]>(STORAGE_KEYS.EVENTS, INITIAL_EVENTS);
@@ -165,7 +165,7 @@ export const clubApi = {
     };
 
     try {
-      const res = await fetch(`/api/events/${eventId}/register`, {
+      const res = await fetch(`/api/index.php/events/${eventId}/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(member)
@@ -206,7 +206,7 @@ export const clubApi = {
   // --- DOCUMENTS ---
   async getDocuments(): Promise<ClubDocument[]> {
     try {
-      const res = await fetch('/api/documents');
+      const res = await fetch('/api/index.php/documents');
       if (res.ok) {
         const json = await res.json();
         if (json.success && Array.isArray(json.data)) {
@@ -234,7 +234,7 @@ export const clubApi = {
     };
 
     try {
-      const res = await fetch('/api/documents', {
+      const res = await fetch('/api/index.php/documents', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newDoc)
@@ -257,7 +257,7 @@ export const clubApi = {
 
   async deleteDocument(id: string): Promise<boolean> {
     try {
-      await fetch(`/api/documents/${id}`, { method: 'DELETE' });
+      await fetch(`/api/index.php/documents/${id}`, { method: 'DELETE' });
     } catch {}
     const current = getLocal<ClubDocument[]>(STORAGE_KEYS.DOCUMENTS, INITIAL_DOCUMENTS);
     setLocal(STORAGE_KEYS.DOCUMENTS, current.filter(d => d.id !== id));
@@ -267,7 +267,7 @@ export const clubApi = {
   // --- NOTICES ---
   async getNotices(): Promise<ClubNotice[]> {
     try {
-      const res = await fetch('/api/notices');
+      const res = await fetch('/api/index.php/notices');
       if (res.ok) {
         const json = await res.json();
         if (json.success && Array.isArray(json.data)) {
@@ -293,7 +293,7 @@ export const clubApi = {
     };
 
     try {
-      const res = await fetch('/api/notices', {
+      const res = await fetch('/api/index.php/notices', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newNotice)
@@ -316,7 +316,7 @@ export const clubApi = {
 
   async deleteNotice(id: string): Promise<boolean> {
     try {
-      await fetch(`/api/notices/${id}`, { method: 'DELETE' });
+      await fetch(`/api/index.php/notices/${id}`, { method: 'DELETE' });
     } catch {}
     const current = getLocal<ClubNotice[]>(STORAGE_KEYS.NOTICES, INITIAL_NOTICES);
     setLocal(STORAGE_KEYS.NOTICES, current.filter(n => n.id !== id));
@@ -326,7 +326,7 @@ export const clubApi = {
   // --- GALLERY ---
   async getGallery(): Promise<GalleryPhoto[]> {
     try {
-      const res = await fetch('/api/gallery');
+      const res = await fetch('/api/index.php/gallery');
       if (res.ok) {
         const json = await res.json();
         if (json.success && Array.isArray(json.data)) {
@@ -350,7 +350,7 @@ export const clubApi = {
     };
 
     try {
-      const res = await fetch('/api/gallery', {
+      const res = await fetch('/api/index.php/gallery', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newPhoto)
@@ -373,7 +373,7 @@ export const clubApi = {
 
   async deletePhoto(id: string): Promise<boolean> {
     try {
-      await fetch(`/api/gallery/${id}`, { method: 'DELETE' });
+      await fetch(`/api/index.php/gallery/${id}`, { method: 'DELETE' });
     } catch {}
     const current = getLocal<GalleryPhoto[]>(STORAGE_KEYS.GALLERY, INITIAL_GALLERY);
     setLocal(STORAGE_KEYS.GALLERY, current.filter(p => p.id !== id));
@@ -383,7 +383,7 @@ export const clubApi = {
   // --- MEMBERS ---
   async getMembers(): Promise<UserProfile[]> {
     try {
-      const res = await fetch('/api/members');
+      const res = await fetch('/api/index.php/members');
       if (res.ok) {
         const json = await res.json();
         if (json.success && Array.isArray(json.data) && json.data.length > 0) {
@@ -419,7 +419,7 @@ export const clubApi = {
   // --- REGISTRATIONS ---
   async getRegistrations(): Promise<MemberRegistration[]> {
     try {
-      const res = await fetch('/api/registrations');
+      const res = await fetch('/api/index.php/registrations');
       if (res.ok) {
         const json = await res.json();
         if (json.success && Array.isArray(json.data)) {
@@ -441,7 +441,7 @@ export const clubApi = {
   },
 
   logout(): void {
-    fetch('/api/auth/logout', { method: 'POST', credentials: 'same-origin' }).catch(() => undefined);
+    fetch('/api/index.php/auth/logout', { method: 'POST', credentials: 'same-origin' }).catch(() => undefined);
     setLocal(STORAGE_KEYS.CURRENT_USER, null);
   }
 };
