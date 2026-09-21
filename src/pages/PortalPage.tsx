@@ -8,7 +8,6 @@ import {
   UserProfile, 
   EventCategory 
 } from '../types';
-import { INITIAL_MEMBERS } from '../data/initialData';
 
 interface PortalPageProps {
   currentUser: UserProfile;
@@ -26,7 +25,6 @@ interface PortalPageProps {
   onDeleteNotice: (id: string) => Promise<any>;
   onAddPhoto: (photo: Partial<GalleryPhoto>) => Promise<any>;
   onDeletePhoto: (id: string) => Promise<any>;
-  onSwitchUser: (user: UserProfile) => void;
   setActiveTab: (tab: string) => void;
 }
 
@@ -46,7 +44,6 @@ export const PortalPage: React.FC<PortalPageProps> = ({
   onDeleteNotice,
   onAddPhoto,
   onDeletePhoto,
-  onSwitchUser,
   setActiveTab
 }) => {
   const [portalTab, setPortalTab] = useState<'overview' | 'events' | 'documents' | 'registrations' | 'notices' | 'gallery' | 'profile'>('overview');
@@ -285,36 +282,11 @@ Gandaki University Campus, Pokhara-32, Kaski, Nepal
             </div>
           </div>
 
-          {/* Quick Role Switcher for Verification */}
-          <div className="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-1">
-            <span className="text-[10px] font-bold text-slate-500 uppercase block">
-              Switch Member Profile
-            </span>
-            <select
-              value={currentUser.id}
-              onChange={(e) => {
-                const target = INITIAL_MEMBERS.find(m => m.id === e.target.value);
-                if (target) onSwitchUser(target);
-              }}
-              className="text-xs border border-slate-300 rounded px-2.5 py-1 bg-white text-slate-800 font-medium"
-            >
-              <optgroup label="Executive PST (Full Control)">
-                {INITIAL_MEMBERS.filter(m => m.role === 'pst').map(m => (
-                  <option key={m.id} value={m.id}>{m.name} — {m.roleTitle} (PST)</option>
-                ))}
-              </optgroup>
-              <optgroup label="Board of Directors (BOD)">
-                {INITIAL_MEMBERS.filter(m => m.role === 'bod').map(m => (
-                  <option key={m.id} value={m.id}>{m.name} — {m.roleTitle} (BOD)</option>
-                ))}
-              </optgroup>
-              <optgroup label="Collegiate Members">
-                {INITIAL_MEMBERS.filter(m => m.role === 'member').map(m => (
-                  <option key={m.id} value={m.id}>{m.name} — Member</option>
-                ))}
-              </optgroup>
-            </select>
-          </div>
+          {isPst && (
+            <a href="/api/create-user.php" className="px-4 py-2.5 rounded-lg bg-[#D91B5C] text-white text-xs font-bold">
+              Manage Member Accounts
+            </a>
+          )}
         </div>
 
         {/* Portal Navigation Tabs */}
