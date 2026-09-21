@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ClubEvent, ClubNotice, UserProfile } from '../types';
 
 interface HomePageProps {
@@ -20,6 +20,19 @@ export const HomePage: React.FC<HomePageProps> = ({
 }) => {
   const upcomingEvents = events.filter(e => e.status === 'upcoming').slice(0, 3);
   const urgentNotice = notices.find(n => n.isUrgent) || notices[0];
+  const heroSlides = [
+    { image: '/assets/hero/charter-ceremony.webp', label: 'Charter Ceremony' },
+    { image: '/assets/hero/guru-purnima.webp', label: 'Guru Purnima Celebration' },
+    { image: '/assets/hero/installation-fellowship.webp', label: 'Rotaract Fellowship' }
+  ];
+  const [activeHeroSlide, setActiveHeroSlide] = useState(0);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setActiveHeroSlide(current => (current + 1) % heroSlides.length);
+    }, 5500);
+    return () => window.clearInterval(timer);
+  }, [heroSlides.length]);
 
   return (
     <div className="space-y-12 pb-16">
@@ -44,154 +57,91 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
       )}
 
-      {/* --- HERO SECTION --- */}
-      <section className="bg-white pt-6 pb-12 border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            
-            {/* Left Col: Hero Title & Affiliation */}
-            <div className="lg:col-span-7 space-y-6 text-left">
-              {/* Official Badges */}
-              <div className="flex flex-wrap items-center gap-2">
-                <div className="px-3 py-1 rounded bg-slate-900 text-white text-xs font-bold uppercase tracking-wider">
-                  RID 3292 • Zone XVI
-                </div>
-                <div className="px-3 py-1 rounded bg-pink-50 text-[#D91B5C] text-xs font-bold border border-pink-200">
-                  Chartered 22nd January 2026
-                </div>
-                <div className="px-3 py-1 rounded bg-slate-100 text-slate-700 text-xs font-semibold">
-                  Club No. 8828026
-                </div>
-              </div>
+      {/* --- AUTOMATIC HERO SLIDESHOW --- */}
+      <section className="relative min-h-[620px] overflow-hidden bg-slate-950">
+        <div className="absolute inset-0" aria-hidden="true">
+          {heroSlides.map((slide, index) => (
+            <img
+              key={slide.image}
+              src={slide.image}
+              alt=""
+              className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${index === activeHeroSlide ? 'opacity-100' : 'opacity-0'}`}
+            />
+          ))}
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-950/72 to-slate-950/35" />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-slate-950/25" />
+        </div>
 
-              {/* Main Headline */}
-              <div className="space-y-2">
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
-                  Rotaract Club of <br />
-                  <span className="text-[#D91B5C]">Gandaki University</span>
-                </h1>
-                <p className="text-xs sm:text-sm font-semibold uppercase tracking-wider text-slate-500">
-                  Sponsored by Rotaract Club of Lekhnath • Pokhara, Nepal
-                </p>
-              </div>
-
-              {/* Description */}
-              <p className="text-slate-700 text-sm sm:text-base leading-relaxed max-w-2xl">
-                A university-based community of young leaders committed to transforming knowledge, ideas and
-                compassion into meaningful action through leadership, fellowship and community service.
-              </p>
-
-              {/* Action Buttons */}
-              <div className="flex flex-wrap items-center gap-3 pt-1">
-                <button
-                  onClick={() => setActiveTab('events')}
-                  id="hero-events-btn"
-                  className="px-5 py-2.5 rounded-lg bg-[#D91B5C] hover:bg-[#BE123C] text-white text-xs sm:text-sm font-bold shadow-xs transition-all"
-                >
-                  Events & Calendar
-                </button>
-
-                <button
-                  onClick={() => setActiveTab('team')}
-                  className="px-5 py-2.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs sm:text-sm font-bold shadow-xs transition-all"
-                >
-                  Members & BOD
-                </button>
-
-                <button
-                  onClick={() => setActiveTab('parent-club')}
-                  className="px-5 py-2.5 rounded-lg bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 text-xs sm:text-sm font-bold transition-all"
-                >
-                  Parent Club
-                </button>
-
-                {!currentUser && (
-                  <button
-                    onClick={onOpenLogin}
-                    className="px-4 py-2.5 rounded-lg text-[#D91B5C] hover:underline text-xs sm:text-sm font-bold"
-                  >
-                    Portal Login &rarr;
-                  </button>
-                )}
-              </div>
-
-              {/* Affiliation Info */}
-              <div className="pt-4 border-t border-slate-200 grid grid-cols-3 gap-4 text-xs">
-                <div>
-                  <span className="text-slate-400 block text-[11px] uppercase font-semibold">Rotary Affiliation</span>
-                  <span className="font-bold text-slate-800">RI District 3292</span>
-                </div>
-                <div>
-                  <span className="text-slate-400 block text-[11px] uppercase font-semibold">Presidential Theme</span>
-                  <span className="font-bold text-[#D91B5C]">Insight to Impact</span>
-                </div>
-                <div>
-                  <span className="text-slate-400 block text-[11px] uppercase font-semibold">Campus</span>
-                  <span className="font-bold text-slate-800">Gandaki University, Pokhara</span>
-                </div>
-              </div>
+        <div className="relative z-10 max-w-7xl mx-auto min-h-[620px] px-4 sm:px-6 lg:px-8 py-16 sm:py-20 flex items-center">
+          <div className="max-w-3xl text-left text-white">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="px-3 py-1 rounded bg-white/12 border border-white/20 text-xs font-bold uppercase tracking-wider backdrop-blur-sm">
+                RID 3292 · Zone XVI
+              </span>
+              <span className="px-3 py-1 rounded bg-[#D91B5C] text-xs font-bold">
+                Chartered 22nd January 2026
+              </span>
+              <span className="px-3 py-1 rounded bg-white/12 border border-white/20 text-xs font-semibold backdrop-blur-sm">
+                Club No. 8828026
+              </span>
             </div>
 
-            {/* Right Col: Official Club & Theme Visual Showcase */}
-            <div className="lg:col-span-5">
-              <div className="rounded-2xl bg-slate-50 p-6 sm:p-8 border border-slate-200 shadow-xs space-y-6 text-center">
-                
-                {/* Official Logos Side-by-Side */}
-                <div className="flex flex-col items-center justify-center gap-4 py-2">
-                  <img 
-                    src="/assets/official/racgu-official-logo.webp"
-                    alt="Rotaract Club of Gandaki University Logo" 
-                    className="w-28 h-28 object-contain"
-                  />
-                  <div className="w-full h-px bg-slate-200" />
-                  <div className="bg-white p-3 rounded-xl border border-slate-200 w-full flex flex-col items-center justify-center">
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
-                      Official Presidential Theme RY 2026-27
-                    </span>
-                    <img 
-                      src="/assets/official/insight-to-impact.webp"
-                      alt="Insight to Impact Presidential Theme Logo" 
-                      className="h-14 w-auto object-contain max-w-full"
-                    />
-                  </div>
-                </div>
+            <p className="mt-8 text-xs sm:text-sm font-bold uppercase tracking-[0.22em] text-pink-300">
+              Welcome to the official website
+            </p>
+            <h1 className="mt-3 text-4xl sm:text-5xl lg:text-7xl font-black tracking-tight leading-[1.05]">
+              Rotaract Club of
+              <span className="block text-pink-400">Gandaki University</span>
+            </h1>
+            <p className="mt-6 max-w-2xl text-base sm:text-lg leading-8 text-slate-100">
+              A university-based community of young leaders transforming knowledge, ideas and compassion into meaningful action through leadership, fellowship and service.
+            </p>
+            <p className="mt-3 text-sm font-semibold text-slate-300">
+              Sponsored by Rotaract Club of Lekhnath, Pokhara, Nepal
+            </p>
 
-                <div className="space-y-1">
-                  <h3 className="text-base font-bold text-slate-900">
-                    "Insight to Impact"
-                  </h3>
-                  <p className="text-xs text-slate-600 leading-relaxed">
-                    Bridging academic knowledge with purposeful community transformation across Pokhara and beyond.
-                  </p>
-                </div>
-
-                {/* Key Quick Facts */}
-                <div className="bg-white rounded-xl p-4 border border-slate-200 space-y-2 text-xs text-left">
-                  <div className="flex justify-between py-1 border-b border-slate-100">
-                    <span className="text-slate-500">Charter Date</span>
-                    <span className="font-bold text-slate-900">22nd January 2026</span>
-                  </div>
-                  <div className="flex justify-between py-1 border-b border-slate-100">
-                    <span className="text-slate-500">Rotaract Club ID</span>
-                    <span className="font-bold text-slate-900">8828026</span>
-                  </div>
-                  <div className="flex justify-between py-1 border-b border-slate-100">
-                    <span className="text-slate-500">Sponsor Rotaract</span>
-                    <span className="font-bold text-[#D91B5C]">Rotaract Club of Lekhnath</span>
-                  </div>
-                  <div className="flex justify-between py-1">
-                    <span className="text-slate-500">Mentor Rotary</span>
-                    <span className="font-bold text-slate-900">Rotary Club of Lekhnath</span>
-                  </div>
-                </div>
-
-              </div>
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <button
+                onClick={() => setActiveTab('events')}
+                className="px-5 py-3 rounded-lg bg-[#D91B5C] hover:bg-[#BE123C] text-white text-sm font-bold transition-colors"
+              >
+                Events & Calendar
+              </button>
+              <button
+                onClick={() => setActiveTab('team')}
+                className="px-5 py-3 rounded-lg bg-white text-slate-900 hover:bg-slate-100 text-sm font-bold transition-colors"
+              >
+                Members & BOD
+              </button>
+              <button
+                onClick={() => setActiveTab('about')}
+                className="px-5 py-3 rounded-lg border border-white/40 bg-white/10 hover:bg-white/20 text-white text-sm font-bold backdrop-blur-sm transition-colors"
+              >
+                Discover Our Club
+              </button>
+              {!currentUser && (
+                <button onClick={onOpenLogin} className="px-4 py-3 text-sm font-bold text-pink-300 hover:text-white">
+                  Portal Login
+                </button>
+              )}
             </div>
 
+            <div className="mt-10 flex items-center gap-2" role="group" aria-label="Slideshow selection">
+              {heroSlides.map((slide, index) => (
+                <button
+                  key={slide.image}
+                  type="button"
+                  onClick={() => setActiveHeroSlide(index)}
+                  aria-label={`Show ${slide.label}`}
+                  aria-current={index === activeHeroSlide}
+                  className={`h-1.5 rounded-full transition-all ${index === activeHeroSlide ? 'w-10 bg-pink-400' : 'w-5 bg-white/50 hover:bg-white/80'}`}
+                />
+              ))}
+              <span className="ml-2 text-xs font-semibold text-slate-200">{heroSlides[activeHeroSlide].label}</span>
+            </div>
           </div>
         </div>
       </section>
-
       {/* --- OFFICIAL LOGO REVEAL --- */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-950 shadow-sm">
@@ -253,9 +203,9 @@ export const HomePage: React.FC<HomePageProps> = ({
           <div className="grid grid-cols-1 lg:grid-cols-12">
             <div className="lg:col-span-4 relative min-h-[520px] bg-[#0A1931] overflow-hidden">
               <img
-                src="/members/prabhab.webp"
+                src="/members/prabhab-portrait.webp"
                 alt="Rtr. Prabhab Tiwari, Charter President"
-                className="absolute inset-0 w-full h-full object-cover object-top"
+                className="absolute inset-0 w-full h-full object-contain object-bottom"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#07152d] via-[#07152d]/20 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8 text-white text-left">
