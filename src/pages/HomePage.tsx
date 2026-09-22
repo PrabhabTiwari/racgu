@@ -29,8 +29,10 @@ export const HomePage: React.FC<HomePageProps> = ({
   const [activeHeroSlide, setActiveHeroSlide] = useState(0);
   const guidingTeam = INITIAL_MEMBERS.filter(member => member.role === 'pst' || member.role === 'bod' || member.role === 'advisor');
   const [activeGuide, setActiveGuide] = useState(0);
+  const [guideCardVisible, setGuideCardVisible] = useState(true);
   const [guidingTeamVisible, setGuidingTeamVisible] = useState(false);
   const guidingTeamRef = useRef<HTMLElement>(null);
+  const guideTransitionRef = useRef<number | null>(null);
   const logoVideoRef = useRef<HTMLVideoElement>(null);
   const logoVideoVisibleRef = useRef(false);
   const statsRef = useRef<HTMLElement>(null);
@@ -56,10 +58,27 @@ export const HomePage: React.FC<HomePageProps> = ({
   useEffect(() => {
     if (!guidingTeamVisible) return;
     const timer = window.setInterval(() => {
-      setActiveGuide(current => (current + 1) % guidingTeam.length);
-    }, 2000);
-    return () => window.clearInterval(timer);
+      setGuideCardVisible(false);
+      guideTransitionRef.current = window.setTimeout(() => {
+        setActiveGuide(current => (current + 1) % guidingTeam.length);
+        window.requestAnimationFrame(() => setGuideCardVisible(true));
+      }, 350);
+    }, 2350);
+    return () => {
+      window.clearInterval(timer);
+      if (guideTransitionRef.current !== null) window.clearTimeout(guideTransitionRef.current);
+    };
   }, [guidingTeam.length, guidingTeamVisible]);
+
+  const selectGuide = (index: number) => {
+    if (index === activeGuide) return;
+    if (guideTransitionRef.current !== null) window.clearTimeout(guideTransitionRef.current);
+    setGuideCardVisible(false);
+    guideTransitionRef.current = window.setTimeout(() => {
+      setActiveGuide(index);
+      window.requestAnimationFrame(() => setGuideCardVisible(true));
+    }, 350);
+  };
 
   useEffect(() => {
     const video = logoVideoRef.current;
@@ -443,13 +462,13 @@ export const HomePage: React.FC<HomePageProps> = ({
               </div>
               <div className="mt-7 flex flex-wrap gap-2" aria-label="Guiding team slideshow controls">
                 {guidingTeam.map((member, index) => (
-                  <button key={member.id} type="button" onClick={() => setActiveGuide(index)} aria-label={`Show ${member.name}`} aria-current={index === activeGuide} className={`h-2 rounded-full transition-all ${index === activeGuide ? 'w-10 bg-pink-400' : 'w-5 bg-white/30 hover:bg-white/60'}`} />
+                  <button key={member.id} type="button" onClick={() => selectGuide(index)} aria-label={`Show ${member.name}`} aria-current={index === activeGuide} className={`h-2 rounded-full transition-all duration-500 ${index === activeGuide ? 'w-10 bg-pink-400' : 'w-5 bg-white/30 hover:bg-white/60'}`} />
                 ))}
               </div>
             </div>
 
             <div className="lg:col-span-7 min-h-[390px] bg-slate-100 text-slate-900">
-              <article key={guidingTeam[activeGuide].id} className="grid min-h-[390px] grid-cols-1 sm:grid-cols-2 animate-in fade-in duration-300">
+              <article className={`grid min-h-[390px] grid-cols-1 sm:grid-cols-2 transform transition-all duration-500 ease-in-out ${guideCardVisible ? 'translate-x-0 opacity-100' : 'translate-x-3 opacity-0'}`}>
                 <div className="min-h-64 overflow-hidden bg-slate-200">
                   <img src={guidingTeam[activeGuide].avatar} alt={guidingTeam[activeGuide].name} className="h-full w-full object-cover object-top" />
                 </div>
