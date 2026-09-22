@@ -95,6 +95,11 @@ export function App() {
     setEvents(updatedEvents);
   };
 
+  const handleRefreshRegistrations = async () => {
+    const latestRegistrations = await clubApi.getRegistrations();
+    setRegistrations(latestRegistrations);
+  };
+
   // Handlers for Document Management (PST)
   const handleUploadDocument = async (docData: Partial<ClubDocument>) => {
     const created = await clubApi.uploadDocument(docData);
@@ -132,9 +137,13 @@ export function App() {
   };
 
   // Auth handlers
-  const handleLoginSuccess = (user: UserProfile) => {
+  const handleLoginSuccess = async (user: UserProfile) => {
     setCurrentUser(user);
     clubApi.setCurrentUser(user);
+    // The first registration request runs before a visitor is authenticated.
+    // Reload it after login so PST can immediately see every attendee.
+    const latestRegistrations = await clubApi.getRegistrations();
+    setRegistrations(latestRegistrations);
   };
 
   const handleLogout = () => {
@@ -223,6 +232,7 @@ export function App() {
               notices={notices}
               gallery={gallery}
               registrations={registrations}
+              onRefreshRegistrations={handleRefreshRegistrations}
               onAddEvent={handleAddEvent}
               onUpdateEvent={handleUpdateEvent}
               onDeleteEvent={handleDeleteEvent}

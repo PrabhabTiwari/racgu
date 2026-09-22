@@ -9,8 +9,11 @@ interface AuthModalProps {
 }
 
 export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onLoginSuccess }) => {
+  const [mode, setMode] = useState<'login' | 'activate'>('login');
   const [email, setEmail] = useState('president.racgu@gandaki.edu.np');
   const [password, setPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmation, setConfirmation] = useState('');
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -22,7 +25,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onLoginSu
     setError('');
 
     try {
-      const user = await clubApi.login(email, password);
+      const user = mode === 'login'
+        ? await clubApi.login(email, password)
+        : await clubApi.activateAccount(email, password, newPassword, confirmation);
       onLoginSuccess(user);
       onClose();
     } catch (err) {
@@ -51,7 +56,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onLoginSu
             <span className="text-[10px] font-bold text-pink-400 uppercase tracking-wider block">
               Official Portal Authentication
             </span>
-            <h3 className="text-xl font-bold text-white mt-0.5">Member Portal Login</h3>
+            <h3 className="text-xl font-bold text-white mt-0.5">{mode === 'login' ? 'Member Portal Login' : 'First-Time Account Setup'}</h3>
             <p className="text-xs text-slate-300">Rotaract Club of Gandaki University</p>
           </div>
         </div>
@@ -82,7 +87,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onLoginSu
 
             <div>
               <label className="block text-xs font-semibold text-slate-700 mb-1">
-                Password / Security Key
+                {mode === 'login' ? 'Password / Security Key' : 'Temporary Password'}
               </label>
               <input
                 type="password"
@@ -94,16 +99,39 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onLoginSu
               />
             </div>
 
+            {mode === 'activate' && (
+              <>
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">Create New Password</label>
+                  <input type="password" required minLength={10} value={newPassword} onChange={(e) => setNewPassword(e.target.value)} className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white text-slate-800" placeholder="At least 10 characters" />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">Confirm New Password</label>
+                  <input type="password" required minLength={10} value={confirmation} onChange={(e) => setConfirmation(e.target.value)} className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg bg-white text-slate-800" placeholder="Enter the new password again" />
+                </div>
+              </>
+            )}
+
             <div className="flex gap-2 pt-2">
               <button
                 type="submit"
                 disabled={isSubmitting}
                 className="flex-1 py-2.5 px-4 rounded-lg bg-[#D91B5C] hover:bg-[#BE123C] text-white text-xs font-bold transition-colors"
               >
-                {isSubmitting ? 'Authenticating...' : 'Log In'}
+                {isSubmitting ? 'Please wait...' : mode === 'login' ? 'Log In' : 'Activate Account & Sign In'}
               </button>
             </div>
           </form>
+
+          <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-center">
+            <p className="text-xs font-semibold text-slate-700">
+              {mode === 'login' ? 'Signing in for the first time?' : 'Already activated your account?'}
+            </p>
+            <button type="button" onClick={() => { setMode(mode === 'login' ? 'activate' : 'login'); setError(''); setPassword(''); setNewPassword(''); setConfirmation(''); }} className="mt-1 text-xs font-bold text-[#D91B5C] hover:underline">
+              {mode === 'login' ? 'Set up your member account' : 'Return to normal login'}
+            </button>
+            {mode === 'activate' && <p className="mt-2 text-[11px] leading-5 text-slate-500">Use the email registered by the club and the temporary password issued by PST. Public account creation is not permitted.</p>}
+          </div>
 
           <div className="text-center pt-2 border-t border-slate-100">
             <p className="text-[11px] text-slate-500">

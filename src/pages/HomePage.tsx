@@ -209,7 +209,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 }}
                 aria-label="Official Rotaract Club of Gandaki University logo reveal"
               >
-                <source src="/assets/official/racgu-logo-reveal.mp4" type="video/mp4" />
+                <source src="/assets/official/racgu-logo-reveal.mp4?v=20260922-2" type="video/mp4" />
                 Your browser does not support the official club logo reveal video.
               </video>
             </div>

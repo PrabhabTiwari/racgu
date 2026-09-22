@@ -5,9 +5,8 @@ RewriteEngine On
 # their normal root URLs. Run `npm run build` after each pull.
 RewriteRule ^$ dist/index.html [L]
 
-RewriteCond %{REQUEST_URI} !^/api/
-RewriteCond %{REQUEST_URI} !^/uploads/
-RewriteCond %{REQUEST_FILENAME} !-f
+# Always serve compiled static assets from dist. This intentionally bypasses
+# stale root-level assets left behind by older manual WAMP builds.
 RewriteRule ^(assets|members)/(.*)$ dist/$1/$2 [L]
 
 RewriteCond %{REQUEST_URI} !^/api/

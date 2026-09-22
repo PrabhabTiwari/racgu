@@ -13,6 +13,7 @@ export interface UserProfile {
   joinedDate: string;
   bio: string;
   badge?: string;
+  mustChangePassword?: boolean;
 }
 
 export type EventCategory = 'Community Service' | 'Club Service' | 'Professional Development' | 'International Service' | 'Youth & Sports';

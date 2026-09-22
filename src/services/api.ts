@@ -34,6 +34,16 @@ function setLocal<T>(key: string, value: T): void {
   }
 }
 
+async function readApiResponse(res: Response, fallback: string): Promise<any> {
+  const text = await res.text();
+  try {
+    return JSON.parse(text);
+  } catch {
+    if (res.status === 413) throw new Error('The upload is larger than the Apache/PHP post limit.');
+    throw new Error(text && !text.trim().startsWith('<') ? text : fallback);
+  }
+}
+
 export const clubApi = {
   async login(email: string, password: string): Promise<UserProfile> {
     const res = await fetch('/api/index.php/auth/login', {
@@ -44,6 +54,19 @@ export const clubApi = {
     });
     const json = await res.json();
     if (!res.ok || !json.success) throw new Error(json.error || 'Login failed');
+    setLocal(STORAGE_KEYS.CURRENT_USER, json.data);
+    return json.data;
+  },
+
+  async activateAccount(email: string, temporaryPassword: string, newPassword: string, confirmation: string): Promise<UserProfile> {
+    const res = await fetch('/api/index.php/auth/activate', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, temporaryPassword, newPassword, confirmation })
+    });
+    const json = await readApiResponse(res, 'Account activation failed. Check that PHP and MySQL are running.');
+    if (!res.ok || !json.success) throw new Error(json.error || 'Account activation failed.');
     setLocal(STORAGE_KEYS.CURRENT_USER, json.data);
     return json.data;
   },
@@ -155,7 +178,7 @@ export const clubApi = {
     const res = await fetch('/api/index.php/events/upload-cover', {
       method: 'POST', credentials: 'same-origin', body: formData
     });
-    const json = await res.json();
+    const json = await readApiResponse(res, 'The event cover upload did not return a valid API response.');
     if (!res.ok || !json.success || !json.data?.url) throw new Error(json.error || 'Event cover upload failed');
     return json.data.url;
   },
@@ -261,7 +284,7 @@ export const clubApi = {
     const res = await fetch('/api/index.php/documents/upload', {
       method: 'POST', credentials: 'same-origin', body: formData
     });
-    const json = await res.json();
+    const json = await readApiResponse(res, 'The document upload did not return a valid API response.');
     if (!res.ok || !json.success || !json.data?.url) throw new Error(json.error || 'Document upload failed');
     return json.data;
   },
@@ -388,7 +411,7 @@ export const clubApi = {
     const res = await fetch('/api/index.php/gallery/upload', {
       method: 'POST', credentials: 'same-origin', body: formData
     });
-    const json = await res.json();
+    const json = await readApiResponse(res, 'The gallery upload did not return a valid API response.');
     if (!res.ok || !json.success || !json.data?.url) throw new Error(json.error || 'Photo upload failed');
     return json.data.url;
   },

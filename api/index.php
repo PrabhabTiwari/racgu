@@ -49,12 +49,25 @@ function save_upload(string $field, string $folder, array $allowedMimes, int $ma
         reply(422, ['success' => false, 'error' => 'Select a file to upload.']);
     }
     $file = $_FILES[$field];
-    if (($file['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK) reply(422, ['success' => false, 'error' => 'The file upload failed.']);
+    $uploadError = (int)($file['error'] ?? UPLOAD_ERR_NO_FILE);
+    if ($uploadError !== UPLOAD_ERR_OK) {
+        $messages = [
+            UPLOAD_ERR_INI_SIZE => 'The file exceeds PHP upload_max_filesize.',
+            UPLOAD_ERR_FORM_SIZE => 'The file exceeds the form upload limit.',
+            UPLOAD_ERR_PARTIAL => 'The upload was interrupted. Please try again.',
+            UPLOAD_ERR_NO_FILE => 'Select a file to upload.',
+            UPLOAD_ERR_NO_TMP_DIR => 'PHP temporary upload directory is missing.',
+            UPLOAD_ERR_CANT_WRITE => 'PHP could not write the temporary upload file.',
+            UPLOAD_ERR_EXTENSION => 'A PHP extension stopped the upload.',
+        ];
+        reply(422, ['success' => false, 'error' => $messages[$uploadError] ?? 'The file upload failed.']);
+    }
     if (($file['size'] ?? 0) > $maxBytes) reply(413, ['success' => false, 'error' => 'The selected file is too large.']);
     $mime = (new finfo(FILEINFO_MIME_TYPE))->file($file['tmp_name']);
     if (!isset($allowedMimes[$mime])) reply(422, ['success' => false, 'error' => 'This file type is not allowed.']);
     $uploadDir = dirname(__DIR__) . '/uploads/' . $folder;
     if (!is_dir($uploadDir) && !mkdir($uploadDir, 0755, true) && !is_dir($uploadDir)) reply(500, ['success' => false, 'error' => 'Could not create the upload directory.']);
+    if (!is_writable($uploadDir)) reply(500, ['success' => false, 'error' => 'The uploads/' . $folder . ' directory is not writable by Apache.']);
     $filename = date('Ymd-His') . '-' . bin2hex(random_bytes(6)) . '.' . $allowedMimes[$mime];
     if (!move_uploaded_file($file['tmp_name'], $uploadDir . '/' . $filename)) reply(500, ['success' => false, 'error' => 'Could not save the uploaded file.']);
     return ['url' => '/uploads/' . $folder . '/' . $filename, 'mime' => $mime, 'bytes' => (int)$file['size'], 'originalName' => basename((string)$file['name'])];
@@ -102,6 +115,40 @@ try {
             reply(401, ['success' => false, 'error' => 'Invalid email or password.']);
         }
         $profile = json_decode($user['profile_json'], true);
+        session_regenerate_id(true);
+        $_SESSION['user'] = $profile;
+        reply(200, ['success' => true, 'data' => $profile]);
+    }
+
+    if ($path === '/auth/activate' && $method === 'POST') {
+        $body = input();
+        $email = strtolower(trim((string)($body['email'] ?? '')));
+        $temporaryPassword = (string)($body['temporaryPassword'] ?? '');
+        $newPassword = (string)($body['newPassword'] ?? '');
+        $confirmation = (string)($body['confirmation'] ?? '');
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) reply(422, ['success' => false, 'error' => 'Enter your registered email address.']);
+        if (strlen($newPassword) < 10) reply(422, ['success' => false, 'error' => 'Your new password must contain at least 10 characters.']);
+        if ($newPassword !== $confirmation) reply(422, ['success' => false, 'error' => 'The new password and confirmation do not match.']);
+        if ($newPassword === $temporaryPassword) reply(422, ['success' => false, 'error' => 'Choose a password different from the temporary password.']);
+
+        $stmt = $pdo->prepare('SELECT id, password_hash, profile_json, active FROM users WHERE email = ? LIMIT 1');
+        $stmt->execute([$email]);
+        $user = $stmt->fetch();
+        if (!$user || !$user['active'] || !password_verify($temporaryPassword, $user['password_hash'])) {
+            usleep(250000);
+            reply(401, ['success' => false, 'error' => 'Registered email or temporary password is incorrect.']);
+        }
+        $profile = json_decode($user['profile_json'], true, 512, JSON_THROW_ON_ERROR);
+        if (($profile['mustChangePassword'] ?? false) !== true) {
+            reply(409, ['success' => false, 'error' => 'This account is already activated. Use the normal login form.']);
+        }
+        $profile['mustChangePassword'] = false;
+        $stmt = $pdo->prepare('UPDATE users SET password_hash = ?, profile_json = ? WHERE id = ?');
+        $stmt->execute([
+            password_hash($newPassword, PASSWORD_DEFAULT),
+            json_encode($profile, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
+            $user['id'],
+        ]);
         session_regenerate_id(true);
         $_SESSION['user'] = $profile;
         reply(200, ['success' => true, 'data' => $profile]);
@@ -208,18 +255,8 @@ try {
 
     if ($path === '/gallery/upload' && $method === 'POST') {
         require_pst();
-        if (!isset($_FILES['photo']) || !is_uploaded_file($_FILES['photo']['tmp_name'])) reply(422, ['success' => false, 'error' => 'Select a photo to upload.']);
-        $file = $_FILES['photo'];
-        if (($file['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK) reply(422, ['success' => false, 'error' => 'The photo upload failed.']);
-        if (($file['size'] ?? 0) > 5 * 1024 * 1024) reply(413, ['success' => false, 'error' => 'The photo must be 5 MB or smaller.']);
-        $mime = (new finfo(FILEINFO_MIME_TYPE))->file($file['tmp_name']);
-        $extensions = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/webp' => 'webp'];
-        if (!isset($extensions[$mime])) reply(422, ['success' => false, 'error' => 'Only JPG, PNG and WebP photos are allowed.']);
-        $uploadDir = dirname(__DIR__) . '/uploads/gallery';
-        if (!is_dir($uploadDir) && !mkdir($uploadDir, 0755, true) && !is_dir($uploadDir)) reply(500, ['success' => false, 'error' => 'Could not create the gallery upload directory.']);
-        $filename = date('Ymd-His') . '-' . bin2hex(random_bytes(6)) . '.' . $extensions[$mime];
-        if (!move_uploaded_file($file['tmp_name'], $uploadDir . '/' . $filename)) reply(500, ['success' => false, 'error' => 'Could not save the uploaded photo.']);
-        reply(201, ['success' => true, 'data' => ['url' => '/uploads/gallery/' . $filename]]);
+        $saved = save_upload('photo', 'gallery', ['image/jpeg'=>'jpg', 'image/png'=>'png', 'image/webp'=>'webp'], 15 * 1024 * 1024);
+        reply(201, ['success' => true, 'data' => ['url' => $saved['url']]]);
     }
 
     if (preg_match('#^/(events|documents|notices|gallery)(?:/([^/]+))?$#', $path, $m)) {
