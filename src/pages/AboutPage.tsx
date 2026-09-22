@@ -1,159 +1,71 @@
 import React from 'react';
 
-export const AboutPage: React.FC = () => {
-  return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10 text-left">
-      {/* Header Banner */}
-      <div className="bg-[#0A1931] text-white rounded-2xl p-6 sm:p-10 border border-slate-800 space-y-4">
-        <div className="flex items-center gap-3">
-          <img 
-            src="/assets/official/racgu-official-logo.webp"
-            alt="Club Logo" 
-            className="w-16 h-16 object-contain"
-          />
-          <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-pink-400 block">
-              Foundation & Charter
-            </span>
-            <h1 className="text-2xl sm:text-3xl font-black text-white">
-              About Rotaract Club of Gandaki University
-            </h1>
+const objectives = [
+  'Develop leadership and professional skills among university students.',
+  'Identify and respond to the needs of the university and surrounding communities.',
+  'Promote ethical leadership, responsibility and integrity.',
+  'Encourage fellowship, teamwork and cultural understanding.',
+  'Support youth empowerment and meaningful student participation.',
+  'Promote digital innovation and technology-based service.',
+  'Organize sustainable projects in education, health and the environment.',
+  'Strengthen cooperation with the parent club, Rotary and other Rotaract clubs.',
+  'Encourage international understanding and peace.',
+  'Prepare members for long-term community and Rotary leadership.'
+];
+
+const values = [
+  ['Service', 'Placing community needs at the centre of club action'],
+  ['Leadership', 'Developing confident, responsible and ethical leaders'],
+  ['Fellowship', 'Building lasting friendships through shared experiences'],
+  ['Integrity', 'Acting honestly, transparently and responsibly'],
+  ['Inclusion', 'Respecting different backgrounds, identities and perspectives'],
+  ['Innovation', 'Applying creative and technological solutions'],
+  ['Accountability', 'Taking responsibility for decisions and commitments'],
+  ['Collaboration', 'Working with the university, clubs and communities']
+];
+
+export const AboutPage: React.FC = () => (
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10 text-left">
+    <section className="relative overflow-hidden rounded-3xl border border-slate-800 bg-[#0A1931] text-white">
+      <div className="absolute right-[-80px] top-[-100px] h-96 w-96 rounded-full bg-[#D91B5C]/20 blur-3xl" />
+      <div className="relative grid grid-cols-1 lg:grid-cols-12 items-center gap-8 p-7 sm:p-12">
+        <div className="lg:col-span-4 flex justify-center">
+          <div className="flex h-64 w-64 sm:h-80 sm:w-80 items-center justify-center rounded-full bg-white p-5 shadow-2xl ring-8 ring-white/10">
+            <img src="/assets/official/racgu-official-logo.webp" alt="Rotaract Club of Gandaki University official logo" className="h-full w-full object-contain" />
           </div>
         </div>
-
-        <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-3xl">
-          Chartered on 22nd January 2026 under Club No. 8828026, Zone XVI, RID 3292. 
-          Combining the academic dedication of Gandaki University with Rotary International's global humanitarian service.
-        </p>
-
-        {/* Credentials Bar */}
-        <div className="pt-4 border-t border-slate-800 grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
-          <div>
-            <span className="text-slate-400 block text-[11px] uppercase font-semibold">Charter Date</span>
-            <span className="font-bold text-white">22nd January 2026</span>
-          </div>
-          <div>
-            <span className="text-slate-400 block text-[11px] uppercase font-semibold">Rotary International ID</span>
-            <span className="font-bold text-white">8828026</span>
-          </div>
-          <div>
-            <span className="text-slate-400 block text-[11px] uppercase font-semibold">District & Zone</span>
-            <span className="font-bold text-white">RID 3292 • Zone XVI</span>
-          </div>
-          <div>
-            <span className="text-slate-400 block text-[11px] uppercase font-semibold">Sponsoring Club</span>
-            <span className="font-bold text-pink-300">Rotaract Club of Lekhnath</span>
+        <div className="lg:col-span-8">
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-pink-300">Established at Gandaki University</p>
+          <h1 className="mt-3 text-3xl sm:text-5xl font-black leading-tight">Rotaract Club of Gandaki University</h1>
+          <p className="mt-5 max-w-3xl text-sm sm:text-base leading-7 text-slate-300">A university-based, non-profit, non-political and non-sectarian service and leadership organization that develops students through fellowship, professional growth and meaningful community action.</p>
+          <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-3">
+            {[['Chartered','22 January 2026'],['Club ID','8828026'],['District','3292'],['Zone','XVI']].map(([label,value]) => <div key={label} className="rounded-xl border border-white/15 bg-white/5 p-4"><p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">{label}</p><p className="mt-1 text-sm font-bold text-white">{value}</p></div>)}
           </div>
         </div>
       </div>
+    </section>
 
-      {/* Club History & Inception */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 space-y-4">
-        <h2 className="text-xl font-bold text-slate-900 border-b border-slate-100 pb-3">
-          Charter Inception & University Collaboration
-        </h2>
-
-        <div className="space-y-4 text-slate-700 text-xs sm:text-sm leading-relaxed">
-          <p>
-            The <strong>Rotaract Club of Gandaki University (RCGU)</strong> is a university-based, non-profit,
-            non-political and non-sectarian service and leadership organization at Gandaki University, Pokhara.
-            Sponsored by the <strong>Rotaract Club of Lekhnath</strong>, it was chartered on <strong>22 January 2026</strong>.
-          </p>
-          <p>
-            The club provides students with a structured platform for leadership development, professional growth,
-            fellowship and community service. Guided by Service Above Self, members work together to address
-            community needs and convert knowledge and ideas into sustainable impact.
-          </p>
-        </div>
+    <section className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div className="lg:col-span-7 rounded-3xl border border-slate-200 bg-white p-7 sm:p-10">
+        <p className="text-xs font-bold uppercase tracking-wider text-[#D91B5C]">Who we are</p>
+        <h2 className="mt-2 text-2xl font-black text-slate-900">Leadership, fellowship and service in action</h2>
+        <div className="mt-5 space-y-4 text-sm leading-7 text-slate-700"><p>Chartered on 22 January 2026, RCGU provides Gandaki University students with a structured platform for leadership development, professional growth, fellowship and community service.</p><p>Guided by Service Above Self, the club brings together energetic students committed to addressing community needs, strengthening fellowship and converting knowledge and ideas into sustainable impact.</p></div>
       </div>
+      <div className="lg:col-span-5 rounded-3xl bg-gradient-to-br from-[#D91B5C] to-[#9F1239] p-7 sm:p-10 text-white"><p className="text-xs font-bold uppercase tracking-wider text-pink-100">Founding story</p><h2 className="mt-2 text-2xl font-black">A foundation built by students</h2><p className="mt-5 text-sm leading-7 text-pink-50">RCGU was established to create a formal student-led platform where young people could develop leadership skills, build meaningful connections and serve their communities. Its charter team began with a focus on good governance, responsible leadership, fellowship, digital innovation and sustainable community projects.</p></div>
+    </section>
 
-      {/* Vision & Mission */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 space-y-3">
-          <span className="text-xs font-bold text-[#D91B5C] uppercase tracking-wider block">
-            Core Direction
-          </span>
-          <h3 className="text-lg font-bold text-slate-900">Our Vision</h3>
-          <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
-            To build a resilient and sustainable Rotaract Club of Gandaki University through strategic recruitment,
-            meaningful engagement, leadership development and impactful community service.
-          </p>
-        </div>
+    <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="rounded-3xl border border-slate-200 bg-white p-7 sm:p-9"><p className="text-xs font-bold uppercase tracking-wider text-[#D91B5C]">Our vision</p><h2 className="mt-2 text-2xl font-black text-slate-900">A resilient and sustainable club</h2><p className="mt-4 text-sm leading-7 text-slate-700">To build a resilient and sustainable Rotaract Club of Gandaki University through strategic recruitment, meaningful engagement, leadership development and impactful community service.</p><p className="mt-4 border-l-4 border-[#D91B5C] pl-4 text-sm leading-7 text-slate-600">To become a leading student-led organization that inspires leadership, innovation and service while creating sustainable positive change within Gandaki University and the wider community.</p></div>
+      <div className="rounded-3xl border border-slate-200 bg-white p-7 sm:p-9"><p className="text-xs font-bold uppercase tracking-wider text-blue-700">Our mission</p><h2 className="mt-2 text-2xl font-black text-slate-900">Develop ethical and responsible leaders</h2><p className="mt-4 text-sm leading-7 text-slate-700">To engage and develop university students as ethical and responsible leaders by providing opportunities for community service, professional growth, fellowship, innovation and collaboration while upholding the values of Rotary and Rotaract.</p></div>
+    </section>
 
-        <div className="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 space-y-3">
-          <span className="text-xs font-bold text-blue-800 uppercase tracking-wider block">
-            Action Framework
-          </span>
-          <h3 className="text-lg font-bold text-slate-900">Our Mission</h3>
-          <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
-            To engage and develop university students as ethical and responsible leaders through community service,
-            professional growth, fellowship, innovation and collaboration while upholding Rotary and Rotaract values.
-          </p>
-        </div>
-      </div>
+    <section className="rounded-3xl border border-slate-200 bg-white p-7 sm:p-10">
+      <div className="max-w-3xl"><p className="text-xs font-bold uppercase tracking-wider text-[#D91B5C]">Our goals</p><h2 className="mt-2 text-2xl font-black text-slate-900">What the club is working to achieve</h2></div>
+      <div className="mt-7 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3">{objectives.map((goal,index)=><div key={goal} className="flex gap-4 rounded-xl bg-slate-50 p-4"><span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#0A1931] text-xs font-bold text-white">{index+1}</span><p className="text-sm leading-6 text-slate-700">{goal}</p></div>)}</div>
+    </section>
 
-      {/* Presidential Theme Spotlight */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
-          <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-[#D91B5C] block">
-              Presidential Theme (RY 2026-27)
-            </span>
-            <h3 className="text-xl font-bold text-slate-900 mt-1">
-              "Insight to Impact"
-            </h3>
-          </div>
-          <div className="h-10">
-            <img 
-              src="/assets/official/insight-to-impact.webp"
-              alt="Insight to Impact" 
-              className="h-10 w-auto object-contain"
-            />
-          </div>
-        </div>
+    <section><div className="mb-6"><p className="text-xs font-bold uppercase tracking-wider text-[#D91B5C]">Core values</p><h2 className="mt-2 text-2xl font-black text-slate-900">The standards behind every action</h2></div><div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">{values.map(([name,description])=><div key={name} className="rounded-2xl border border-slate-200 bg-white p-5"><h3 className="font-bold text-slate-900">{name}</h3><p className="mt-2 text-xs leading-5 text-slate-600">{description}</p></div>)}</div></section>
 
-        <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
-          The presidential theme for RY 2026-27, <strong>"Insight to Impact"</strong>, signifies our pledge that university education 
-          must not remain confined to textbooks. Every concept learned in software, healthcare, management, and sports is 
-          deployed through community service avenues to uplift individuals and communities throughout Pokhara.
-        </p>
-      </div>
-
-      {/* The Rotary 4-Way Test */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 space-y-4">
-        <h3 className="text-lg font-bold text-slate-900 border-b border-slate-100 pb-3">
-          The Rotary 4-Way Test
-        </h3>
-        <p className="text-xs text-slate-600">
-          The guiding ethical principle observed by all Rotaractors of Gandaki University:
-        </p>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
-          <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
-            <span className="text-xs font-bold text-[#D91B5C] block">Point 1</span>
-            <p className="text-sm font-bold text-slate-900">Is it the TRUTH?</p>
-            <p className="text-xs text-slate-600">Complete transparency, integrity, and ethical conduct in all actions.</p>
-          </div>
-
-          <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
-            <span className="text-xs font-bold text-[#D91B5C] block">Point 2</span>
-            <p className="text-sm font-bold text-slate-900">Is it FAIR to all concerned?</p>
-            <p className="text-xs text-slate-600">Equity, fairness, and mutual respect among all members and beneficiaries.</p>
-          </div>
-
-          <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
-            <span className="text-xs font-bold text-[#D91B5C] block">Point 3</span>
-            <p className="text-sm font-bold text-slate-900">Will it build GOODWILL and BETTER FRIENDSHIPS?</p>
-            <p className="text-xs text-slate-600">Nurturing genuine fellowship, teamwork, and parent club synergy.</p>
-          </div>
-
-          <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
-            <span className="text-xs font-bold text-[#D91B5C] block">Point 4</span>
-            <p className="text-sm font-bold text-slate-900">Will it be BENEFICIAL to all concerned?</p>
-            <p className="text-xs text-slate-600">Ensuring all service projects provide enduring community value.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
+    <section className="overflow-hidden rounded-3xl border border-slate-200 bg-white"><div className="grid grid-cols-1 lg:grid-cols-12 items-center"><div className="lg:col-span-5 bg-slate-50 p-8 flex justify-center"><img src="/assets/official/insight-to-impact.webp" alt="Insight to Impact" className="max-h-64 w-full object-contain" /></div><div className="lg:col-span-7 p-7 sm:p-10"><p className="text-xs font-bold uppercase tracking-wider text-[#D91B5C]">Charter theme RY 2026-27</p><h2 className="mt-2 text-3xl font-black text-slate-900">Insight to Impact</h2><p className="mt-4 text-sm leading-7 text-slate-700">Insight begins with understanding the challenges around us. Impact is created when that understanding becomes purposeful action. The theme guides RCGU to apply academic knowledge, creativity and compassion through projects that benefit the university and wider community.</p></div></div></section>
+  </div>
+);

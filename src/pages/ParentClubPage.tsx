@@ -1,146 +1,67 @@
 import React from 'react';
 
-export const ParentClubPage: React.FC<{ setActiveTab: (tab: string) => void }> = ({ setActiveTab }) => {
-  return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10 text-left">
-      {/* Header Banner */}
-      <div className="bg-[#0A1931] text-white rounded-2xl p-6 sm:p-10 border border-slate-800 space-y-3">
-        <span className="text-xs font-bold uppercase tracking-wider text-pink-400 block">
-          Institutional Sponsorship & Rotary Mentorship
-        </span>
-        <h1 className="text-2xl sm:text-3xl font-black text-white">
-          Our Parent Clubs
-        </h1>
-        <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-3xl">
-          The Rotaract Club of Gandaki University owes its inception, charter guidance, and continuous youth 
-          mentorship to our esteemed sponsor, <strong>Rotaract Club of Lekhnath</strong>, and our patron Rotary 
-          institution, <strong>Rotary Club of Lekhnath</strong>.
-        </p>
-      </div>
-
-      {/* Dual Parent Club Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Card 1: Rotaract Club of Lekhnath */}
-        <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 space-y-5">
-          <div className="flex items-center justify-between border-b border-slate-100 pb-4">
-            <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-[#D91B5C] block">
-                Sponsoring Club
-              </span>
-              <h3 className="text-xl font-bold text-slate-900 mt-1">
-                Rotaract Club of Lekhnath
-              </h3>
-              <p className="text-xs text-slate-500">
-                Zone XVI • RID 3292 • Kaski, Nepal
-              </p>
-            </div>
-            <div className="px-2.5 py-1 rounded bg-pink-50 text-[#D91B5C] text-xs font-bold border border-pink-200">
-              Sponsor
-            </div>
-          </div>
-
-          <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
-            One of the most active community clubs in District 3292, the Rotaract Club of Lekhnath 
-            has a storied legacy of community development around the Seven Lakes of Lekhnath. Their leadership 
-            championed the chartering of RAC Gandaki University, guiding the club through charter documentation, 
-            constitution formation, and initial board training.
-          </p>
-
-          <div className="space-y-2 bg-slate-50 p-4 rounded-xl border border-slate-200 text-xs text-slate-700">
-            <p>• Charter Sponsor of Club No. 8828026 (Chartered: 22nd Jan 2026)</p>
-            <p>• Co-hosts of annual Begnas Lake environmental campaigns</p>
-            <p>• Continuous board mentoring and joint fellowship assemblies</p>
+export const ParentClubPage: React.FC<{ setActiveTab: (tab: string) => void }> = ({ setActiveTab }) => (
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10 text-left">
+    <section className="overflow-hidden rounded-3xl border border-slate-200 bg-white">
+      <div className="grid grid-cols-1 lg:grid-cols-12 items-center">
+        <div className="lg:col-span-5 flex min-h-[420px] items-center justify-center bg-slate-50 p-8 sm:p-12">
+          <div className="flex h-72 w-72 items-center justify-center rounded-full bg-white p-5 shadow-xl">
+            <img src="/assets/parent-club/rotaract-lekhnath-logo.webp" alt="Rotaract Club of Lekhnath logo" className="h-full w-full object-contain mix-blend-multiply" />
           </div>
         </div>
-
-        {/* Card 2: Rotary Club of Lekhnath */}
-        <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 space-y-5">
-          <div className="flex items-center justify-between border-b border-slate-100 pb-4">
-            <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-blue-800 block">
-                Parent Rotary Club
-              </span>
-              <h3 className="text-xl font-bold text-slate-900 mt-1">
-                Rotary Club of Lekhnath
-              </h3>
-              <p className="text-xs text-slate-500">
-                District 3292 • Rotary International
-              </p>
-            </div>
-            <div className="px-2.5 py-1 rounded bg-blue-50 text-blue-800 text-xs font-bold border border-blue-200">
-              Patron
-            </div>
-          </div>
-
-          <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
-            The Rotary Club of Lekhnath provides the overarching umbrella of ethical counsel, project funding, 
-            and strategic mentorship for youth leadership. Through dedicated Rotarian advisors, they guide our 
-            health diagnostic camps, scholarship distributions, and professional networking seminars.
-          </p>
-
-          <div className="space-y-2 bg-slate-50 p-4 rounded-xl border border-slate-200 text-xs text-slate-700">
-            <p>• Endorsed the official charter petition to Rotary International</p>
-            <p>• Appoints official Rotarian Mentors to our Executive Board</p>
-            <p>• Grant collaboration for university blood drives and sanitation programs</p>
+        <div className="lg:col-span-7 bg-[#0A1931] p-8 sm:p-12 text-white lg:min-h-[420px] flex flex-col justify-center">
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-pink-300">Our Parent Club</p>
+          <h1 className="mt-3 text-3xl sm:text-5xl font-black">Rotaract Club of Lekhnath</h1>
+          <p className="mt-5 text-sm sm:text-base leading-7 text-slate-300">A respected community-based Rotaract club serving Lekhnath and the City of Seven Lakes. The club guided the formation of the Rotaract Club of Gandaki University and continues to support its leadership, fellowship and connection with the wider Rotaract movement.</p>
+          <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 gap-3">
+            <div className="rounded-xl border border-white/15 bg-white/5 p-4"><p className="text-[10px] uppercase text-slate-400">Club ID</p><p className="mt-1 font-bold">RILM 74801</p></div>
+            <div className="rounded-xl border border-white/15 bg-white/5 p-4"><p className="text-[10px] uppercase text-slate-400">Chartered</p><p className="mt-1 font-bold">26 January 2018</p></div>
+            <div className="rounded-xl border border-white/15 bg-white/5 p-4"><p className="text-[10px] uppercase text-slate-400">District</p><p className="mt-1 font-bold">3292</p></div>
           </div>
         </div>
       </div>
+    </section>
 
-      {/* Joint Initiatives */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 space-y-6">
-        <div>
-          <span className="text-xs font-bold text-[#D91B5C] uppercase tracking-wider block">
-            Collaborative Synergies
-          </span>
-          <h2 className="text-xl font-bold text-slate-900 mt-1">
-            Flagship Joint Initiatives
-          </h2>
-          <p className="text-xs text-slate-500 mt-0.5">
-            How Gandaki University Rotaractors and Lekhnath parent clubs unite for measurable service.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
-            <span className="text-xs font-bold text-[#D91B5C] uppercase block">Environmental</span>
-            <h4 className="text-sm font-bold text-slate-900">Begnas & Rupa Conservation</h4>
-            <p className="text-xs text-slate-600 leading-relaxed">
-              Joint environmental cleanup, tree plantation, and plastic segregation drives along lake shores 
-              involving collegiate youth volunteers.
-            </p>
-          </div>
-
-          <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
-            <span className="text-xs font-bold text-blue-800 uppercase block">Healthcare</span>
-            <h4 className="text-sm font-bold text-slate-900">Health & Blood Donation Camps</h4>
-            <p className="text-xs text-slate-600 leading-relaxed">
-              Organized biannually on Gandaki University campus with logistics co-sponsored by Rotaract 
-              and Rotary Clubs of Lekhnath and Nepal Red Cross Society.
-            </p>
-          </div>
-
-          <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
-            <span className="text-xs font-bold text-purple-800 uppercase block">Leadership</span>
-            <h4 className="text-sm font-bold text-slate-900">RYLA & Leadership Seminars</h4>
-            <p className="text-xs text-slate-600 leading-relaxed">
-              Rotary Youth Leadership Awards (RYLA) sponsorships sending promising collegiate members to 
-              regional leadership intensives across Nepal.
-            </p>
-          </div>
-        </div>
-
-        <div className="pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-slate-600">
-            View joint service projects on our interactive club calendar:
-          </p>
-          <button
-            onClick={() => setActiveTab('events')}
-            className="px-4 py-2 bg-[#D91B5C] hover:bg-[#BE123C] text-white text-xs font-bold rounded-lg transition-colors"
-          >
-            Explore Joint Events &rarr;
-          </button>
+    <section className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div className="lg:col-span-7 rounded-3xl border border-slate-200 bg-white p-7 sm:p-10">
+        <p className="text-xs font-bold uppercase tracking-wider text-[#D91B5C]">The relationship</p>
+        <h2 className="mt-2 text-2xl font-black text-slate-900">Guidance that helped establish RCGU</h2>
+        <div className="mt-5 space-y-4 text-sm leading-7 text-slate-700">
+          <p>The Rotaract Club of Lekhnath played an important role in guiding the formation of RCGU, supporting its charter leadership and helping the club build a responsible institutional foundation.</p>
+          <p>The relationship continues through leadership mentoring, joint programmes, fellowship, district and zonal participation and collaboration on community-focused projects.</p>
         </div>
       </div>
-    </div>
-  );
-};
+      <div className="lg:col-span-5 rounded-3xl border border-pink-200 bg-pink-50 p-7 sm:p-10">
+        <p className="text-xs font-bold uppercase tracking-wider text-[#D91B5C]">Shared commitment</p>
+        <h2 className="mt-2 text-2xl font-black text-slate-900">Fellowship through service</h2>
+        <p className="mt-4 text-sm leading-7 text-slate-700">Both clubs work to strengthen youth leadership, encourage responsible service and develop projects that create sustainable value across Gandaki University, Lekhnath and surrounding communities.</p>
+      </div>
+    </section>
+
+    <section className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+      <div className="grid grid-cols-1 lg:grid-cols-12">
+        <div className="lg:col-span-4 flex min-h-[420px] items-center justify-center bg-[#0A1931] p-10">
+          <div className="text-center text-white">
+            <img src="/assets/parent-club/rotaract-lekhnath-logo.webp" alt="Rotaract Club of Lekhnath" className="mx-auto h-48 w-48 rounded-full bg-white p-3 object-contain" />
+            <p className="mt-5 text-lg font-bold">Rtr. Sushant Mani Dahal</p>
+            <p className="mt-1 text-xs text-slate-300">President, Rotaract Club of Lekhnath<br />Rotary Year 2026-27</p>
+          </div>
+        </div>
+        <div className="lg:col-span-8 p-7 sm:p-10">
+          <p className="text-xs font-bold uppercase tracking-wider text-[#D91B5C]">Message from the Parent Club President</p>
+          <h2 className="mt-2 text-2xl font-black text-slate-900">Grow through leadership, fellowship and meaningful service</h2>
+          <div className="mt-5 space-y-4 text-sm leading-7 text-slate-700">
+            <p>Warm Rotaract greetings to the members of the Rotaract Club of Gandaki University. It is a privilege for the Rotaract Club of Lekhnath to stand alongside a university-based club whose members bring fresh ideas, academic knowledge and youthful energy to the Rotaract movement.</p>
+            <p>As your parent club, we remain committed to supporting your growth through guidance, fellowship and collaboration. We encourage every member to participate actively, take responsibility and develop service initiatives that respond to real community needs.</p>
+            <p>May the spirit of “Insight to Impact” guide you to transform learning into action, build a strong institutional foundation and create a legacy that future generations of Gandaki University Rotaractors will proudly continue.</p>
+          </div>
+          <div className="mt-7 border-t border-slate-200 pt-5"><p className="font-bold text-slate-900">Rtr. Sushant Mani Dahal</p><p className="text-xs text-slate-500">President, Rotaract Club of Lekhnath, RY 2026-27</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section className="rounded-3xl bg-slate-100 p-7 sm:p-10">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-5"><div><p className="text-xs font-bold uppercase tracking-wider text-[#D91B5C]">Work together</p><h2 className="mt-2 text-2xl font-black text-slate-900">Explore collaborative club activities</h2></div><button onClick={() => setActiveTab('events')} className="rounded-xl bg-[#D91B5C] px-5 py-3 text-sm font-bold text-white hover:bg-[#BE123C]">View Events and Projects</button></div>
+    </section>
+  </div>
+);

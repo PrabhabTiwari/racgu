@@ -16,6 +16,7 @@ import { RegisterModal } from './components/RegisterModal';
 import { HomePage } from './pages/HomePage';
 import { AboutPage } from './pages/AboutPage';
 import { ParentClubPage } from './pages/ParentClubPage';
+import { MessagesPage } from './pages/MessagesPage';
 import { EventsPage } from './pages/EventsPage';
 import { NoticesPage } from './pages/NoticesPage';
 import { GalleryPage } from './pages/GalleryPage';
@@ -173,6 +174,8 @@ export function App() {
         {activeTab === 'about' && <AboutPage />}
 
         {activeTab === 'parent-club' && <ParentClubPage setActiveTab={setActiveTab} />}
+
+        {activeTab === 'messages' && <MessagesPage />}
 
         {activeTab === 'events' && (
           <EventsPage

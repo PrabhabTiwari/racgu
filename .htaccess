@@ -1,9 +1,18 @@
 Options -Indexes
 RewriteEngine On
+
+# Serve Vite's production build while keeping PHP API and uploaded files at
+# their normal root URLs. Run `npm run build` after each pull.
 RewriteCond %{REQUEST_URI} !^/api/
+RewriteCond %{REQUEST_URI} !^/uploads/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(assets|members)/(.*)$ dist/$1/$2 [L]
+
+RewriteCond %{REQUEST_URI} !^/api/
+RewriteCond %{REQUEST_URI} !^/uploads/
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^ index.html [L]
+RewriteRule ^ dist/index.html [L]
 
 <FilesMatch "^(config\.php|\.env|database\.sql)$">
   Require all denied

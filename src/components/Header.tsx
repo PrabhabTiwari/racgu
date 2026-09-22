@@ -44,7 +44,7 @@ export const Header: React.FC<HeaderProps> = ({
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const isAboutActive = activeTab === 'about' || activeTab === 'parent-club';
+  const isAboutActive = activeTab === 'about' || activeTab === 'parent-club' || activeTab === 'messages';
 
   return (
     <header className="sticky top-0 z-40 bg-white border-b border-slate-200 shadow-xs">
@@ -147,6 +147,17 @@ export const Header: React.FC<HeaderProps> = ({
                     }`}
                   >
                     About Us
+                  </button>
+                  <button
+                    onClick={() => handleNavClick('messages')}
+                    id="nav-sublink-messages"
+                    className={`w-full text-left px-3.5 py-2 text-xs font-semibold ${
+                      activeTab === 'messages'
+                        ? 'bg-pink-50 text-[#D91B5C] font-bold'
+                        : 'text-slate-700 hover:bg-slate-50 hover:text-[#D91B5C]'
+                    }`}
+                  >
+                    Leadership Messages
                   </button>
                   <button
                     onClick={() => handleNavClick('parent-club')}
@@ -356,6 +367,14 @@ export const Header: React.FC<HeaderProps> = ({
               }`}
             >
               About Us
+            </button>
+            <button
+              onClick={() => handleNavClick('messages')}
+              className={`w-full text-left px-4 py-2.5 rounded-lg text-sm font-semibold ${
+                activeTab === 'messages' ? 'bg-pink-50 text-[#D91B5C]' : 'text-slate-700'
+              }`}
+            >
+              Leadership Messages
             </button>
             <button
               onClick={() => handleNavClick('parent-club')}
