@@ -14,9 +14,10 @@ export const EventsPage: React.FC<EventsPageProps> = ({
   onOpenAddEvent,
   isPstUser
 }) => {
+  const today = new Date();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [viewMode, setViewMode] = useState<'cards' | 'calendar'>('cards');
-  const [calendarMonth, setCalendarMonth] = useState<Date>(new Date(2026, 9, 1)); // Oct 2026
+  const [calendarMonth, setCalendarMonth] = useState<Date>(() => new Date(today.getFullYear(), today.getMonth(), 1));
 
   const categories: (EventCategory | 'all')[] = [
     'all',
@@ -258,7 +259,7 @@ export const EventsPage: React.FC<EventsPageProps> = ({
                 &larr; Prev
               </button>
               <button
-                onClick={() => setCalendarMonth(new Date(2026, 9, 1))}
+                onClick={() => setCalendarMonth(new Date(today.getFullYear(), today.getMonth(), 1))}
                 className="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-xs font-bold text-slate-700"
               >
                 Today
@@ -296,6 +297,7 @@ export const EventsPage: React.FC<EventsPageProps> = ({
                 const dayEvents = getEventsForDay(day);
                 const hasEvents = dayEvents.length > 0;
                 const isSelected = selectedDayNumber === day;
+                const isToday = year === today.getFullYear() && month === today.getMonth() && day === today.getDate();
 
                 return (
                   <div
@@ -304,15 +306,18 @@ export const EventsPage: React.FC<EventsPageProps> = ({
                     className={`min-h-[80px] p-2 transition-all cursor-pointer relative ${
                       isSelected
                         ? 'bg-pink-50 ring-2 ring-[#D91B5C]'
+                        : isToday
+                        ? 'bg-amber-50 ring-2 ring-amber-400 ring-inset'
                         : hasEvents
                         ? 'bg-pink-50/30 hover:bg-pink-50'
                         : 'hover:bg-slate-50'
                     }`}
                   >
                     <div className="flex items-center justify-between">
-                      <span className={`text-xs font-bold ${hasEvents ? 'text-[#D91B5C]' : 'text-slate-700'}`}>
+                      <span className={`flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold ${isToday ? 'bg-amber-500 text-white' : hasEvents ? 'text-[#D91B5C]' : 'text-slate-700'}`}>
                         {day}
                       </span>
+                      {isToday && <span className="text-[9px] font-bold uppercase text-amber-700">Today</span>}
                       {hasEvents && (
                         <span className="w-1.5 h-1.5 rounded-full bg-[#D91B5C]"></span>
                       )}

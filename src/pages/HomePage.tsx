@@ -27,8 +27,10 @@ export const HomePage: React.FC<HomePageProps> = ({
     { image: '/assets/hero/installation-fellowship.webp', label: 'Rotaract Fellowship' }
   ];
   const [activeHeroSlide, setActiveHeroSlide] = useState(0);
-  const guidingTeam = INITIAL_MEMBERS.filter(member => member.role === 'pst' || member.role === 'advisor');
+  const guidingTeam = INITIAL_MEMBERS.filter(member => member.role === 'pst' || member.role === 'bod' || member.role === 'advisor');
   const [activeGuide, setActiveGuide] = useState(0);
+  const [guidingTeamVisible, setGuidingTeamVisible] = useState(false);
+  const guidingTeamRef = useRef<HTMLElement>(null);
   const logoVideoRef = useRef<HTMLVideoElement>(null);
   const logoVideoVisibleRef = useRef(false);
   const statsRef = useRef<HTMLElement>(null);
@@ -42,11 +44,22 @@ export const HomePage: React.FC<HomePageProps> = ({
   }, [heroSlides.length]);
 
   useEffect(() => {
+    const section = guidingTeamRef.current;
+    if (!section) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      setGuidingTeamVisible(entry.isIntersecting);
+    }, { threshold: 0.25 });
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!guidingTeamVisible) return;
     const timer = window.setInterval(() => {
       setActiveGuide(current => (current + 1) % guidingTeam.length);
     }, 2000);
     return () => window.clearInterval(timer);
-  }, [guidingTeam.length]);
+  }, [guidingTeam.length, guidingTeamVisible]);
 
   useEffect(() => {
     const video = logoVideoRef.current;
@@ -419,7 +432,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       </section>
 
       {/* --- GUIDING TEAM RY 2026-27 --- */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section ref={guidingTeamRef} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="overflow-hidden rounded-3xl bg-[#0A1931] text-white shadow-sm">
           <div className="grid min-h-[390px] grid-cols-1 lg:grid-cols-12">
             <div className="lg:col-span-5 bg-white/5 p-7 sm:p-10 flex flex-col justify-between">
@@ -435,21 +448,19 @@ export const HomePage: React.FC<HomePageProps> = ({
               </div>
             </div>
 
-            <div className="lg:col-span-7 relative min-h-[390px] bg-slate-100 text-slate-900">
-              {guidingTeam.map((member, index) => (
-                <article key={member.id} className={`absolute inset-0 grid grid-cols-1 sm:grid-cols-2 transition-all duration-500 ${index === activeGuide ? 'opacity-100 translate-x-0' : 'pointer-events-none opacity-0 translate-x-4'}`} aria-hidden={index !== activeGuide}>
-                  <div className="min-h-64 overflow-hidden bg-slate-200">
-                    <img src={member.avatar} alt={member.name} className="h-full w-full object-cover object-top" />
-                  </div>
-                  <div className="flex flex-col justify-center p-7 sm:p-9 text-left">
-                    <span className="text-xs font-bold uppercase tracking-wider text-[#D91B5C]">{member.role === 'pst' ? 'Executive PST' : 'Club Advisor'}</span>
-                    <h3 className="mt-2 text-2xl font-black text-slate-900">{member.name}</h3>
-                    <p className="mt-1 text-sm font-bold text-[#D91B5C]">{member.roleTitle}</p>
-                    <p className="mt-5 text-sm leading-7 text-slate-600">{member.bio || `${member.roleTitle} guiding the club's leadership, governance and service initiatives for Rotaract Year 2026-27.`}</p>
-                    <button type="button" onClick={() => setActiveTab('team')} className="mt-6 w-fit rounded-lg border border-slate-300 px-4 py-2 text-xs font-bold text-slate-800 hover:border-[#D91B5C] hover:text-[#D91B5C]">View Full Team</button>
-                  </div>
-                </article>
-              ))}
+            <div className="lg:col-span-7 min-h-[390px] bg-slate-100 text-slate-900">
+              <article key={guidingTeam[activeGuide].id} className="grid min-h-[390px] grid-cols-1 sm:grid-cols-2 animate-in fade-in duration-300">
+                <div className="min-h-64 overflow-hidden bg-slate-200">
+                  <img src={guidingTeam[activeGuide].avatar} alt={guidingTeam[activeGuide].name} className="h-full w-full object-cover object-top" />
+                </div>
+                <div className="flex flex-col justify-center p-7 sm:p-9 text-left">
+                  <span className="text-xs font-bold uppercase tracking-wider text-[#D91B5C]">{guidingTeam[activeGuide].role === 'pst' ? 'Executive PST' : guidingTeam[activeGuide].role === 'bod' ? 'Board of Directors' : 'Club Advisor'}</span>
+                  <h3 className="mt-2 text-2xl font-black text-slate-900">{guidingTeam[activeGuide].name}</h3>
+                  <p className="mt-1 text-sm font-bold text-[#D91B5C]">{guidingTeam[activeGuide].roleTitle}</p>
+                  <p className="mt-5 text-sm leading-7 text-slate-600">{guidingTeam[activeGuide].bio || `${guidingTeam[activeGuide].roleTitle} guiding the club's leadership, governance and service initiatives for Rotaract Year 2026-27.`}</p>
+                  <button type="button" onClick={() => setActiveTab('team')} className="mt-6 w-fit rounded-lg border border-slate-300 px-4 py-2 text-xs font-bold text-slate-800 hover:border-[#D91B5C] hover:text-[#D91B5C]">View Full Team</button>
+                </div>
+              </article>
             </div>
           </div>
         </div>

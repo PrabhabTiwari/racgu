@@ -106,7 +106,7 @@ export const TeamPage: React.FC<TeamPageProps> = ({ members }) => {
             </div>
             <div className="bg-white/10 rounded-xl p-3 text-center border border-white/10">
               <span className="text-xl font-bold text-emerald-300 block">{generalMembers.length}</span>
-              <span className="text-[11px] text-slate-300">Collegiate Members</span>
+              <span className="text-[11px] text-slate-300">Members</span>
             </div>
           </div>
         </div>
@@ -120,7 +120,7 @@ export const TeamPage: React.FC<TeamPageProps> = ({ members }) => {
             { id: 'all', label: `All Members (${members.length})` },
             { id: 'pst', label: `PST Executives (${pstMembers.length})` },
             { id: 'bod', label: `Board of Directors (${bodMembers.length})` },
-            { id: 'member', label: `Collegiate Members (${generalMembers.length})` },
+            { id: 'member', label: `Members (${generalMembers.length})` },
             { id: 'advisor', label: `Advisors (${advisorMembers.length})` },
           ].map((tab) => (
             <button
