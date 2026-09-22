@@ -57,7 +57,7 @@ export const MessagesPage: React.FC = () => (
       <p>May your leadership inspire excellence, your service create enduring impact and your fellowship continue to strengthen the Rotaract movement.</p>
     </MessageBlock>
 
-    <MessageBlock eyebrow="Message from the Charter President" title="Insight must become purposeful action" name="Rtr. Prabhab Tiwari" designation="Charter President, Rotaract Club of Gandaki University, RY 2026-27" image="/members/prabhab-portrait.webp">
+    <MessageBlock eyebrow="Message from the Charter President" title="Insight must become purposeful action" name="Rtr. Prabhab Tiwari" designation="Charter President, Rotaract Club of Gandaki University, RY 2026-27" image="/members/prabhabpp.JPG">
       <p>It is an honor and privilege to serve as the Charter President of the Rotaract Club of Gandaki University. Our club was founded with a shared commitment to service, leadership, fellowship and creating meaningful change.</p>
       <p>Our charter theme, <strong>“Insight to Impact,”</strong> represents our belief that understanding must lead to purposeful action. Through our projects, collaborations and initiatives, we aim to transform ideas into positive outcomes for our university and the wider community.</p>
       <p>As a charter club, we have the responsibility of building a strong, inclusive and sustainable foundation for future generations of Rotaractors at Gandaki University. I am sincerely grateful to Gandaki University, our parent club, the Rotaract Club of Lekhnath, Rotaract District 3292, our mentors, faculty members, well-wishers and every charter member for their support.</p>
