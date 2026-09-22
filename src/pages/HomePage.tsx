@@ -27,6 +27,7 @@ export const HomePage: React.FC<HomePageProps> = ({
   ];
   const [activeHeroSlide, setActiveHeroSlide] = useState(0);
   const logoVideoRef = useRef<HTMLVideoElement>(null);
+  const logoVideoVisibleRef = useRef(false);
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -38,16 +39,46 @@ export const HomePage: React.FC<HomePageProps> = ({
   useEffect(() => {
     const video = logoVideoRef.current;
     if (!video) return;
+
+    const playVideo = () => {
+      if (!logoVideoVisibleRef.current || document.hidden) return;
+      video.muted = true;
+      void video.play().catch(() => {
+        // Some browsers need a second attempt after media data is ready.
+        window.setTimeout(() => {
+          if (logoVideoVisibleRef.current && !document.hidden) {
+            void video.play().catch(() => undefined);
+          }
+        }, 250);
+      });
+    };
+
     const observer = new IntersectionObserver(([entry]) => {
+      logoVideoVisibleRef.current = entry.isIntersecting;
       if (entry.isIntersecting) {
-        video.muted = true;
-        void video.play().catch(() => undefined);
+        playVideo();
       } else {
         video.pause();
       }
-    }, { threshold: 0.35 });
+    }, { threshold: 0.15 });
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) video.pause();
+      else playVideo();
+    };
+
+    video.addEventListener('loadeddata', playVideo);
+    video.addEventListener('canplay', playVideo);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
     observer.observe(video);
-    return () => observer.disconnect();
+    video.load();
+
+    return () => {
+      observer.disconnect();
+      video.removeEventListener('loadeddata', playVideo);
+      video.removeEventListener('canplay', playVideo);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
   }, []);
 
   return (
@@ -166,14 +197,19 @@ export const HomePage: React.FC<HomePageProps> = ({
               <video
                 ref={logoVideoRef}
                 className="block w-full aspect-video object-cover"
-                src="/assets/official/racgu-logo-reveal.mp4"
                 poster="/assets/official/racgu-letterhead.webp"
+                autoPlay
                 muted
                 loop
                 playsInline
                 preload="auto"
+                onEnded={event => {
+                  event.currentTarget.currentTime = 0;
+                  void event.currentTarget.play().catch(() => undefined);
+                }}
                 aria-label="Official Rotaract Club of Gandaki University logo reveal"
               >
+                <source src="/assets/official/racgu-logo-reveal.mp4" type="video/mp4" />
                 Your browser does not support the official club logo reveal video.
               </video>
             </div>
