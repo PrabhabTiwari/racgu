@@ -41,16 +41,16 @@ export const Footer: React.FC<FooterProps> = ({ setActiveTab }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Col 1: Club Identity */}
           <div className="space-y-3">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-4">
               <img 
                 src="/assets/official/racgu-official-logo.webp"
                 alt="Rotaract Club of Gandaki University" 
-                className="h-10 w-auto object-contain"
+                className="h-16 w-16 rounded-lg bg-white p-1 object-contain"
               />
               <img 
                 src="/assets/official/insight-to-impact.webp"
                 alt="Insight to Impact Theme" 
-                className="h-8 w-auto object-contain"
+                className="h-16 max-w-32 rounded-lg bg-white p-1 object-contain"
               />
             </div>
             <div>
@@ -58,17 +58,17 @@ export const Footer: React.FC<FooterProps> = ({ setActiveTab }) => {
                 Rotaract Club of Gandaki University
               </h3>
               <p className="text-xs text-slate-400 mt-1 leading-relaxed">
-                Chartered 22nd January 2026. RI Club ID: 8828026. Zone XVI, RID 3292. Sponsored by Rotaract Club of Lekhnath.
+                Chartered on: 22nd January 2026. Club No. 8828026. Zone XVI, District 3292. Sponsored by Rotaract Club of Lekhnath.
               </p>
             </div>
-            <div className="text-xs text-pink-300">
+            <div className="text-xs text-slate-300">
               Presidential Theme: "Insight to Impact"
             </div>
           </div>
 
           {/* Col 2: Quick Links */}
           <div>
-            <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-3 text-pink-400">
+            <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-3">
               Navigation
             </h4>
             <ul className="space-y-1.5 text-xs">
@@ -78,8 +78,8 @@ export const Footer: React.FC<FooterProps> = ({ setActiveTab }) => {
                 </button>
               </li>
               <li>
-                <button onClick={() => { setActiveTab('parent-club'); window.scrollTo({top: 0, behavior: 'smooth'}); }} className="hover:text-white transition-colors text-pink-300 font-semibold">
-                  Parent Club: RAC Lekhnath
+                <button onClick={() => { setActiveTab('parent-club'); window.scrollTo({top: 0, behavior: 'smooth'}); }} className="hover:text-white transition-colors">
+                  Parent Club: Rotaract Club of Lekhnath
                 </button>
               </li>
               <li>
@@ -98,7 +98,7 @@ export const Footer: React.FC<FooterProps> = ({ setActiveTab }) => {
                 </button>
               </li>
               <li>
-                <button onClick={() => { setActiveTab('portal'); window.scrollTo({top: 0, behavior: 'smooth'}); }} className="hover:text-white transition-colors text-[#D91B5C] font-bold">
+                <button onClick={() => { setActiveTab('portal'); window.scrollTo({top: 0, behavior: 'smooth'}); }} className="hover:text-white transition-colors">
                   Member & PST Portal
                 </button>
               </li>
@@ -107,7 +107,7 @@ export const Footer: React.FC<FooterProps> = ({ setActiveTab }) => {
 
           {/* Col 3: Avenues of Service */}
           <div>
-            <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-3 text-pink-400">
+            <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-3">
               Avenues of Service
             </h4>
             <ul className="space-y-1.5 text-xs text-slate-400">
@@ -121,7 +121,7 @@ export const Footer: React.FC<FooterProps> = ({ setActiveTab }) => {
 
           {/* Col 4: Secretariat & Campus Office */}
           <div>
-            <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-3 text-pink-400">
+            <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-3">
               Club Secretariat
             </h4>
             <div className="space-y-2 text-xs text-slate-300">
@@ -140,7 +140,7 @@ export const Footer: React.FC<FooterProps> = ({ setActiveTab }) => {
         {/* Bottom copyright */}
         <div className="mt-8 pt-4 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-400">
           <p>© {currentYear} Rotaract Club of Gandaki University. All rights reserved.</p>
-          <p className="text-[11px] text-slate-400">Chartered 22 Jan 2026 • Pokhara, Nepal</p>
+          <p className="text-[11px] text-slate-400">Chartered on: 22 January 2026 • Pokhara, Nepal</p>
         </div>
       </div>
     </footer>

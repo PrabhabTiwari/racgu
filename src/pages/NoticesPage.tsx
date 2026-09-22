@@ -35,7 +35,7 @@ ${n.content}
 
 ---------------------------------------------------
 Attachment: ${n.attachmentName || 'None'}
-Verified by: Secretariat, RAC Gandaki University
+Verified by: Secretariat, RACGU
 Club ID: 8828026 • RID 3292 Zone XVI`;
 
     const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });

@@ -49,27 +49,23 @@ export const Header: React.FC<HeaderProps> = ({
   return (
     <header className="sticky top-0 z-40 bg-white border-b border-slate-200 shadow-xs">
       {/* --- TOP THEME BAR --- */}
-      <div className="bg-[#0A1931] text-slate-200 text-xs py-1.5 px-4 border-b border-slate-800">
-        <div className="max-w-7xl mx-auto flex items-center justify-between text-xs">
-          <div className="flex items-center gap-2">
-            <span className="text-amber-400 font-bold uppercase tracking-wider text-[11px]">
-              Rotaract Club of Gandaki University
-            </span>
-            <span className="text-slate-500 hidden sm:inline">•</span>
-            <span className="text-slate-300 hidden sm:inline text-[11px]">
-              Chartered: 22nd January 2026
-            </span>
+      <div className="bg-[#0A1931] text-white text-xs px-4 border-b border-slate-800">
+        <div className="max-w-7xl mx-auto min-h-9 py-1.5 flex flex-wrap items-center justify-center lg:justify-between gap-x-5 gap-y-1 text-[10px] sm:text-[11px] font-semibold">
+          <div className="flex flex-wrap items-center justify-center lg:justify-start gap-x-3 gap-y-1">
+            <span className="text-amber-400 font-bold uppercase tracking-wide">Rotaract Club of Gandaki University</span>
+            <span>Zone XVI</span>
+            <span>District 3292</span>
+            <span>Sponsored by: Rotaract Club of Lekhnath</span>
+            <span>Club No. 8828026</span>
           </div>
 
-          <div className="flex items-center gap-3">
-            <span className="text-slate-400 text-[11px] hidden md:inline">
-              RY 2026-27 Theme:
-            </span>
-            <div className="h-6 flex items-center bg-white/10 px-2 py-0.5 rounded border border-white/10">
+          <div className="flex items-center gap-2 shrink-0">
+            <span>RY 2026-27 Theme: Insight to Impact</span>
+            <div className="h-7 flex items-center bg-white px-2 py-0.5 rounded border border-white/20">
               <img 
                 src="/assets/official/insight-to-impact.webp"
                 alt="Insight to Impact" 
-                className="h-4 w-auto object-contain"
+                className="h-5 w-auto object-contain"
               />
             </div>
           </div>
@@ -91,14 +87,9 @@ export const Header: React.FC<HeaderProps> = ({
               alt="Rotaract Club of Gandaki University Logo" 
               className="w-14 h-14 object-contain shrink-0"
             />
-            <div className="flex flex-col text-left leading-tight">
-              <span className="text-base sm:text-lg font-black text-slate-900 tracking-tight">
-                Rotaract Club
-              </span>
-              <span className="text-xs sm:text-sm font-bold text-[#D91B5C] tracking-wide uppercase">
-                Gandaki University
-              </span>
-            </div>
+            <span className="max-w-[190px] sm:max-w-[260px] text-[11px] sm:text-sm font-black leading-tight text-slate-900 tracking-wide uppercase text-left">
+              Rotaract Club of Gandaki University
+            </span>
           </div>
 
           {/* Desktop Direct Nav Links (No hamburger on PC) */}

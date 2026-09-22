@@ -25,9 +25,9 @@ export const ParentClubPage: React.FC<{ setActiveTab: (tab: string) => void }> =
     <section className="grid grid-cols-1 lg:grid-cols-12 gap-6">
       <div className="lg:col-span-7 rounded-3xl border border-slate-200 bg-white p-7 sm:p-10">
         <p className="text-xs font-bold uppercase tracking-wider text-[#D91B5C]">The relationship</p>
-        <h2 className="mt-2 text-2xl font-black text-slate-900">Guidance that helped establish RCGU</h2>
+        <h2 className="mt-2 text-2xl font-black text-slate-900">Guidance that helped establish RACGU</h2>
         <div className="mt-5 space-y-4 text-sm leading-7 text-slate-700">
-          <p>The Rotaract Club of Lekhnath played an important role in guiding the formation of RCGU, supporting its charter leadership and helping the club build a responsible institutional foundation.</p>
+          <p>The Rotaract Club of Lekhnath played an important role in guiding the formation of RACGU, supporting its charter leadership and helping the club build a responsible institutional foundation.</p>
           <p>The relationship continues through leadership mentoring, joint programmes, fellowship, district and zonal participation and collaboration on community-focused projects.</p>
         </div>
       </div>

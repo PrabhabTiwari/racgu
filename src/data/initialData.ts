@@ -516,7 +516,7 @@ export const INITIAL_DOCUMENTS: ClubDocument[] = [
   },
   {
     id: 'doc-2',
-    title: 'Charter Constitution & Bylaws of RAC Gandaki University',
+    title: 'Charter Constitution & Bylaws of RACGU',
     category: 'Club Bylaws',
     uploadedBy: 'Rtr. Prabhab Tiwari (Charter President)',
     uploadedRole: 'PST President',
@@ -603,7 +603,7 @@ export const INITIAL_GALLERY: GalleryPhoto[] = [
     date: '2026-07-20',
     imageUrl: 'https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&q=80&w=900',
     category: 'Club Service',
-    caption: 'Honoring the mentorship of parent clubs Rotaract Club of Lekhnath and Rotary Club of Lekhnath.'
+    caption: 'Honoring the mentorship and fellowship of our parent club, Rotaract Club of Lekhnath.'
   },
   {
     id: 'gal-5',
