@@ -28,6 +28,8 @@ export const HomePage: React.FC<HomePageProps> = ({
   const [activeHeroSlide, setActiveHeroSlide] = useState(0);
   const logoVideoRef = useRef<HTMLVideoElement>(null);
   const logoVideoVisibleRef = useRef(false);
+  const statsRef = useRef<HTMLElement>(null);
+  const [stats, setStats] = useState({ members: 0, bod: 0, projects: 0 });
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -78,6 +80,41 @@ export const HomePage: React.FC<HomePageProps> = ({
       video.removeEventListener('loadeddata', playVideo);
       video.removeEventListener('canplay', playVideo);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, []);
+
+  useEffect(() => {
+    const section = statsRef.current;
+    if (!section) return;
+    let frame = 0;
+    let hasAnimated = false;
+    const targets = { members: 22, bod: 13, projects: 18 };
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting || hasAnimated) return;
+      hasAnimated = true;
+      const startedAt = performance.now();
+      const duration = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 1200;
+
+      const animate = (now: number) => {
+        const progress = duration === 0 ? 1 : Math.min((now - startedAt) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        setStats({
+          members: Math.round(targets.members * eased),
+          bod: Math.round(targets.bod * eased),
+          projects: Math.round(targets.projects * eased)
+        });
+        if (progress < 1) frame = requestAnimationFrame(animate);
+      };
+
+      frame = requestAnimationFrame(animate);
+      observer.disconnect();
+    }, { threshold: 0.3 });
+
+    observer.observe(section);
+    return () => {
+      observer.disconnect();
+      cancelAnimationFrame(frame);
     };
   }, []);
 
@@ -225,26 +262,21 @@ export const HomePage: React.FC<HomePageProps> = ({
       </section>
 
       {/* --- STATS COUNTER --- */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <section ref={statsRef} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div className="bg-white p-5 rounded-xl border border-slate-200 text-center space-y-1">
-            <p className="text-2xl sm:text-3xl font-black text-slate-900">22</p>
+            <p className="text-2xl sm:text-3xl font-black text-slate-900">{stats.members}</p>
             <p className="text-xs font-bold text-slate-500 uppercase tracking-wide">Charter Roster Members</p>
           </div>
 
           <div className="bg-white p-5 rounded-xl border border-slate-200 text-center space-y-1">
-            <p className="text-2xl sm:text-3xl font-black text-[#D91B5C]">13</p>
+            <p className="text-2xl sm:text-3xl font-black text-[#D91B5C]">{stats.bod}</p>
             <p className="text-xs font-bold text-slate-500 uppercase tracking-wide">Board Directors (BOD)</p>
           </div>
 
           <div className="bg-white p-5 rounded-xl border border-slate-200 text-center space-y-1">
-            <p className="text-2xl sm:text-3xl font-black text-slate-900">18+</p>
+            <p className="text-2xl sm:text-3xl font-black text-slate-900">{stats.projects}+</p>
             <p className="text-xs font-bold text-slate-500 uppercase tracking-wide">Planned Projects</p>
-          </div>
-
-          <div className="bg-white p-5 rounded-xl border border-slate-200 text-center space-y-1">
-            <p className="text-2xl sm:text-3xl font-black text-[#D91B5C]">3,500+</p>
-            <p className="text-xs font-bold text-slate-500 uppercase tracking-wide">Community Impact</p>
           </div>
         </div>
       </section>
