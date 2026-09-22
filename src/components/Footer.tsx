@@ -99,7 +99,7 @@ export const Footer: React.FC<FooterProps> = ({ setActiveTab }) => {
               </li>
               <li>
                 <button onClick={() => { setActiveTab('portal'); window.scrollTo({top: 0, behavior: 'smooth'}); }} className="hover:text-white transition-colors">
-                  Member & PST Portal
+                  Member Portal
                 </button>
               </li>
             </ul>

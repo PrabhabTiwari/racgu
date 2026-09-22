@@ -642,12 +642,23 @@ Gandaki University Campus, Pokhara-32, Kaski, Nepal
                   </div>
 
                   <div className="flex items-center gap-2 shrink-0">
-                    <button
-                      onClick={() => setSelectedEventAttendees(ev)}
-                      className="px-3 py-1.5 rounded border border-slate-300 hover:bg-slate-50 text-slate-700 text-xs font-bold"
-                    >
-                      Attendees ({registrations.filter(r => r.eventId === ev.id).length})
-                    </button>
+                    {!isPst && (
+                      <button
+                        onClick={() => setActiveTab('events')}
+                        className="px-3 py-1.5 rounded bg-[#D91B5C] hover:bg-[#BE123C] text-white text-xs font-bold"
+                      >
+                        Register
+                      </button>
+                    )}
+
+                    {isPst && (
+                      <button
+                        onClick={() => setSelectedEventAttendees(ev)}
+                        className="px-3 py-1.5 rounded border border-slate-300 hover:bg-slate-50 text-slate-700 text-xs font-bold"
+                      >
+                        Attendees ({registrations.filter(r => r.eventId === ev.id).length})
+                      </button>
+                    )}
 
                     {isPst && (
                       <>
@@ -672,7 +683,7 @@ Gandaki University Campus, Pokhara-32, Kaski, Nepal
           </div>
 
           {/* Attendees Modal */}
-          {selectedEventAttendees && (
+          {isPst && selectedEventAttendees && (
             <div className="fixed inset-0 z-50 bg-slate-900/50 flex items-center justify-center p-4">
               <div className="bg-white rounded-2xl border border-slate-200 max-w-2xl w-full p-6 space-y-4">
                 <div className="flex items-center justify-between border-b border-slate-100 pb-3">

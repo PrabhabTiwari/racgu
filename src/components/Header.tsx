@@ -262,7 +262,7 @@ export const Header: React.FC<HeaderProps> = ({
                       <p className="text-xs font-bold text-slate-800">{currentUser.name}</p>
                       <p className="text-[11px] text-slate-500">{currentUser.roleTitle}</p>
                       <span className="inline-block mt-1 text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-pink-100 text-[#D91B5C]">
-                        {currentUser.role.toUpperCase()}
+                        {currentUser.role === 'pst' ? 'PST' : 'MEMBER'}
                       </span>
                     </div>
 
@@ -273,7 +273,7 @@ export const Header: React.FC<HeaderProps> = ({
                         }}
                         className="w-full px-4 py-2 text-left text-xs font-semibold text-slate-700 hover:bg-pink-50 hover:text-[#D91B5C]"
                       >
-                        Member & PST Vault
+                        {currentUser.role === 'pst' ? 'PST Portal' : 'Member Portal'}
                       </button>
                     </div>
 
@@ -428,7 +428,7 @@ export const Header: React.FC<HeaderProps> = ({
                 onClick={() => handleNavClick('portal')}
                 className="w-full py-2 bg-[#D91B5C] text-white text-xs font-bold rounded text-center"
               >
-                Member & PST Vault ({currentUser.role.toUpperCase()})
+                {currentUser.role === 'pst' ? 'PST Portal' : 'Member Portal'}
               </button>
             </div>
           )}

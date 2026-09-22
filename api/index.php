@@ -221,7 +221,7 @@ try {
         if (!$sessionUser) reply(401, ['success' => false, 'error' => 'Member login required.']);
         $rows = $pdo->query('SELECT payload FROM registrations ORDER BY created_at DESC')->fetchAll();
         $registrations = array_map(fn($r) => json_decode($r['payload'], true), $rows);
-        if (!in_array($sessionUser['role'] ?? '', ['pst', 'bod'], true)) {
+        if (($sessionUser['role'] ?? '') !== 'pst') {
             $userId = (string)($sessionUser['id'] ?? '');
             $userEmail = strtolower((string)($sessionUser['email'] ?? ''));
             $registrations = array_values(array_filter($registrations, static fn($r) =>
