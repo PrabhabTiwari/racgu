@@ -69,8 +69,7 @@ export const ContactPage: React.FC = () => {
 
               <div className="pt-3">
                 <strong className="block text-slate-900 font-semibold mb-0.5">Official Inquiries:</strong>
-                <p>rotaract@gandaki.edu.np</p>
-                <p className="text-slate-400">president.racgu@gandaki.edu.np</p>
+                <a className="text-[#D91B5C] hover:underline" href="mailto:racgandakiuniversity@gmail.com">racgandakiuniversity@gmail.com</a>
               </div>
 
               <div className="pt-3">

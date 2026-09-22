@@ -54,6 +54,7 @@ export const PortalPage: React.FC<PortalPageProps> = ({
 
   // Event form state
   const [showEventForm, setShowEventForm] = useState(false);
+  const [eventCoverFile, setEventCoverFile] = useState<File | null>(null);
   const [editingEventId, setEditingEventId] = useState<string | null>(null);
   const [eventFormData, setEventFormData] = useState<Partial<ClubEvent>>({
     title: '',
@@ -71,6 +72,7 @@ export const PortalPage: React.FC<PortalPageProps> = ({
 
   // Document form state
   const [showDocForm, setShowDocForm] = useState(false);
+  const [documentFile, setDocumentFile] = useState<File | null>(null);
   const [docFormData, setDocFormData] = useState<Partial<ClubDocument>>({
     title: '',
     category: 'Meeting Minutes',
@@ -118,7 +120,19 @@ export const PortalPage: React.FC<PortalPageProps> = ({
       return;
     }
 
-    // Generate real client-side downloadable file
+    if (doc.downloadUrl && doc.downloadUrl !== '#download') {
+      const link = document.createElement('a');
+      link.href = doc.downloadUrl;
+      link.download = doc.title;
+      link.target = '_blank';
+      link.rel = 'noopener';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      return;
+    }
+
+    // Preserve a text download for older records that have no uploaded file.
     const fileContent = `=====================================================
 ROTARACT CLUB OF GANDAKI UNIVERSITY (RID 3292, Zone XVI)
 Official Document Repository - Club No. 8828026
@@ -161,15 +175,22 @@ Gandaki University Campus, Pokhara-32, Kaski, Nepal
       return;
     }
 
-    if (editingEventId) {
-      await onUpdateEvent(editingEventId, eventFormData);
-      flashMessage(`Event "${eventFormData.title}" updated successfully.`);
-      setEditingEventId(null);
-    } else {
-      await onAddEvent(eventFormData);
-      flashMessage(`New event "${eventFormData.title}" created.`);
+    try {
+      const image = eventCoverFile ? await clubApi.uploadEventCover(eventCoverFile) : eventFormData.image;
+      const payload = { ...eventFormData, image };
+      if (editingEventId) {
+        await onUpdateEvent(editingEventId, payload);
+        flashMessage(`Event "${eventFormData.title}" updated successfully.`);
+        setEditingEventId(null);
+      } else {
+        await onAddEvent(payload);
+        flashMessage(`New event "${eventFormData.title}" created.`);
+      }
+      setEventCoverFile(null);
+      setShowEventForm(false);
+    } catch (error) {
+      flashMessage(error instanceof Error ? error.message : 'The event could not be saved.');
     }
-    setShowEventForm(false);
   };
 
   const startEditEvent = (ev: ClubEvent) => {
@@ -204,21 +225,27 @@ Gandaki University Campus, Pokhara-32, Kaski, Nepal
       alert('Only Executive PST can upload official documents to the vault.');
       return;
     }
-    await onUploadDocument({
-      ...docFormData,
-      uploadedBy: `${currentUser.name} (${currentUser.roleTitle})`,
-      uploadedRole: currentUser.role.toUpperCase()
-    });
-    flashMessage(`Document "${docFormData.title}" uploaded to the vault.`);
-    setShowDocForm(false);
-    setDocFormData({
-      title: '',
-      category: 'Meeting Minutes',
-      fileSize: '1.4 MB',
-      fileType: 'PDF',
-      isPstOnly: false,
-      summary: ''
-    });
+    if (!documentFile) {
+      flashMessage('Select a document file before uploading.');
+      return;
+    }
+    try {
+      const uploaded = await clubApi.uploadDocumentFile(documentFile);
+      await onUploadDocument({
+        ...docFormData,
+        downloadUrl: uploaded.url,
+        fileSize: uploaded.size,
+        fileType: uploaded.type as ClubDocument['fileType'],
+        uploadedBy: `${currentUser.name} (${currentUser.roleTitle})`,
+        uploadedRole: currentUser.role.toUpperCase()
+      });
+      flashMessage(`Document "${docFormData.title}" uploaded to the vault.`);
+      setDocumentFile(null);
+      setShowDocForm(false);
+      setDocFormData({ title: '', category: 'Meeting Minutes', fileSize: '1.4 MB', fileType: 'PDF', isPstOnly: false, summary: '' });
+    } catch (error) {
+      flashMessage(error instanceof Error ? error.message : 'Document upload failed.');
+    }
   };
 
   const handleSaveNotice = async (e: React.FormEvent) => {
@@ -548,6 +575,17 @@ Gandaki University Campus, Pokhara-32, Kaski, Nepal
                 ></textarea>
               </div>
 
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1">Event Cover Photo</label>
+                <input
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp"
+                  onChange={(e) => setEventCoverFile(e.target.files?.[0] || null)}
+                  className="w-full px-3 py-2 text-xs border border-slate-300 rounded bg-white text-slate-800 file:mr-3 file:border-0 file:rounded file:bg-pink-50 file:px-3 file:py-1 file:text-[#D91B5C] file:font-bold"
+                />
+                <p className="mt-1 text-[11px] text-slate-500">JPG, PNG or WebP, maximum 8 MB. When editing, leave empty to retain the current cover.</p>
+              </div>
+
               <div className="flex gap-2">
                 <button
                   type="submit"
@@ -605,7 +643,7 @@ Gandaki University Campus, Pokhara-32, Kaski, Nepal
                       onClick={() => setSelectedEventAttendees(ev)}
                       className="px-3 py-1.5 rounded border border-slate-300 hover:bg-slate-50 text-slate-700 text-xs font-bold"
                     >
-                      Attendees ({ev.registeredMembers.length})
+                      Attendees ({registrations.filter(r => r.eventId === ev.id).length})
                     </button>
 
                     {isPst && (
@@ -640,7 +678,7 @@ Gandaki University Campus, Pokhara-32, Kaski, Nepal
                       Attendees Roster: {selectedEventAttendees.title}
                     </h3>
                     <p className="text-xs text-slate-500">
-                      Total Registered: {selectedEventAttendees.registeredMembers.length}
+                      Total Registered: {registrations.filter(r => r.eventId === selectedEventAttendees.id).length}
                     </p>
                   </div>
                   <button
@@ -651,18 +689,18 @@ Gandaki University Campus, Pokhara-32, Kaski, Nepal
                   </button>
                 </div>
 
-                {selectedEventAttendees.registeredMembers.length === 0 ? (
+                {registrations.filter(r => r.eventId === selectedEventAttendees.id).length === 0 ? (
                   <p className="text-xs text-slate-500 py-4 text-center">
                     No members have registered for this event yet.
                   </p>
                 ) : (
                   <div className="max-h-72 overflow-y-auto divide-y divide-slate-100 text-xs">
-                    {selectedEventAttendees.registeredMembers.map((attendeeId, i) => {
+                    {registrations.filter(r => r.eventId === selectedEventAttendees.id).map((regRecord, i) => {
+                      const attendeeId = regRecord.memberId;
                       const foundMember = INITIAL_MEMBERS.find(m => m.id === attendeeId);
-                      const regRecord = registrations.find(r => r.eventId === selectedEventAttendees.id && r.memberId === attendeeId);
-                      const name = foundMember ? foundMember.name : (regRecord ? regRecord.memberName : `Member ${attendeeId}`);
-                      const email = foundMember ? foundMember.email : (regRecord ? regRecord.memberEmail : 'N/A');
-                      const phone = foundMember ? foundMember.phone : (regRecord ? regRecord.memberPhone : 'N/A');
+                      const name = foundMember?.name || regRecord.memberName;
+                      const email = foundMember?.email || regRecord.memberEmail;
+                      const phone = foundMember?.phone || regRecord.memberPhone;
                       const faculty = foundMember ? foundMember.faculty : 'Gandaki University';
 
                       return (
@@ -758,14 +796,15 @@ Gandaki University Campus, Pokhara-32, Kaski, Nepal
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">File Format / Size</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">Document File *</label>
                   <input
-                    type="text"
-                    value={docFormData.fileSize}
-                    onChange={(e) => setDocFormData({ ...docFormData, fileSize: e.target.value })}
-                    placeholder="e.g. 1.8 MB (PDF)"
-                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded bg-white text-slate-800"
+                    type="file"
+                    required
+                    accept=".pdf,.doc,.docx,.xls,.xlsx,.zip"
+                    onChange={(e) => setDocumentFile(e.target.files?.[0] || null)}
+                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded bg-white text-slate-800 file:mr-3 file:border-0 file:rounded file:bg-pink-50 file:px-3 file:py-1 file:text-[#D91B5C] file:font-bold"
                   />
+                  <p className="mt-1 text-[11px] text-slate-500">PDF, Word, Excel or ZIP, maximum 15 MB.</p>
                 </div>
 
                 <div className="flex items-center gap-2 pt-6">

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ClubEvent, ClubNotice, UserProfile } from '../types';
 
 interface HomePageProps {
@@ -26,6 +26,7 @@ export const HomePage: React.FC<HomePageProps> = ({
     { image: '/assets/hero/installation-fellowship.webp', label: 'Rotaract Fellowship' }
   ];
   const [activeHeroSlide, setActiveHeroSlide] = useState(0);
+  const logoVideoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -33,6 +34,21 @@ export const HomePage: React.FC<HomePageProps> = ({
     }, 5500);
     return () => window.clearInterval(timer);
   }, [heroSlides.length]);
+
+  useEffect(() => {
+    const video = logoVideoRef.current;
+    if (!video) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        video.muted = true;
+        void video.play().catch(() => undefined);
+      } else {
+        video.pause();
+      }
+    }, { threshold: 0.35 });
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div className="space-y-12 pb-16">
@@ -148,14 +164,14 @@ export const HomePage: React.FC<HomePageProps> = ({
           <div className="grid grid-cols-1 lg:grid-cols-12 items-center">
             <div className="lg:col-span-8 bg-black">
               <video
+                ref={logoVideoRef}
                 className="block w-full aspect-video object-cover"
                 src="/assets/official/racgu-logo-reveal.mp4"
                 poster="/assets/official/racgu-letterhead.webp"
-                autoPlay
                 muted
                 loop
                 playsInline
-                preload="metadata"
+                preload="auto"
                 aria-label="Official Rotaract Club of Gandaki University logo reveal"
               >
                 Your browser does not support the official club logo reveal video.
@@ -201,11 +217,11 @@ export const HomePage: React.FC<HomePageProps> = ({
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
           <div className="grid grid-cols-1 lg:grid-cols-12">
-            <div className="lg:col-span-4 relative min-h-[520px] bg-[#0A1931] overflow-hidden">
+            <div className="lg:col-span-4 relative bg-[#0A1931] overflow-hidden self-start">
               <img
                 src="/members/prabhab-portrait.webp"
                 alt="Rtr. Prabhab Tiwari, Charter President"
-                className="absolute inset-0 w-full h-full object-contain object-bottom"
+                className="block w-full h-auto object-contain"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#07152d] via-[#07152d]/20 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8 text-white text-left">
@@ -223,13 +239,10 @@ export const HomePage: React.FC<HomePageProps> = ({
                 Building a Foundation for Service, Leadership and Lasting Impact
               </h4>
               <div className="mt-5 space-y-4 text-sm text-slate-700 leading-7">
-                <p>It is both an honor and a privilege to serve as the Charter President of the Rotaract Club of Gandaki University. The establishment of our club marks the beginning of a new journey—one built on service, leadership, fellowship, and a shared commitment to creating meaningful change.</p>
-                <p>As a university-based Rotaract Club, we believe that young people have the potential not only to imagine a better future but also to actively build it. Our club provides a platform where students can develop leadership skills, exchange ideas, serve communities, build lasting friendships, and transform their knowledge into meaningful action.</p>
-                <p>Our charter theme, <strong className="text-[#D91B5C]">“Insight to Impact,”</strong> reflects the spirit of our journey. Insight begins with understanding the challenges around us, while impact is created when that understanding is transformed into purposeful action. Through every project, meeting, collaboration, and service initiative, we aim to turn ideas into outcomes that positively influence both our university and the wider community.</p>
-                <p>Being a charter club also brings a special responsibility. We are not simply leading a club for one Rotaract year; we are building the foundation upon which future generations of Rotaractors at Gandaki University will stand. Our priority is therefore to create a strong, inclusive, disciplined, and sustainable institution where every member is encouraged to participate, lead, learn, and grow.</p>
-                <p>I am deeply grateful to Gandaki University for its support, to our sponsoring club, the Rotaract Club of Lekhnath, for its guidance and encouragement, and to Rotaract District 3292, our mentors, faculty members, well-wishers, and every charter member who believed in this vision from the beginning.</p>
-                <p>To every member of the Rotaract Club of Gandaki University, I encourage you to consider this club not merely as an organization you belong to, but as a platform where you can discover your abilities, take responsibility, serve others, and leave behind a meaningful legacy.</p>
-                <p>As we move forward, may we continue to learn together, lead with integrity, serve with compassion, and transform our insights into lasting impact.</p>
+                <p>It is an honor and privilege to serve as the Charter President of the Rotaract Club of Gandaki University. Our club was founded with a shared commitment to service, leadership, fellowship, and creating meaningful change.</p>
+                <p>Our charter theme, <strong className="text-[#D91B5C]">“Insight to Impact,”</strong> represents our belief that understanding must lead to purposeful action. Through our projects, collaborations, and initiatives, we aim to transform ideas into positive outcomes for our university and the wider community.</p>
+                <p>As a charter club, we have the responsibility of building a strong, inclusive, and sustainable foundation for future generations of Rotaractors at Gandaki University. I am sincerely grateful to Gandaki University, our sponsoring club—the Rotaract Club of Lekhnath—Rotaract District 3292, our mentors, faculty members, well-wishers, and every charter member for their support.</p>
+                <p>Together, may we continue to learn, lead with integrity, serve with compassion, and turn our <strong className="text-[#D91B5C]">Insight into Impact.</strong></p>
               </div>
               <div className="mt-6 pt-5 border-t border-slate-200">
                 <img

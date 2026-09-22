@@ -126,8 +126,8 @@ export const Footer: React.FC<FooterProps> = ({ setActiveTab }) => {
             </h4>
             <div className="space-y-2 text-xs text-slate-300">
               <p>Gandaki University Campus, Pokhara-32, Kaski, Gandaki Province, Nepal</p>
-              <p>Email: racgu.official@gmail.com</p>
-              <p>Phone: +977 9748421238</p>
+              <p>Email: racgandakiuniversity@gmail.com</p>
+              <p>Telephone: To be officially confirmed</p>
               <div className="pt-1">
                 <span className="inline-block text-[10px] px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">
                   Rotaract District 3292 • Zone XVI

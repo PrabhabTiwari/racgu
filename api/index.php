@@ -44,6 +44,22 @@ function require_pst(): void {
     }
 }
 
+function save_upload(string $field, string $folder, array $allowedMimes, int $maxBytes): array {
+    if (!isset($_FILES[$field]) || !is_uploaded_file($_FILES[$field]['tmp_name'])) {
+        reply(422, ['success' => false, 'error' => 'Select a file to upload.']);
+    }
+    $file = $_FILES[$field];
+    if (($file['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK) reply(422, ['success' => false, 'error' => 'The file upload failed.']);
+    if (($file['size'] ?? 0) > $maxBytes) reply(413, ['success' => false, 'error' => 'The selected file is too large.']);
+    $mime = (new finfo(FILEINFO_MIME_TYPE))->file($file['tmp_name']);
+    if (!isset($allowedMimes[$mime])) reply(422, ['success' => false, 'error' => 'This file type is not allowed.']);
+    $uploadDir = dirname(__DIR__) . '/uploads/' . $folder;
+    if (!is_dir($uploadDir) && !mkdir($uploadDir, 0755, true) && !is_dir($uploadDir)) reply(500, ['success' => false, 'error' => 'Could not create the upload directory.']);
+    $filename = date('Ymd-His') . '-' . bin2hex(random_bytes(6)) . '.' . $allowedMimes[$mime];
+    if (!move_uploaded_file($file['tmp_name'], $uploadDir . '/' . $filename)) reply(500, ['success' => false, 'error' => 'Could not save the uploaded file.']);
+    return ['url' => '/uploads/' . $folder . '/' . $filename, 'mime' => $mime, 'bytes' => (int)$file['size'], 'originalName' => basename((string)$file['name'])];
+}
+
 $configFile = __DIR__ . '/config.php';
 if (!is_file($configFile)) reply(503, ['success' => false, 'error' => 'Copy api/config.example.php to api/config.php and enter the MySQL settings.']);
 $config = require $configFile;
@@ -166,6 +182,28 @@ try {
             ));
         }
         reply(200, ['success' => true, 'data' => $registrations]);
+    }
+
+    if ($path === '/events/upload-cover' && $method === 'POST') {
+        require_pst();
+        $saved = save_upload('cover', 'events', ['image/jpeg'=>'jpg', 'image/png'=>'png', 'image/webp'=>'webp'], 8 * 1024 * 1024);
+        reply(201, ['success' => true, 'data' => ['url' => $saved['url']]]);
+    }
+
+    if ($path === '/documents/upload' && $method === 'POST') {
+        require_pst();
+        $allowed = [
+            'application/pdf'=>'pdf', 'application/msword'=>'doc',
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document'=>'docx',
+            'application/vnd.ms-excel'=>'xls',
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'=>'xlsx',
+            'application/zip'=>'zip', 'application/x-zip-compressed'=>'zip'
+        ];
+        $saved = save_upload('document', 'documents', $allowed, 15 * 1024 * 1024);
+        $extension = strtoupper(pathinfo($saved['url'], PATHINFO_EXTENSION));
+        $type = in_array($extension, ['PDF', 'ZIP'], true) ? $extension : (in_array($extension, ['XLS', 'XLSX'], true) ? 'XLSX' : 'DOCX');
+        $size = number_format($saved['bytes'] / 1048576, 2) . ' MB';
+        reply(201, ['success' => true, 'data' => ['url'=>$saved['url'], 'name'=>$saved['originalName'], 'size'=>$size, 'type'=>$type]]);
     }
 
     if ($path === '/gallery/upload' && $method === 'POST') {

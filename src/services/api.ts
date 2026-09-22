@@ -149,6 +149,17 @@ export const clubApi = {
     return true;
   },
 
+  async uploadEventCover(file: File): Promise<string> {
+    const formData = new FormData();
+    formData.append('cover', file);
+    const res = await fetch('/api/index.php/events/upload-cover', {
+      method: 'POST', credentials: 'same-origin', body: formData
+    });
+    const json = await res.json();
+    if (!res.ok || !json.success || !json.data?.url) throw new Error(json.error || 'Event cover upload failed');
+    return json.data.url;
+  },
+
   async registerForEvent(eventId: string, member: { id: string; name: string; email: string; phone: string; notes?: string }): Promise<MemberRegistration> {
     const reg: MemberRegistration = {
       id: 'reg-' + Date.now(),
@@ -242,6 +253,17 @@ export const clubApi = {
     const updated = [newDoc, ...current];
     setLocal(STORAGE_KEYS.DOCUMENTS, updated);
     return newDoc;
+  },
+
+  async uploadDocumentFile(file: File): Promise<{ url: string; name: string; size: string; type: string }> {
+    const formData = new FormData();
+    formData.append('document', file);
+    const res = await fetch('/api/index.php/documents/upload', {
+      method: 'POST', credentials: 'same-origin', body: formData
+    });
+    const json = await res.json();
+    if (!res.ok || !json.success || !json.data?.url) throw new Error(json.error || 'Document upload failed');
+    return json.data;
   },
 
   async deleteDocument(id: string): Promise<boolean> {
