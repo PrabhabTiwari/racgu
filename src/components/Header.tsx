@@ -85,7 +85,7 @@ export const Header: React.FC<HeaderProps> = ({
             aria-label="Go to Rotaract Club of Gandaki University home page"
           >
             <img
-              src="/assets/official/racgu-header-brand.png"
+              src="/assets/official/racgu-header-brand.webp"
               alt="Rotaract Club of Gandaki University"
               className="h-11 w-auto max-w-[230px] object-contain sm:h-14 sm:max-w-[310px]"
             />
