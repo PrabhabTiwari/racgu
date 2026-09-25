@@ -22,9 +22,10 @@ export const HomePage: React.FC<HomePageProps> = ({
   const upcomingEvents = events.filter(e => e.status === 'upcoming').slice(0, 3);
   const urgentNotice = notices.find(n => n.isUrgent) || notices[0];
   const heroSlides = [
-    { image: '/assets/hero/charter-ceremony.webp', label: 'Charter Ceremony' },
-    { image: '/assets/hero/guru-purnima.webp', label: 'Guru Purnima Celebration' },
-    { image: '/assets/hero/installation-fellowship.webp', label: 'Rotaract Fellowship' }
+    { image: '/assets/hero/charter-ceremony.webp', label: 'Charter Ceremony', position: 'center' },
+    { image: '/assets/hero/guru-purnima.webp', label: 'Guru Purnima Celebration', position: 'center' },
+    { image: '/assets/hero/installation-fellowship.webp', label: 'Rotaract Fellowship', position: 'center' },
+    { image: '/assets/hero/cleaning-plantation-program.webp', label: 'Cleaning and Plantation Program', position: 'center 58%' }
   ];
   const [activeHeroSlide, setActiveHeroSlide] = useState(0);
   const guidingTeam = INITIAL_MEMBERS.filter(member => member.role === 'pst' || member.role === 'bod' || member.role === 'advisor');
@@ -191,6 +192,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               key={slide.image}
               src={slide.image}
               alt=""
+              style={{ objectPosition: slide.position }}
               className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${index === activeHeroSlide ? 'opacity-100' : 'opacity-0'}`}
             />
           ))}
