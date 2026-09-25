@@ -85,7 +85,18 @@ export const ContactPage: React.FC = () => {
 
               <div className="pt-3">
                 <strong className="block text-slate-900 font-semibold mb-0.5">Official Inquiries:</strong>
-                <a className="text-[#D91B5C] hover:underline" href="mailto:racgandakiuniversity@gmail.com">racgandakiuniversity@gmail.com</a>
+                <div className="flex flex-col items-start gap-1">
+                  <a className="text-[#D91B5C] hover:underline" href="mailto:rotaract@gandakiuniversity.edu.np">rotaract@gandakiuniversity.edu.np</a>
+                  <a className="text-[#D91B5C] hover:underline" href="mailto:racgandakiuniversity@gmail.com">racgandakiuniversity@gmail.com</a>
+                </div>
+              </div>
+
+              <div className="pt-3">
+                <strong className="block text-slate-900 font-semibold mb-2">Official Social Media:</strong>
+                <div className="flex flex-wrap gap-2">
+                  <a href="https://www.facebook.com/profile.php?id=61587242528509" target="_blank" rel="noreferrer" className="rounded-lg border border-blue-200 bg-blue-50 px-3 py-1.5 font-bold text-blue-700 hover:bg-blue-100">Facebook</a>
+                  <a href="https://www.instagram.com/rotaractgandakiuniversity/" target="_blank" rel="noreferrer" className="rounded-lg border border-pink-200 bg-pink-50 px-3 py-1.5 font-bold text-pink-700 hover:bg-pink-100">Instagram</a>
+                </div>
               </div>
 
               <div className="pt-3">

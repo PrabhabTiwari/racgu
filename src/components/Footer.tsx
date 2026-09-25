@@ -126,8 +126,15 @@ export const Footer: React.FC<FooterProps> = ({ setActiveTab }) => {
             </h4>
             <div className="space-y-2 text-xs text-slate-300">
               <p>Gandaki University Campus, Pokhara-32, Kaski, Gandaki Province, Nepal</p>
-              <p>Email: racgandakiuniversity@gmail.com</p>
+              <div className="space-y-1">
+                <a href="mailto:rotaract@gandakiuniversity.edu.np" className="block hover:text-white hover:underline">rotaract@gandakiuniversity.edu.np</a>
+                <a href="mailto:racgandakiuniversity@gmail.com" className="block hover:text-white hover:underline">racgandakiuniversity@gmail.com</a>
+              </div>
               <p>Telephone: To be officially confirmed</p>
+              <div className="flex flex-wrap gap-2 pt-1">
+                <a href="https://www.facebook.com/profile.php?id=61587242528509" target="_blank" rel="noreferrer" className="rounded border border-blue-400/40 bg-blue-500/10 px-2.5 py-1 font-bold text-blue-200 hover:bg-blue-500/20 hover:text-white">Facebook</a>
+                <a href="https://www.instagram.com/rotaractgandakiuniversity/" target="_blank" rel="noreferrer" className="rounded border border-pink-400/40 bg-pink-500/10 px-2.5 py-1 font-bold text-pink-200 hover:bg-pink-500/20 hover:text-white">Instagram</a>
+              </div>
               <div className="pt-1">
                 <span className="inline-block text-[10px] px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">
                   Rotaract District 3292 • Zone XVI
