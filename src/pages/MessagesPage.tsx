@@ -40,9 +40,18 @@ export const MessagesPage: React.FC = () => (
       <div className="relative max-w-3xl">
         <p className="text-xs font-bold uppercase tracking-[0.2em] text-pink-300">Leadership Messages</p>
         <h1 className="mt-3 text-3xl sm:text-5xl font-black">Messages of guidance, service and leadership</h1>
-        <p className="mt-4 text-sm sm:text-base leading-7 text-slate-300">Words from Rotaract District 3292 leadership and the Charter President of the Rotaract Club of Gandaki University.</p>
+        <p className="mt-4 text-sm sm:text-base leading-7 text-slate-300">Words from Rotary International, Rotaract District 3292, Zone XVI and the Charter President of the Rotaract Club of Gandaki University.</p>
       </div>
     </header>
+
+    <MessageBlock eyebrow="Message from the RI President" title="Create lasting impact through service" name="Olayinka H. Babalola" designation="President, Rotary International, 2026-27" image="/assets/leadership/ri-president-olayinka-babalola.webp">
+      <p>Rotary has changed my life, and I’m willing to bet that it has changed yours too. It expands our world, enriches our understanding of service, creates international friendships and grounds us. It teaches us to see, to look beyond ourselves.</p>
+      <p>Think about our Vision Statement: Together, we see a world where people unite and take action to create lasting change—across the globe, in our communities and in ourselves.</p>
+      <p>Those final words of our Vision Statement are at the heart of what it means to <strong>Create Lasting Impact.</strong> We often share how Rotary inspires lasting change in others, but we rarely discuss how it transforms us. We must consider how Rotary has changed our lives and share our stories widely. If we can do that, we will engage current members, expand our reach and forge exciting connections with like-minded partners.</p>
+      <p>We must embrace Rotary’s global diversity and build a welcoming culture, one where fresh perspectives are embraced, new ideas are celebrated and differences are met with curiosity and kindness instead of judgement. If we can do that, we will meet our membership goals and continue to grow.</p>
+      <p>And finally, we must reaffirm our commitment to service. We must think bigger, understanding our struggles as interconnected and leveraging our connections to make global progress. If we can do that, we will be one step closer to a world free of polio, a world where everyone has access to clean water and a quality education—a world at peace.</p>
+      <p>Let us continue to inspire one another and seek innovative solutions to some of the world’s most pressing challenges. I look forward to working alongside you in service.</p>
+    </MessageBlock>
 
     <MessageBlock eyebrow="Message from the DRR" title="Lead with integrity and create lasting impact" name="PHF Rtr. Prakash Sharma Gaire" designation="District Rotaract Representative, Rotaract District 3292, Nepal & Bhutan, RY 2026-27" image="/assets/leadership/drr-prakash-sharma-gaire.webp">
       <p>Blissful Rotaract Greetings. It is with immense pleasure that I extend my heartfelt congratulations and best wishes to the Rotaract Club of Gandaki University. The club’s journey reflects the dedication of Rotaractors committed to service, fellowship and leadership.</p>
@@ -57,7 +66,18 @@ export const MessagesPage: React.FC = () => (
       <p>May your leadership inspire excellence, your service create enduring impact and your fellowship continue to strengthen the Rotaract movement.</p>
     </MessageBlock>
 
-    <MessageBlock eyebrow="Message from the Charter President" title="Insight must become purposeful action" name="Rtr. Prabhab Tiwari" designation="Charter President, Rotaract Club of Gandaki University, RY 2026-27" image="/members/prabhabpp.JPG">
+    <MessageBlock eyebrow="Message from the ZRR" title="Leading together, serving better" name="Rtr. Saurav KC" designation="Zonal Rotaract Representative, Zone XVI, Rotaract District 3292, Nepal & Bhutan" image="/assets/leadership/zrr-saurav-kc.webp">
+      <p>It is with great pleasure that I extend my heartfelt congratulations to you on assuming the role of President of the Rotaract Club of Gandaki University. This opportunity reflects the trust and confidence your members have placed in your leadership, dedication and vision. I am confident that your passion and commitment will guide the club toward another successful and impactful year.</p>
+      <p>As we begin this new Rotary year, we are inspired by Rotary International’s theme, <strong>“Creating Lasting Impact.”</strong> It reminds us that every act of service, no matter how small, has the power to create meaningful change that continues to benefit communities for years to come.</p>
+      <p>Guided by our District theme, <strong>“Integrity, Vision, Leadership,”</strong> we are encouraged to lead with honesty, dream with purpose and serve with determination. At the same time, our zonal theme, <strong>“Leading Together, Serving Better,”</strong> highlights the importance of unity, teamwork and collaboration in achieving greater success and stronger impact.</p>
+      <p>The Rotaract Club of Gandaki University has demonstrated its dedication to service, leadership development and community engagement. I am excited to witness the innovative projects, meaningful initiatives and lasting memories your team will create throughout the year.</p>
+      <p>As your Zonal Rotaract Representative, I look forward to working closely with you and your club. Let us support one another, share our strengths and build a culture where every member feels empowered to lead, serve and grow.</p>
+      <p>I also extend my sincere best wishes to your Board of Directors and all club members. May this year be filled with learning, fellowship, achievements and impactful service.</p>
+      <p>Together, let us lead with integrity, serve with purpose and create lasting impact in our communities. Let us continue <strong>Leading Together, Serving Better.</strong></p>
+      <p className="font-bold text-slate-900">Jay Rotary!! Jay Rotaract!!</p>
+    </MessageBlock>
+
+    <MessageBlock eyebrow="Message from the Charter President" title="Insight must become purposeful action" name="Rtr. Prabhab Tiwari" designation="Charter President, Rotaract Club of Gandaki University, RY 2026-27" image="/members/prabhab-portrait.webp">
       <p>It is an honor and privilege to serve as the Charter President of the Rotaract Club of Gandaki University. Our club was founded with a shared commitment to service, leadership, fellowship and creating meaningful change.</p>
       <p>Our charter theme, <strong>“Insight to Impact,”</strong> represents our belief that understanding must lead to purposeful action. Through our projects, collaborations and initiatives, we aim to transform ideas into positive outcomes for our university and the wider community.</p>
       <p>As a charter club, we have the responsibility of building a strong, inclusive and sustainable foundation for future generations of Rotaractors at Gandaki University. I am sincerely grateful to Gandaki University, our parent club, the Rotaract Club of Lekhnath, Rotaract District 3292, our mentors, faculty members, well-wishers and every charter member for their support.</p>

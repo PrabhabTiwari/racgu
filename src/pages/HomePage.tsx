@@ -250,6 +250,9 @@ export const HomePage: React.FC<HomePageProps> = ({
                   Portal Login
                 </button>
               )}
+              <a href="https://forms.gle/kEuU9vkiXkp2T6Cp8" target="_blank" rel="noreferrer" className="px-5 py-3 rounded-lg bg-white text-[#D91B5C] hover:bg-pink-50 text-sm font-bold transition-colors">
+                Become a Member
+              </a>
             </div>
 
             <div className="mt-10 flex items-center gap-2" role="group" aria-label="Slideshow selection">

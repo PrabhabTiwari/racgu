@@ -47,6 +47,22 @@ export const ContactPage: React.FC = () => {
         </p>
       </div>
 
+      <section className="overflow-hidden rounded-2xl border border-pink-200 bg-gradient-to-br from-pink-50 via-white to-slate-50 p-6 sm:p-8">
+        <div className="grid items-center gap-6 md:grid-cols-[1fr_auto]">
+          <div>
+            <span className="text-xs font-bold uppercase tracking-[0.18em] text-[#D91B5C]">Membership Application</span>
+            <h2 className="mt-2 text-2xl font-black text-slate-900">Join the Rotaract Club of Gandaki University</h2>
+            <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-600">Become part of a community committed to service, leadership, fellowship and meaningful impact. Open the official membership form using the button or scan the QR code.</p>
+            <a href="https://forms.gle/kEuU9vkiXkp2T6Cp8" target="_blank" rel="noreferrer" className="mt-5 inline-flex items-center rounded-lg bg-[#D91B5C] px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-[#BE123C]">
+              Join Now
+            </a>
+          </div>
+          <a href="https://forms.gle/kEuU9vkiXkp2T6Cp8" target="_blank" rel="noreferrer" className="mx-auto block rounded-2xl border border-slate-200 bg-white p-3 shadow-sm" aria-label="Open RACGU membership application form">
+            <img src="/assets/official/racgu-membership-qr.png" alt="QR code for the RACGU membership application" className="h-36 w-36 object-contain" />
+          </a>
+        </div>
+      </section>
+
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left Col: Contact Information */}
         <div className="lg:col-span-5 space-y-4">
