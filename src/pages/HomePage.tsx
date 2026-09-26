@@ -2,7 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ClubEvent, ClubNotice, UserProfile } from '../types';
 import { INITIAL_MEMBERS } from '../data/initialData';
 
-const HERO_WELCOME = 'Welcome to the Rotaract Club of Gandaki University';
+const HERO_WELCOME_LINES = ['Welcome to the', 'Rotaract Club of', 'Gandaki University'];
+const HERO_WELCOME = HERO_WELCOME_LINES.join(' ');
 
 interface HomePageProps {
   events: ClubEvent[];
@@ -240,9 +241,24 @@ export const HomePage: React.FC<HomePageProps> = ({
               </span>
             </div>
 
-            <h1 className="mt-8 min-h-[2.2em] max-w-4xl text-4xl sm:text-5xl lg:text-7xl font-black tracking-tight leading-[1.05]" aria-label={HERO_WELCOME}>
-              {typedWelcome}
-              <span className="ml-1 inline-block h-[0.9em] w-[3px] animate-pulse bg-pink-400 align-[-0.04em]" aria-hidden="true" />
+            <h1 className="mt-8 min-h-[3.15em] max-w-4xl text-4xl sm:text-5xl lg:text-7xl font-black tracking-tight leading-[1.05]" aria-label={HERO_WELCOME}>
+              {HERO_WELCOME_LINES.map((line, index) => {
+                const start = HERO_WELCOME_LINES
+                  .slice(0, index)
+                  .reduce((total, previousLine) => total + previousLine.length + 1, 0);
+                const visibleCharacters = Math.max(0, Math.min(line.length, typedWelcome.length - start));
+                const cursorIsHere = typedWelcome.length >= start &&
+                  (typedWelcome.length < start + line.length || (index === HERO_WELCOME_LINES.length - 1 && typedWelcome.length === HERO_WELCOME.length));
+
+                return (
+                  <span key={line} className={`block ${index === 2 ? 'text-pink-400' : ''}`}>
+                    {line.slice(0, visibleCharacters) || '\u00a0'}
+                    {cursorIsHere && (
+                      <span className="ml-1 inline-block h-[0.9em] w-[3px] animate-pulse bg-pink-400 align-[-0.04em]" aria-hidden="true" />
+                    )}
+                  </span>
+                );
+              })}
             </h1>
             <p className="mt-6 max-w-2xl text-base sm:text-lg leading-8 text-slate-100">
               A university-based community of young leaders transforming knowledge, ideas and compassion into meaningful action through leadership, fellowship and service.
