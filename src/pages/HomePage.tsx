@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ClubEvent, ClubNotice, UserProfile } from '../types';
 import { INITIAL_MEMBERS } from '../data/initialData';
 
+const HERO_WELCOME = 'Welcome to the Rotaract Club of Gandaki University';
+
 interface HomePageProps {
   events: ClubEvent[];
   notices: ClubNotice[];
@@ -28,6 +30,8 @@ export const HomePage: React.FC<HomePageProps> = ({
     { image: '/assets/hero/cleaning-plantation-program.webp', label: 'Cleaning and Plantation Program', position: 'center 58%' }
   ];
   const [activeHeroSlide, setActiveHeroSlide] = useState(0);
+  const [heroReady, setHeroReady] = useState(false);
+  const [typedWelcome, setTypedWelcome] = useState('');
   const guidingTeam = INITIAL_MEMBERS.filter(member => member.role === 'pst' || member.role === 'bod' || member.role === 'advisor');
   const [activeGuide, setActiveGuide] = useState(0);
   const [guideCardVisible, setGuideCardVisible] = useState(true);
@@ -38,6 +42,28 @@ export const HomePage: React.FC<HomePageProps> = ({
   const logoVideoVisibleRef = useRef(false);
   const statsRef = useRef<HTMLElement>(null);
   const [stats, setStats] = useState({ members: 0, bod: 0, projects: 0 });
+
+  useEffect(() => {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reducedMotion) {
+      setHeroReady(true);
+      setTypedWelcome(HERO_WELCOME);
+      return;
+    }
+
+    const revealTimer = window.setTimeout(() => setHeroReady(true), 80);
+    let characterIndex = 0;
+    const typingTimer = window.setInterval(() => {
+      characterIndex += 1;
+      setTypedWelcome(HERO_WELCOME.slice(0, characterIndex));
+      if (characterIndex >= HERO_WELCOME.length) window.clearInterval(typingTimer);
+    }, 55);
+
+    return () => {
+      window.clearTimeout(revealTimer);
+      window.clearInterval(typingTimer);
+    };
+  }, []);
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -193,7 +219,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               src={slide.image}
               alt=""
               style={{ objectPosition: slide.position }}
-              className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${index === activeHeroSlide ? 'opacity-100' : 'opacity-0'}`}
+              className={`absolute inset-0 h-full w-full object-cover transition-all duration-[1400ms] ease-out ${index === activeHeroSlide && heroReady ? 'opacity-100 scale-100' : 'opacity-0 scale-[1.025]'}`}
             />
           ))}
           <div className="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-950/72 to-slate-950/35" />
@@ -214,12 +240,9 @@ export const HomePage: React.FC<HomePageProps> = ({
               </span>
             </div>
 
-            <p className="mt-8 text-xs sm:text-sm font-bold uppercase tracking-[0.22em] text-pink-300">
-              Welcome to the official website
-            </p>
-            <h1 className="mt-3 text-4xl sm:text-5xl lg:text-7xl font-black tracking-tight leading-[1.05]">
-              Rotaract Club of
-              <span className="block text-pink-400">Gandaki University</span>
+            <h1 className="mt-8 min-h-[2.2em] max-w-4xl text-4xl sm:text-5xl lg:text-7xl font-black tracking-tight leading-[1.05]" aria-label={HERO_WELCOME}>
+              {typedWelcome}
+              <span className="ml-1 inline-block h-[0.9em] w-[3px] animate-pulse bg-pink-400 align-[-0.04em]" aria-hidden="true" />
             </h1>
             <p className="mt-6 max-w-2xl text-base sm:text-lg leading-8 text-slate-100">
               A university-based community of young leaders transforming knowledge, ideas and compassion into meaningful action through leadership, fellowship and service.

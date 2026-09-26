@@ -198,14 +198,14 @@ export const INITIAL_MEMBERS: UserProfile[] = [
     name: 'Rtr. Sandesh Dhakal',
     email: 'sandesh.dhakal@student.gandaki.edu.np',
     role: 'member',
-    roleTitle: 'Collegiate Member',
+    roleTitle: 'Member',
     avatar: '/members/sandesh.webp',
     phone: '+977 9846111001',
     faculty: 'B.Tech AI & Data Science',
     bloodGroup: 'O+ve',
     joinedDate: 'Jan 2026',
     bio: 'Active member participating in technological innovations and digital awareness initiatives.',
-    badge: 'Collegiate Member'
+    badge: 'Member'
   },
   {
     id: 'mem-14',
@@ -213,14 +213,14 @@ export const INITIAL_MEMBERS: UserProfile[] = [
     name: 'Rtr. Pratigya BK',
     email: 'pratigya.bk@student.gandaki.edu.np',
     role: 'member',
-    roleTitle: 'Collegiate Member',
+    roleTitle: 'Member',
     avatar: '/members/pratigya.webp',
     phone: '+977 9846111002',
     faculty: 'BBA',
     bloodGroup: 'A+ve',
     joinedDate: 'Jan 2026',
     bio: 'Active member contributing to campus entrepreneurship projects and youth leadership events.',
-    badge: 'Collegiate Member'
+    badge: 'Member'
   },
   {
     id: 'mem-15',
@@ -228,14 +228,14 @@ export const INITIAL_MEMBERS: UserProfile[] = [
     name: 'Rtr. Punam Pun Magar',
     email: 'punam.pm@student.gandaki.edu.np',
     role: 'member',
-    roleTitle: 'Collegiate Member',
+    roleTitle: 'Member',
     avatar: '/members/punam.webp',
     phone: '+977 9846111003',
     faculty: 'Bachelor in Pharmacy',
     bloodGroup: 'B+ve',
     joinedDate: 'Jan 2026',
     bio: 'Active member supporting community healthcare campaigns and public hygiene programs.',
-    badge: 'Collegiate Member'
+    badge: 'Member'
   },
   {
     id: 'mem-16',
@@ -243,14 +243,14 @@ export const INITIAL_MEMBERS: UserProfile[] = [
     name: 'Rtr. Salina Bastola',
     email: 'salina.bastola@student.gandaki.edu.np',
     role: 'member',
-    roleTitle: 'Collegiate Member',
+    roleTitle: 'Member',
     avatar: '/members/salina.webp',
     phone: '+977 9846111004',
     faculty: 'B.Tech AI & Data Science',
     bloodGroup: 'AB+ve',
     joinedDate: 'Jan 2026',
     bio: 'Active member engaging in campus digital drives and academic peer mentoring.',
-    badge: 'Collegiate Member'
+    badge: 'Member'
   },
   {
     id: 'mem-17',
@@ -258,14 +258,14 @@ export const INITIAL_MEMBERS: UserProfile[] = [
     name: 'Rtr. Sangam Bhujel',
     email: 'sangam.bhujel@student.gandaki.edu.np',
     role: 'member',
-    roleTitle: 'Collegiate Member',
+    roleTitle: 'Member',
     avatar: '/members/sangam.webp',
     phone: '+977 9846111005',
     faculty: 'BBA',
     bloodGroup: 'O+ve',
     joinedDate: 'Jan 2026',
     bio: 'Active member volunteering in logistical planning and civic relief operations.',
-    badge: 'Collegiate Member'
+    badge: 'Member'
   },
   {
     id: 'mem-18',
@@ -273,14 +273,14 @@ export const INITIAL_MEMBERS: UserProfile[] = [
     name: 'Rtr. Subarna Poudel',
     email: 'subarna.poudel@student.gandaki.edu.np',
     role: 'member',
-    roleTitle: 'Collegiate Member',
+    roleTitle: 'Member',
     avatar: '/members/subarna.webp',
     phone: '+977 9846111006',
     faculty: 'Bachelor of Sports Management',
     bloodGroup: 'A+ve',
     joinedDate: 'Jan 2026',
     bio: 'Active member passionate about university sports tournaments and fitness workshops.',
-    badge: 'Collegiate Member'
+    badge: 'Member'
   },
   {
     id: 'mem-19',
@@ -288,14 +288,14 @@ export const INITIAL_MEMBERS: UserProfile[] = [
     name: 'Rtr. Akriti Bhattarai',
     email: 'akriti.bhattarai@student.gandaki.edu.np',
     role: 'member',
-    roleTitle: 'Collegiate Member',
+    roleTitle: 'Member',
     avatar: '/members/akriti.webp',
     phone: '+977 9846111007',
     faculty: 'Bachelor in Pharmacy',
     bloodGroup: 'B-ve',
     joinedDate: 'Jan 2026',
     bio: 'Active member promoting health literacy and maternal-child health awareness.',
-    badge: 'Collegiate Member'
+    badge: 'Member'
   },
   {
     id: 'mem-20',
@@ -303,14 +303,14 @@ export const INITIAL_MEMBERS: UserProfile[] = [
     name: 'Rtr. Suresh Gurung',
     email: 'suresh.gurung@student.gandaki.edu.np',
     role: 'member',
-    roleTitle: 'Collegiate Member',
+    roleTitle: 'Member',
     avatar: '/members/suresh.webp',
     phone: '+977 9846111008',
     faculty: 'Bachelor of Sports Management',
     bloodGroup: 'AB+ve',
     joinedDate: 'Jan 2026',
     bio: 'Active member engaging in sports administration and outdoor community fellowships.',
-    badge: 'Collegiate Member'
+    badge: 'Member'
   },
   {
     id: 'mem-21',
@@ -318,14 +318,14 @@ export const INITIAL_MEMBERS: UserProfile[] = [
     name: 'Rtr. Manoram Subedi',
     email: 'manoram.subedi@student.gandaki.edu.np',
     role: 'member',
-    roleTitle: 'Collegiate Member',
+    roleTitle: 'Member',
     avatar: '/members/manoram.webp',
     phone: '+977 9846111009',
     faculty: 'B.Tech AI & Data Science',
     bloodGroup: 'O-ve',
     joinedDate: 'Jan 2026',
     bio: 'Active member supporting web administration, technical registrations, and database indexing.',
-    badge: 'Collegiate Member'
+    badge: 'Member'
   },
   {
     id: 'mem-22',
@@ -333,14 +333,14 @@ export const INITIAL_MEMBERS: UserProfile[] = [
     name: 'Rtr. Diperson BK',
     email: 'diperson.bk@student.gandaki.edu.np',
     role: 'member',
-    roleTitle: 'Collegiate Member',
+    roleTitle: 'Member',
     avatar: '/members/diperson.webp',
     phone: '+977 9846111010',
     faculty: 'BBA',
     bloodGroup: 'B+ve',
     joinedDate: 'Jan 2026',
     bio: 'Active member contributing to club assemblies and youth leadership conventions.',
-    badge: 'Collegiate Member'
+    badge: 'Member'
   },
 
   // ==========================================

@@ -169,14 +169,15 @@ try {
         reply(200, ['success' => true, 'data' => array_map(fn($r) => json_decode($r['profile_json'], true), $rows)]);
     }
 
-    if ($path === '/members/me' && $method === 'PUT') {
+    if ($path === '/members/me/bio' && $method === 'POST') {
         $sessionUser = $_SESSION['user'] ?? null;
         if (!$sessionUser || empty($sessionUser['id'])) {
             reply(401, ['success' => false, 'error' => 'Member login required.']);
         }
         $body = clean(input());
         $bio = trim((string)($body['bio'] ?? ''));
-        if (mb_strlen($bio) > 600) {
+        $bioLength = function_exists('mb_strlen') ? mb_strlen($bio) : strlen($bio);
+        if ($bioLength > 600) {
             reply(422, ['success' => false, 'error' => 'Your bio must be 600 characters or fewer.']);
         }
 

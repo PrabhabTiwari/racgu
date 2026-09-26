@@ -474,8 +474,8 @@ export const clubApi = {
   },
 
   async updateMemberProfile(id: string, updates: Pick<UserProfile, 'bio'>): Promise<UserProfile> {
-    const res = await fetch('/api/index.php/members/me', {
-      method: 'PUT',
+    const res = await fetch('/api/index.php/members/me/bio', {
+      method: 'POST',
       credentials: 'same-origin',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ bio: updates.bio })
