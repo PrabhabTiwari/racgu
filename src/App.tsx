@@ -29,10 +29,15 @@ export function App() {
   const [activeTab, setActiveTab] = useState<string>('home');
   const [currentUser, setCurrentUser] = useState<UserProfile | null>(() => {
     const storedUser = clubApi.getCurrentUser();
-    if (!storedUser) return null;
+    if (!storedUser || !storedUser.name || !storedUser.email) {
+      clubApi.setCurrentUser(null);
+      return null;
+    }
+    const storedName = storedUser.name.toLowerCase();
+    const storedEmail = storedUser.email.toLowerCase();
     const verified = INITIAL_MEMBERS.find(member =>
-      member.name.toLowerCase() === storedUser.name.toLowerCase() ||
-      member.email.toLowerCase() === storedUser.email.toLowerCase()
+      member.name.toLowerCase() === storedName ||
+      member.email.toLowerCase() === storedEmail
     );
     return { ...storedUser, districtId: storedUser.districtId || verified?.districtId };
   });
