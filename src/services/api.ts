@@ -473,20 +473,23 @@ export const clubApi = {
     return local;
   },
 
-  async updateMemberProfile(id: string, updates: Partial<UserProfile>): Promise<UserProfile | null> {
+  async updateMemberProfile(id: string, updates: Pick<UserProfile, 'bio'>): Promise<UserProfile> {
+    const res = await fetch('/api/index.php/members/me', {
+      method: 'PUT',
+      credentials: 'same-origin',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ bio: updates.bio })
+    });
+    const json = await readApiResponse(res, 'The profile update did not return a valid API response.');
+    if (!res.ok || !json.success || !json.data) throw new Error(json.error || 'Profile update failed.');
+
+    const updated = json.data as UserProfile;
     const current = getLocal<UserProfile[]>(STORAGE_KEYS.MEMBERS, INITIAL_MEMBERS);
-    const idx = current.findIndex(m => m.id === id);
-    if (idx >= 0) {
-      current[idx] = { ...current[idx], ...updates };
-      setLocal(STORAGE_KEYS.MEMBERS, current);
-      // If current user, update session
-      const currentUser = this.getCurrentUser();
-      if (currentUser && currentUser.id === id) {
-        setLocal(STORAGE_KEYS.CURRENT_USER, current[idx]);
-      }
-      return current[idx];
-    }
-    return null;
+    const idx = current.findIndex(member => member.id === id);
+    if (idx >= 0) current[idx] = { ...current[idx], ...updated };
+    setLocal(STORAGE_KEYS.MEMBERS, current);
+    setLocal(STORAGE_KEYS.CURRENT_USER, updated);
+    return updated;
   },
 
   // --- REGISTRATIONS ---

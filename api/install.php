@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $password = (string)($_POST['password'] ?? '');
         if (!filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($password) < 10) throw new RuntimeException('Use a valid email and a password of at least 10 characters.');
         $profile = [
-            'id' => 'mem-1', 'name' => 'Rtr. Prabhab Tiwari', 'email' => $email, 'role' => 'pst',
+            'id' => 'mem-1', 'districtId' => 'RTR23813', 'name' => 'Rtr. Prabhab Tiwari', 'email' => $email, 'role' => 'pst',
             'roleTitle' => 'Charter President', 'avatar' => '/members/prabhab.webp', 'phone' => '',
             'faculty' => 'Bachelor of Information Technology', 'bloodGroup' => '', 'joinedDate' => '2026-01-22',
             'bio' => 'Charter President of the Rotaract Club of Gandaki University, leading the RY 2026-27 theme Insight to Impact.',

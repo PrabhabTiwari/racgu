@@ -169,6 +169,33 @@ try {
         reply(200, ['success' => true, 'data' => array_map(fn($r) => json_decode($r['profile_json'], true), $rows)]);
     }
 
+    if ($path === '/members/me' && $method === 'PUT') {
+        $sessionUser = $_SESSION['user'] ?? null;
+        if (!$sessionUser || empty($sessionUser['id'])) {
+            reply(401, ['success' => false, 'error' => 'Member login required.']);
+        }
+        $body = clean(input());
+        $bio = trim((string)($body['bio'] ?? ''));
+        if (mb_strlen($bio) > 600) {
+            reply(422, ['success' => false, 'error' => 'Your bio must be 600 characters or fewer.']);
+        }
+
+        $stmt = $pdo->prepare('SELECT profile_json FROM users WHERE id = ? AND active = 1 LIMIT 1');
+        $stmt->execute([(string)$sessionUser['id']]);
+        $profileJson = $stmt->fetchColumn();
+        if (!$profileJson) reply(404, ['success' => false, 'error' => 'Member profile not found.']);
+
+        $profile = json_decode((string)$profileJson, true, 512, JSON_THROW_ON_ERROR);
+        $profile['bio'] = $bio;
+        $stmt = $pdo->prepare('UPDATE users SET profile_json = ? WHERE id = ?');
+        $stmt->execute([
+            json_encode($profile, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
+            (string)$sessionUser['id'],
+        ]);
+        $_SESSION['user'] = $profile;
+        reply(200, ['success' => true, 'data' => $profile]);
+    }
+
     if ($path === '/contact' && $method === 'POST') {
         $body = clean(input());
         if (empty($body['name']) || !filter_var($body['email'] ?? '', FILTER_VALIDATE_EMAIL) || empty($body['message'])) {

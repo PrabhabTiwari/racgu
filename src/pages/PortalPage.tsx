@@ -18,6 +18,7 @@ interface PortalPageProps {
   gallery: GalleryPhoto[];
   registrations: MemberRegistration[];
   onRefreshRegistrations: () => Promise<void>;
+  onProfileUpdated: (profile: UserProfile) => void;
   onAddEvent: (event: Partial<ClubEvent>) => Promise<any>;
   onUpdateEvent: (id: string, updates: Partial<ClubEvent>) => Promise<any>;
   onDeleteEvent: (id: string) => Promise<any>;
@@ -38,6 +39,7 @@ export const PortalPage: React.FC<PortalPageProps> = ({
   gallery,
   registrations,
   onRefreshRegistrations,
+  onProfileUpdated,
   onAddEvent,
   onUpdateEvent,
   onDeleteEvent,
@@ -106,6 +108,8 @@ export const PortalPage: React.FC<PortalPageProps> = ({
   });
 
   const [statusMessage, setStatusMessage] = useState<string>('');
+  const [profileBio, setProfileBio] = useState(currentUser.bio || '');
+  const [savingBio, setSavingBio] = useState(false);
   const [selectedEventAttendees, setSelectedEventAttendees] = useState<ClubEvent | null>(null);
 
   const flashMessage = (msg: string) => {
@@ -428,6 +432,7 @@ Gandaki University Campus, Pokhara-32, Kaski, Nepal
                 {currentUser.name}
               </h3>
               <div className="space-y-1 text-xs text-slate-600">
+                <p><strong>District ID:</strong> {currentUser.districtId || 'Pending'}</p>
                 <p><strong>Faculty:</strong> {currentUser.faculty}</p>
                 <p><strong>Blood Group:</strong> {currentUser.bloodGroup}</p>
                 <p><strong>Phone:</strong> {currentUser.phone}</p>
@@ -1274,11 +1279,41 @@ Gandaki University Campus, Pokhara-32, Kaski, Nepal
             </div>
           </div>
 
-          <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 text-xs text-slate-700 space-y-1">
-            <span className="text-[10px] font-bold uppercase text-slate-400 block">
-              Official Bio
-            </span>
-            <p>{currentUser.bio}</p>
+          <div className="space-y-2">
+            <label htmlFor="member-bio" className="text-[10px] font-bold uppercase text-slate-400 block">
+              Public Bio
+            </label>
+            <textarea
+              id="member-bio"
+              value={profileBio}
+              onChange={(event) => setProfileBio(event.target.value)}
+              maxLength={600}
+              rows={6}
+              placeholder="Write a short introduction about yourself, your interests, skills and Rotaract journey."
+              className="w-full rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm leading-6 text-slate-700 outline-none focus:border-[#D91B5C] focus:ring-2 focus:ring-[#D91B5C]/10"
+            />
+            <div className="flex items-center justify-between gap-3">
+              <span className="text-[11px] text-slate-500">{profileBio.length}/600 characters</span>
+              <button
+                type="button"
+                disabled={savingBio || profileBio.trim() === (currentUser.bio || '').trim()}
+                onClick={async () => {
+                  try {
+                    setSavingBio(true);
+                    const updated = await clubApi.updateMemberProfile(currentUser.id, { bio: profileBio.trim() });
+                    onProfileUpdated(updated);
+                    flashMessage('Your public bio was updated successfully.');
+                  } catch (error) {
+                    flashMessage(error instanceof Error ? error.message : 'Could not update your bio.');
+                  } finally {
+                    setSavingBio(false);
+                  }
+                }}
+                className="rounded-lg bg-[#D91B5C] px-4 py-2 text-xs font-bold text-white hover:bg-[#BE123C] disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {savingBio ? 'Saving...' : 'Save Bio'}
+              </button>
+            </div>
           </div>
         </div>
       )}

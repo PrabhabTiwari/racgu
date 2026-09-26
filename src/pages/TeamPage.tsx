@@ -250,6 +250,10 @@ export const TeamPage: React.FC<TeamPageProps> = ({ members }) => {
                         {member.name}
                       </h3>
 
+                      <p className="text-[11px] font-bold text-[#D91B5C]">
+                        District ID: {member.districtId || 'Pending'}
+                      </p>
+
                       <p className="text-xs font-medium text-slate-600">
                         {member.faculty}
                       </p>
@@ -303,6 +307,7 @@ export const TeamPage: React.FC<TeamPageProps> = ({ members }) => {
               <thead>
                 <tr className="bg-slate-50 text-slate-700 font-bold uppercase tracking-wider border-b border-slate-200 text-[11px]">
                   <th className="py-3 px-5">Member & Photograph</th>
+                  <th className="py-3 px-5">District ID</th>
                   <th className="py-3 px-5">Role</th>
                   <th className="py-3 px-5">Faculty</th>
                   <th className="py-3 px-5">Blood</th>
@@ -329,6 +334,9 @@ export const TeamPage: React.FC<TeamPageProps> = ({ members }) => {
                           </span>
                         </div>
                       </div>
+                    </td>
+                    <td className="py-3 px-5 font-bold text-slate-700">
+                      {member.districtId || 'Pending'}
                     </td>
                     <td className="py-3 px-5">
                       <span className="font-bold text-[#D91B5C] block">
@@ -417,6 +425,7 @@ export const TeamPage: React.FC<TeamPageProps> = ({ members }) => {
                   </p>
 
                   <div className="space-y-1 text-xs text-slate-600 pt-2">
+                    <p><strong>District ID:</strong> {selectedMember.districtId || 'Pending'}</p>
                     <p><strong>Faculty:</strong> {selectedMember.faculty}</p>
                     <p><strong>Blood Group:</strong> {selectedMember.bloodGroup}</p>
                     <p><strong>Inducted:</strong> {selectedMember.joinedDate}</p>
@@ -431,7 +440,7 @@ export const TeamPage: React.FC<TeamPageProps> = ({ members }) => {
                 <span className="text-[10px] font-bold uppercase text-slate-400 block">
                   Profile & Commitment
                 </span>
-                <p>{selectedMember.bio}</p>
+                <p>{selectedMember.bio || 'This member has not added a public bio yet.'}</p>
               </div>
 
               <div className="flex justify-end pt-2">

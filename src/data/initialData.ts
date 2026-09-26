@@ -10,6 +10,7 @@ export const INITIAL_MEMBERS: UserProfile[] = [
   // ==========================================
   {
     id: 'bod-1',
+    districtId: 'RTR23813',
     name: 'Rtr. Prabhab Tiwari',
     email: 'president.racgu@gandaki.edu.np',
     role: 'pst',
@@ -24,6 +25,7 @@ export const INITIAL_MEMBERS: UserProfile[] = [
   },
   {
     id: 'bod-2',
+    districtId: 'RTR26242',
     name: 'Rtr. Sujan Shrestha',
     email: 'secretary.racgu@gandaki.edu.np',
     role: 'pst',
@@ -38,6 +40,7 @@ export const INITIAL_MEMBERS: UserProfile[] = [
   },
   {
     id: 'bod-3',
+    districtId: 'RTR26244',
     name: 'Rtr. Madhab Khanal',
     email: 'treasurer.racgu@gandaki.edu.np',
     role: 'pst',
@@ -52,6 +55,7 @@ export const INITIAL_MEMBERS: UserProfile[] = [
   },
   {
     id: 'bod-4',
+    districtId: 'RTR26243',
     name: 'Rtr. Shreya Subedi',
     email: 'shreya.subedi@gandaki.edu.np',
     role: 'bod',
@@ -66,6 +70,7 @@ export const INITIAL_MEMBERS: UserProfile[] = [
   },
   {
     id: 'bod-5',
+    districtId: 'RTR26245',
     name: 'Rtr. Rajiv Rimal',
     email: 'rajiv.rimal@gandaki.edu.np',
     role: 'bod',
@@ -80,6 +85,7 @@ export const INITIAL_MEMBERS: UserProfile[] = [
   },
   {
     id: 'bod-6',
+    districtId: 'RTR26252',
     name: 'Rtr. Raj Dhakal',
     email: 'raj.dhakal@gandaki.edu.np',
     role: 'bod',
@@ -94,6 +100,7 @@ export const INITIAL_MEMBERS: UserProfile[] = [
   },
   {
     id: 'bod-7',
+    districtId: 'RTR26250',
     name: 'Rtr. Manila Adhikari',
     email: 'manila.adhikari@gandaki.edu.np',
     role: 'bod',
@@ -108,6 +115,7 @@ export const INITIAL_MEMBERS: UserProfile[] = [
   },
   {
     id: 'bod-8',
+    districtId: 'RTR26247',
     name: 'Rtr. Sandhya Sharma',
     email: 'sandhya.sharma@gandaki.edu.np',
     role: 'bod',
@@ -122,6 +130,7 @@ export const INITIAL_MEMBERS: UserProfile[] = [
   },
   {
     id: 'bod-9',
+    districtId: 'RTR26248',
     name: 'Rtr. Rakhi Bhujel',
     email: 'rakhi.bhujel@gandaki.edu.np',
     role: 'bod',
@@ -136,6 +145,7 @@ export const INITIAL_MEMBERS: UserProfile[] = [
   },
   {
     id: 'bod-10',
+    districtId: 'RTR26253',
     name: 'Rtr. Sanjana Adhikari',
     email: 'sanjana.adhikari@gandaki.edu.np',
     role: 'bod',
@@ -150,6 +160,7 @@ export const INITIAL_MEMBERS: UserProfile[] = [
   },
   {
     id: 'bod-11',
+    districtId: 'RTR26255',
     name: 'Rtr. Sujan Giri',
     email: 'sujan.giri@gandaki.edu.np',
     role: 'bod',
@@ -164,6 +175,7 @@ export const INITIAL_MEMBERS: UserProfile[] = [
   },
   {
     id: 'bod-12',
+    districtId: 'RTR26241',
     name: 'Rtr. Arpan Bhandari',
     email: 'arpan.bhandari@gandaki.edu.np',
     role: 'bod',
@@ -182,6 +194,7 @@ export const INITIAL_MEMBERS: UserProfile[] = [
   // ==========================================
   {
     id: 'mem-13',
+    districtId: 'RTR26251',
     name: 'Rtr. Sandesh Dhakal',
     email: 'sandesh.dhakal@student.gandaki.edu.np',
     role: 'member',
@@ -196,6 +209,7 @@ export const INITIAL_MEMBERS: UserProfile[] = [
   },
   {
     id: 'mem-14',
+    districtId: 'RTR26262',
     name: 'Rtr. Pratigya BK',
     email: 'pratigya.bk@student.gandaki.edu.np',
     role: 'member',
@@ -210,6 +224,7 @@ export const INITIAL_MEMBERS: UserProfile[] = [
   },
   {
     id: 'mem-15',
+    districtId: 'RTR26257',
     name: 'Rtr. Punam Pun Magar',
     email: 'punam.pm@student.gandaki.edu.np',
     role: 'member',
@@ -224,6 +239,7 @@ export const INITIAL_MEMBERS: UserProfile[] = [
   },
   {
     id: 'mem-16',
+    districtId: 'RTR26265',
     name: 'Rtr. Salina Bastola',
     email: 'salina.bastola@student.gandaki.edu.np',
     role: 'member',
@@ -238,6 +254,7 @@ export const INITIAL_MEMBERS: UserProfile[] = [
   },
   {
     id: 'mem-17',
+    districtId: 'District ID pending',
     name: 'Rtr. Sangam Bhujel',
     email: 'sangam.bhujel@student.gandaki.edu.np',
     role: 'member',
@@ -252,6 +269,7 @@ export const INITIAL_MEMBERS: UserProfile[] = [
   },
   {
     id: 'mem-18',
+    districtId: 'RTR26266',
     name: 'Rtr. Subarna Poudel',
     email: 'subarna.poudel@student.gandaki.edu.np',
     role: 'member',
@@ -266,6 +284,7 @@ export const INITIAL_MEMBERS: UserProfile[] = [
   },
   {
     id: 'mem-19',
+    districtId: 'RTR26282',
     name: 'Rtr. Akriti Bhattarai',
     email: 'akriti.bhattarai@student.gandaki.edu.np',
     role: 'member',
@@ -280,6 +299,7 @@ export const INITIAL_MEMBERS: UserProfile[] = [
   },
   {
     id: 'mem-20',
+    districtId: 'RTR26256',
     name: 'Rtr. Suresh Gurung',
     email: 'suresh.gurung@student.gandaki.edu.np',
     role: 'member',
@@ -294,6 +314,7 @@ export const INITIAL_MEMBERS: UserProfile[] = [
   },
   {
     id: 'mem-21',
+    districtId: 'RTR26261',
     name: 'Rtr. Manoram Subedi',
     email: 'manoram.subedi@student.gandaki.edu.np',
     role: 'member',
@@ -308,6 +329,7 @@ export const INITIAL_MEMBERS: UserProfile[] = [
   },
   {
     id: 'mem-22',
+    districtId: 'RTR27436',
     name: 'Rtr. Diperson BK',
     email: 'diperson.bk@student.gandaki.edu.np',
     role: 'member',
@@ -326,6 +348,7 @@ export const INITIAL_MEMBERS: UserProfile[] = [
   // ==========================================
   {
     id: 'adv-1',
+    districtId: 'RTR26263',
     name: 'Er. Rtr. Shiva Kunwar',
     email: 'shiva.kunwar@gandaki.edu.np',
     role: 'advisor',

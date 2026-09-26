@@ -2,6 +2,7 @@ export type UserRole = 'pst' | 'bod' | 'member' | 'advisor';
 
 export interface UserProfile {
   id: string;
+  districtId?: string;
   name: string;
   email: string;
   role: UserRole;

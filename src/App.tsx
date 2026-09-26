@@ -100,6 +100,16 @@ export function App() {
     setRegistrations(latestRegistrations);
   };
 
+  const handleProfileUpdated = (updated: UserProfile) => {
+    setCurrentUser(updated);
+    clubApi.setCurrentUser(updated);
+    setMembers(previous => previous.map(member =>
+      member.id === updated.id || member.email.toLowerCase() === updated.email.toLowerCase()
+        ? { ...member, ...updated }
+        : member
+    ));
+  };
+
   // Handlers for Document Management (PST)
   const handleUploadDocument = async (docData: Partial<ClubDocument>) => {
     const created = await clubApi.uploadDocument(docData);
@@ -233,6 +243,7 @@ export function App() {
               gallery={gallery}
               registrations={registrations}
               onRefreshRegistrations={handleRefreshRegistrations}
+              onProfileUpdated={handleProfileUpdated}
               onAddEvent={handleAddEvent}
               onUpdateEvent={handleUpdateEvent}
               onDeleteEvent={handleDeleteEvent}
