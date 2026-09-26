@@ -483,7 +483,7 @@ export const clubApi = {
     const json = await readApiResponse(res, 'The profile update did not return a valid API response.');
     if (!res.ok || !json.success || !json.data) throw new Error(json.error || 'Profile update failed.');
 
-    const updated = json.data as UserProfile;
+    const updated = { ...this.getCurrentUser(), ...json.data } as UserProfile;
     const current = getLocal<UserProfile[]>(STORAGE_KEYS.MEMBERS, INITIAL_MEMBERS);
     const idx = current.findIndex(member => member.id === id);
     if (idx >= 0) current[idx] = { ...current[idx], ...updated };

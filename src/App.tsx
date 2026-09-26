@@ -28,7 +28,13 @@ import { PortalPage } from './pages/PortalPage';
 export function App() {
   const [activeTab, setActiveTab] = useState<string>('home');
   const [currentUser, setCurrentUser] = useState<UserProfile | null>(() => {
-    return clubApi.getCurrentUser() || null;
+    const storedUser = clubApi.getCurrentUser();
+    if (!storedUser) return null;
+    const verified = INITIAL_MEMBERS.find(member =>
+      member.name.toLowerCase() === storedUser.name.toLowerCase() ||
+      member.email.toLowerCase() === storedUser.email.toLowerCase()
+    );
+    return { ...storedUser, districtId: storedUser.districtId || verified?.districtId };
   });
 
   // Data states
@@ -148,8 +154,13 @@ export function App() {
 
   // Auth handlers
   const handleLoginSuccess = async (user: UserProfile) => {
-    setCurrentUser(user);
-    clubApi.setCurrentUser(user);
+    const verified = INITIAL_MEMBERS.find(member =>
+      member.name.toLowerCase() === user.name.toLowerCase() ||
+      member.email.toLowerCase() === user.email.toLowerCase()
+    );
+    const enrichedUser = { ...user, districtId: user.districtId || verified?.districtId };
+    setCurrentUser(enrichedUser);
+    clubApi.setCurrentUser(enrichedUser);
     // The first registration request runs before a visitor is authenticated.
     // Reload it after login so PST can immediately see every attendee.
     const latestRegistrations = await clubApi.getRegistrations();
