@@ -50,16 +50,19 @@ export const Header: React.FC<HeaderProps> = ({
     <header className="sticky top-0 z-40 bg-white border-b border-slate-200 shadow-xs">
       {/* --- TOP THEME BAR --- */}
       <div className="bg-[#0A1931] text-white text-xs px-4 border-b border-slate-800">
-        <div className="max-w-7xl mx-auto min-h-9 py-1.5 flex flex-wrap items-center justify-center lg:justify-between gap-x-5 gap-y-1 text-[10px] sm:text-[11px] font-semibold">
-          <div className="flex flex-wrap items-center justify-center lg:justify-start gap-x-3 gap-y-1">
-            <span className="text-amber-400 font-bold uppercase tracking-wide">Rotaract Club of Gandaki University</span>
+        <div className="max-w-7xl mx-auto min-h-9 py-1.5 flex flex-col items-center justify-center gap-1 text-center text-[10px] sm:text-[11px] font-semibold lg:grid lg:grid-cols-[1fr_auto_1fr] lg:gap-x-5">
+          <span className="text-amber-400 font-bold uppercase tracking-wide lg:justify-self-start">
+            Rotaract Club of Gandaki University
+          </span>
+
+          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 lg:justify-self-center">
             <span>District 3292</span>
             <span>Zone XVI</span>
             <span>Sponsored by: Rotaract Club of Lekhnath</span>
             <span>Club No. 8828026</span>
           </div>
 
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="flex items-center justify-center gap-2 shrink-0 lg:justify-self-end">
             <span>RY 2026-27 Theme: Insight to Impact</span>
             <div className="h-7 flex items-center bg-white px-2 py-0.5 rounded border border-white/20">
               <img 
