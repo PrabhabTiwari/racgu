@@ -43,6 +43,6 @@ CREATE TABLE IF NOT EXISTS contact_messages (
 ) ENGINE=InnoDB;
 
 INSERT INTO content_items (type,item_id,payload) VALUES
-('events','ev-charter','{"id":"ev-charter","title":"Charter Ceremony","theme":"Insight to Impact","category":"Club Service","date":"2026-04-28","time":"2:30 PM","location":"Multipurpose Hall, Gandaki University","chairperson":"Rtr. Prabhab Tiwari","description":"Official charter ceremony of the Rotaract Club of Gandaki University.","image":"/assets/racgu-letterhead.png","status":"completed","maxSeats":100,"registeredMembers":[],"createdAt":"2026-01-22T00:00:00+05:45"}'),
+('events','ev-charter','{"id":"ev-charter","title":"Charter Ceremony","theme":"Insight to Impact","category":"Club Service","date":"2026-04-28","time":"2:30 PM","location":"Multipurpose Hall, Gandaki University","chairperson":"Rtr. Prabhab Tiwari","description":"Official charter ceremony of the Rotaract Club of Gandaki University.","image":"/assets/official/racgu-letterhead.webp","status":"completed","maxSeats":100,"registeredMembers":[],"createdAt":"2026-01-22T00:00:00+05:45"}'),
 ('notices','not-welcome','{"id":"not-welcome","title":"Welcome to Rotaract Club of Gandaki University","refNo":"RACGU/RY26-27/001","issuedBy":"Club Secretariat","date":"2026-09-20","category":"General","content":"Our club works to build a resilient and sustainable student-led institution through strategic recruitment, meaningful engagement, leadership development and community service.","isUrgent":false}')
 ON DUPLICATE KEY UPDATE payload=VALUES(payload);

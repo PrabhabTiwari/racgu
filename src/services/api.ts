@@ -44,6 +44,34 @@ async function readApiResponse(res: Response, fallback: string): Promise<any> {
   }
 }
 
+async function optimizePhoto(file: File, maxDimension = 1920, quality = 0.82): Promise<File> {
+  if (!file.type.startsWith('image/')) return file;
+
+  try {
+    const bitmap = await createImageBitmap(file, { imageOrientation: 'from-image' });
+    const scale = Math.min(1, maxDimension / Math.max(bitmap.width, bitmap.height));
+    const width = Math.max(1, Math.round(bitmap.width * scale));
+    const height = Math.max(1, Math.round(bitmap.height * scale));
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    const context = canvas.getContext('2d');
+    if (!context) {
+      bitmap.close();
+      return file;
+    }
+    context.drawImage(bitmap, 0, 0, width, height);
+    bitmap.close();
+
+    const blob = await new Promise<Blob | null>(resolve => canvas.toBlob(resolve, 'image/webp', quality));
+    if (!blob || blob.size >= file.size) return file;
+    const baseName = file.name.replace(/\.[^.]+$/, '') || 'photo';
+    return new File([blob], `${baseName}.webp`, { type: 'image/webp', lastModified: Date.now() });
+  } catch {
+    return file;
+  }
+}
+
 export const clubApi = {
   async login(email: string, password: string): Promise<UserProfile> {
     const res = await fetch('/api/index.php/auth/login', {
@@ -173,8 +201,9 @@ export const clubApi = {
   },
 
   async uploadEventCover(file: File): Promise<string> {
+    const optimizedFile = await optimizePhoto(file);
     const formData = new FormData();
-    formData.append('cover', file);
+    formData.append('cover', optimizedFile);
     const res = await fetch('/api/index.php/events/upload-cover', {
       method: 'POST', credentials: 'same-origin', body: formData
     });
@@ -403,8 +432,9 @@ export const clubApi = {
   },
 
   async uploadGalleryFile(file: File): Promise<string> {
+    const optimizedFile = await optimizePhoto(file);
     const formData = new FormData();
-    formData.append('photo', file);
+    formData.append('photo', optimizedFile);
     const res = await fetch('/api/index.php/gallery/upload', {
       method: 'POST', credentials: 'same-origin', body: formData
     });

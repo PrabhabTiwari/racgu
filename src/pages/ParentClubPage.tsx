@@ -42,7 +42,7 @@ export const ParentClubPage: React.FC<{ setActiveTab: (tab: string) => void }> =
       <div className="grid grid-cols-1 lg:grid-cols-12">
         <div className="lg:col-span-4 flex min-h-[420px] items-center justify-center bg-[#0A1931] p-10">
           <div className="text-center text-white">
-            <img src="/assets/parent-club/sushant-mani-dahal.jpg" alt="Rtr. Sushant Mani Dahal" className="mx-auto h-72 w-64 rounded-2xl object-cover object-top shadow-2xl ring-1 ring-white/20" />
+            <img src="/assets/parent-club/sushant-mani-dahal.webp" alt="Rtr. Sushant Mani Dahal" className="mx-auto h-72 w-64 rounded-2xl object-cover object-top shadow-2xl ring-1 ring-white/20" />
             <p className="mt-5 text-lg font-bold">Rtr. Sushant Mani Dahal</p>
             <p className="mt-1 text-xs text-slate-300">President, Rotaract Club of Lekhnath<br />Rotary Year 2026-27</p>
           </div>
