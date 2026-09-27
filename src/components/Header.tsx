@@ -53,8 +53,8 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="max-w-7xl mx-auto min-h-9 py-1.5 flex flex-wrap items-center justify-center lg:justify-between gap-x-5 gap-y-1 text-[10px] sm:text-[11px] font-semibold">
           <div className="flex flex-wrap items-center justify-center lg:justify-start gap-x-3 gap-y-1">
             <span className="text-amber-400 font-bold uppercase tracking-wide">Rotaract Club of Gandaki University</span>
-            <span>Zone XVI</span>
             <span>District 3292</span>
+            <span>Zone XVI</span>
             <span>Sponsored by: Rotaract Club of Lekhnath</span>
             <span>Club No. 8828026</span>
           </div>
