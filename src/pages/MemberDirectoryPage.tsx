@@ -124,7 +124,7 @@ export const MemberDirectoryPage: React.FC<MemberDirectoryPageProps> = ({ member
 
               <div className="pt-2 border-t border-slate-100 flex items-center justify-between gap-2 text-xs">
                 <span className="text-[#D91B5C] font-semibold truncate">{member.email}</span>
-                <span className="text-slate-500 font-mono text-[11px]">{member.phone}</span>
+                <span className="text-slate-500 text-[11px]">{member.phone}</span>
               </div>
             </div>
           ))

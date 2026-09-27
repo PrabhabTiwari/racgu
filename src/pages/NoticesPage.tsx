@@ -117,7 +117,7 @@ Club ID: 8828026 • RID 3292 Zone XVI`;
                   }`}
                 >
                   <div className="flex items-center justify-between gap-2 mb-1.5">
-                    <span className="text-[10px] font-mono font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded">
+                    <span className="text-[10px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded">
                       {n.refNo}
                     </span>
                     {n.isUrgent ? (
@@ -152,7 +152,7 @@ Club ID: 8828026 • RID 3292 Zone XVI`;
               {/* Notice Meta Header */}
               <div className="border-b border-slate-200 pb-5 space-y-2">
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  <span className="text-xs font-mono font-bold text-[#D91B5C] bg-pink-50 px-2 py-0.5 rounded border border-pink-200">
+                  <span className="text-xs font-bold text-[#D91B5C] bg-pink-50 px-2 py-0.5 rounded border border-pink-200">
                     Ref: {selectedNotice.refNo}
                   </span>
                   <span className="text-xs text-slate-500">

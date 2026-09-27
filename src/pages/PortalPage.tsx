@@ -317,7 +317,7 @@ Gandaki University Campus, Pokhara-32, Kaski, Nepal
                 }`}>
                   {currentUser.badge}
                 </span>
-                <span className="text-xs text-slate-500 font-mono">ID: {currentUser.id}</span>
+                <span className="text-xs text-slate-500">ID: {currentUser.id}</span>
               </div>
               <h1 className="text-xl sm:text-2xl font-bold text-slate-900 mt-1">
                 {currentUser.name}
