@@ -107,7 +107,7 @@ export function App() {
   };
 
   const handleRefreshRegistrations = async () => {
-    const latestRegistrations = await clubApi.getRegistrations();
+    const latestRegistrations = await clubApi.getRegistrations(true);
     setRegistrations(latestRegistrations);
   };
 
@@ -168,7 +168,7 @@ export function App() {
     clubApi.setCurrentUser(enrichedUser);
     // The first registration request runs before a visitor is authenticated.
     // Reload it after login so PST can immediately see every attendee.
-    const latestRegistrations = await clubApi.getRegistrations();
+    const latestRegistrations = await clubApi.getRegistrations(true);
     setRegistrations(latestRegistrations);
   };
 

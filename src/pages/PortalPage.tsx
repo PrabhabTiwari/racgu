@@ -9,6 +9,7 @@ import {
   EventCategory 
 } from '../types';
 import { clubApi } from '../services/api';
+import { INITIAL_MEMBERS } from '../data/initialData';
 
 interface PortalPageProps {
   currentUser: UserProfile;
@@ -658,7 +659,14 @@ Gandaki University Campus, Pokhara-32, Kaski, Nepal
 
                     {isPst && (
                       <button
-                        onClick={() => setSelectedEventAttendees(ev)}
+                        onClick={async () => {
+                          try {
+                            await onRefreshRegistrations();
+                            setSelectedEventAttendees(ev);
+                          } catch (error) {
+                            flashMessage(error instanceof Error ? error.message : 'Attendee records could not be loaded.');
+                          }
+                        }}
                         className="px-3 py-1.5 rounded border border-slate-300 hover:bg-slate-50 text-slate-700 text-xs font-bold"
                       >
                         Attendees ({registrations.filter(r => r.eventId === ev.id).length})

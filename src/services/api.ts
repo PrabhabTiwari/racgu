@@ -229,7 +229,7 @@ export const clubApi = {
   // --- DOCUMENTS ---
   async getDocuments(): Promise<ClubDocument[]> {
     try {
-      const res = await fetch('/api/index.php/documents');
+      const res = await fetch('/api/index.php/documents', { credentials: 'same-origin' });
       if (res.ok) {
         const json = await res.json();
         if (json.success && Array.isArray(json.data)) {
@@ -259,23 +259,20 @@ export const clubApi = {
     try {
       const res = await fetch('/api/index.php/documents', {
         method: 'POST',
+        credentials: 'same-origin',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newDoc)
       });
-      if (res.ok) {
-        const json = await res.json();
-        if (json.success && json.data) {
-          const current = getLocal<ClubDocument[]>(STORAGE_KEYS.DOCUMENTS, INITIAL_DOCUMENTS);
-          setLocal(STORAGE_KEYS.DOCUMENTS, [json.data, ...current]);
-          return json.data;
-        }
+      const json = await readApiResponse(res, 'The document record could not be saved to the database.');
+      if (!res.ok || !json.success || !json.data) {
+        throw new Error(json.error || 'The document record could not be saved to the database.');
       }
-    } catch {}
-
-    const current = getLocal<ClubDocument[]>(STORAGE_KEYS.DOCUMENTS, INITIAL_DOCUMENTS);
-    const updated = [newDoc, ...current];
-    setLocal(STORAGE_KEYS.DOCUMENTS, updated);
-    return newDoc;
+      const current = getLocal<ClubDocument[]>(STORAGE_KEYS.DOCUMENTS, INITIAL_DOCUMENTS);
+      setLocal(STORAGE_KEYS.DOCUMENTS, [json.data, ...current]);
+      return json.data;
+    } catch (error) {
+      throw error instanceof Error ? error : new Error('Document upload failed.');
+    }
   },
 
   async uploadDocumentFile(file: File): Promise<{ url: string; name: string; size: string; type: string }> {
@@ -290,9 +287,9 @@ export const clubApi = {
   },
 
   async deleteDocument(id: string): Promise<boolean> {
-    try {
-      await fetch(`/api/index.php/documents/${id}`, { method: 'DELETE' });
-    } catch {}
+    const res = await fetch(`/api/index.php/documents/${id}`, { method: 'DELETE', credentials: 'same-origin' });
+    const json = await readApiResponse(res, 'The document could not be deleted.');
+    if (!res.ok || !json.success) throw new Error(json.error || 'The document could not be deleted.');
     const current = getLocal<ClubDocument[]>(STORAGE_KEYS.DOCUMENTS, INITIAL_DOCUMENTS);
     setLocal(STORAGE_KEYS.DOCUMENTS, current.filter(d => d.id !== id));
     return true;
@@ -493,9 +490,9 @@ export const clubApi = {
   },
 
   // --- REGISTRATIONS ---
-  async getRegistrations(): Promise<MemberRegistration[]> {
+  async getRegistrations(requireAuthenticatedSession = false): Promise<MemberRegistration[]> {
     try {
-      const res = await fetch('/api/index.php/registrations');
+      const res = await fetch('/api/index.php/registrations', { credentials: 'same-origin' });
       if (res.ok) {
         const json = await res.json();
         if (json.success && Array.isArray(json.data)) {
@@ -503,8 +500,13 @@ export const clubApi = {
           return json.data;
         }
       }
-    } catch {}
-    return getLocal<MemberRegistration[]>(STORAGE_KEYS.REGISTRATIONS, INITIAL_REGISTRATIONS);
+      if (res.status === 401 && !requireAuthenticatedSession) return [];
+      const json = await readApiResponse(res, 'Attendee records could not be loaded from the database.');
+      throw new Error(json.error || 'Attendee records could not be loaded from the database.');
+    } catch (error) {
+      if (error instanceof Error) throw error;
+      throw new Error('Attendee records could not be loaded from the database.');
+    }
   },
 
   // --- AUTH SESSION ---

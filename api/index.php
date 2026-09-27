@@ -31,15 +31,19 @@ function clean(array $data): array {
     return $data;
 }
 
+function session_role(): string {
+    return strtolower(trim((string)($_SESSION['user']['role'] ?? '')));
+}
+
 function require_manager(): void {
-    $role = $_SESSION['user']['role'] ?? null;
+    $role = session_role();
     if (!in_array($role, ['pst', 'bod'], true)) {
         reply(403, ['success' => false, 'error' => 'Authorized club officers only.']);
     }
 }
 
 function require_pst(): void {
-    if (($_SESSION['user']['role'] ?? null) !== 'pst') {
+    if (session_role() !== 'pst') {
         reply(403, ['success' => false, 'error' => 'Only PST officers can perform this action.']);
     }
 }
@@ -249,7 +253,7 @@ try {
         if (!$sessionUser) reply(401, ['success' => false, 'error' => 'Member login required.']);
         $rows = $pdo->query('SELECT payload FROM registrations ORDER BY created_at DESC')->fetchAll();
         $registrations = array_map(fn($r) => json_decode($r['payload'], true), $rows);
-        if (($sessionUser['role'] ?? '') !== 'pst') {
+        if (session_role() !== 'pst') {
             $userId = (string)($sessionUser['id'] ?? '');
             $userEmail = strtolower((string)($sessionUser['email'] ?? ''));
             $registrations = array_values(array_filter($registrations, static fn($r) =>
